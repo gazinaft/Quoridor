@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Model {
-    class Corner {
+    public class Corner {
 
         public Corner(int x, int y) {
             X = x;
