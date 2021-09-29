@@ -11,10 +11,13 @@ namespace Model
         public Cell(int x, int y) {
             X = x;
             Y = y;
-            Player = 0;
+            //Player = 0; 
         }
-        public int Player;
-        public int X;
-        public int Y;
+
+        public int X { get; }
+        public int Y { get; }
+        public bool HasPlayer { get; private set; } // мені здається, що клітина не повинна містити гравця,
+                                                    // лише має містити флаг, чи є клітина зайнятою
+
     }
 }

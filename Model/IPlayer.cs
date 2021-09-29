@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 namespace Model {
     public interface IPlayer {
         public int PlayerId { get; }
+
+        public int WallsCounter { get; set; }
         
-        public void Think(GameField field);
+        public IPlayerStrategy PlayerStrategy { get; set; } // таким чином не будемо переписувати реалізацію гравця в залежності від зміни алгоритму
+
         public void Decide();
     }
 }
