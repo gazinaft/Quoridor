@@ -9,5 +9,11 @@ namespace Model {
         private GameField board;
         private IPlayer player1;
         private IPlayer player2;
+
+        public Game()
+        {
+            board = new GameField(9, 9);
+
+        }
     }
 }

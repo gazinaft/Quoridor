@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Model {
     public interface IPlayer {
+        
         public int PlayerId { get; }
+
+        public Cell CurrentCell { get; set; }
 
         public int WallsCounter { get; set; }
         

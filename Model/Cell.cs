@@ -14,6 +14,8 @@ namespace Model
             //Player = 0; 
         }
 
+
+
         public int X { get; }
         public int Y { get; }
         public bool HasPlayer { get; private set; } // мені здається, що клітина не повинна містити гравця,
