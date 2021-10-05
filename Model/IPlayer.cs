@@ -9,6 +9,12 @@ namespace Model {
         
         public int PlayerId { get; }
 
+        public PlayerState State { get; set; }
+
+        public bool PlayerIsActive { get; set; }
+
+        public int VictoryRow { get; set; }
+
         public Cell CurrentCell { get; set; }
 
         public int WallsCounter { get; set; }
@@ -16,5 +22,13 @@ namespace Model {
         public IPlayerStrategy PlayerStrategy { get; set; } // таким чином не будемо переписувати реалізацію гравця в залежності від зміни алгоритму
 
         public void Decide();
+    }
+
+    public enum PlayerState
+    {
+
+        ChangeTheCell,
+        PlaceTheWall
+
     }
 }

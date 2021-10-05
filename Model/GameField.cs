@@ -15,9 +15,32 @@ namespace Model {
         
         public GameField(int x, int y) {
             
-            Cells = new Cell[x+1, y+1];
+            Cells = new Cell[x, y];
+
+            for (int i=0; i<=x; i++) {
+
+                for (int j=0; j<=y; j++) {
+
+                    Cell cell = new Cell(i, j);
+                    Cells[i, j] = cell;
+                
+                }
+            
+            }
             
             Corners = new Corner[x+1, y+1];
+
+            for (int i = 0; i <= x + 1; i++) {
+
+                for (int j=0; j<y+1; j++) {
+
+                    Corner corner = new Corner(i, j);
+
+                    Corners[i, j] = corner;
+                
+                }
+            
+            }
 
             Heigth = y;
 
@@ -33,7 +56,8 @@ namespace Model {
 
             List<Cell> availableMoves = new List<Cell>();
 
-            if (Cells[player.CurrentCell.X, player.CurrentCell.Y + 1].HasPlayer) {
+            if (Cells[player.CurrentCell.X, player.CurrentCell.Y + 1].HasPlayer)
+            {
 
 
                 if (!Cells[player.CurrentCell.X - 1, player.CurrentCell.Y].HasPlayer && !(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y] == null))
@@ -50,21 +74,24 @@ namespace Model {
 
                 }
 
-                if (!Cells[player.CurrentCell.X, player.CurrentCell.Y - 1].HasPlayer && !(Cells[player.CurrentCell.X, player.CurrentCell.Y - 1] == null)) {
+                if (!Cells[player.CurrentCell.X, player.CurrentCell.Y - 1].HasPlayer && !(Cells[player.CurrentCell.X, player.CurrentCell.Y - 1] == null))
+                {
 
                     availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y - 1]);
 
                 }
 
 
-                if (!Cells[player.CurrentCell.X, player.CurrentCell.Y + 2].HasPlayer && !(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y + 2] == null)) {
+                if (!Cells[player.CurrentCell.X, player.CurrentCell.Y + 2].HasPlayer && !(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y + 2] == null))
+                {
 
                     availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y + 2]);
 
                 }
 
             }
-            else if (Cells[player.CurrentCell.X - 1, player.CurrentCell.Y].HasPlayer) {
+            else if (Cells[player.CurrentCell.X - 1, player.CurrentCell.Y].HasPlayer)
+            {
 
                 if (!Cells[player.CurrentCell.X, player.CurrentCell.Y + 1].HasPlayer && !(Cells[player.CurrentCell.X, player.CurrentCell.Y + 1] == null))
                 {
@@ -88,7 +115,8 @@ namespace Model {
 
                 }
 
-                if (!Cells[player.CurrentCell.X - 2, player.CurrentCell.Y].HasPlayer && !(Cells[player.CurrentCell.X - 2, player.CurrentCell.Y] == null)) {
+                if (!Cells[player.CurrentCell.X - 2, player.CurrentCell.Y].HasPlayer && !(Cells[player.CurrentCell.X - 2, player.CurrentCell.Y] == null))
+                {
 
                     availableMoves.Add(Cells[player.CurrentCell.X - 2, player.CurrentCell.Y]);
 
@@ -97,7 +125,8 @@ namespace Model {
 
             }
 
-            else if (Cells[player.CurrentCell.X, player.CurrentCell.Y - 1].HasPlayer) {
+            else if (Cells[player.CurrentCell.X, player.CurrentCell.Y - 1].HasPlayer)
+            {
 
                 if (!Cells[player.CurrentCell.X, player.CurrentCell.Y - 2].HasPlayer && !(Cells[player.CurrentCell.X, player.CurrentCell.Y - 2] == null))
                 {
@@ -131,12 +160,13 @@ namespace Model {
 
             }
 
-            else if (Cells[player.CurrentCell.X + 1, player.CurrentCell.Y].HasPlayer) {
+            else if (Cells[player.CurrentCell.X + 1, player.CurrentCell.Y].HasPlayer)
+            {
 
                 if (!Cells[player.CurrentCell.X, player.CurrentCell.Y + 1].HasPlayer && !(Cells[player.CurrentCell.X, player.CurrentCell.Y + 1] == null))
                 {
 
-                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y +1]);
+                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y + 1]);
 
                 }
 
@@ -163,6 +193,30 @@ namespace Model {
                 }
 
             }
+            else {
+
+                if (!(Cells[player.CurrentCell.X, player.CurrentCell.Y + 1] == null)) {
+
+                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y + 1]);
+
+                }
+                if (!(Cells[player.CurrentCell.X, player.CurrentCell.Y - 1] == null)) {
+
+                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y - 1]);
+
+                }
+                if (!(Cells[player.CurrentCell.X+1, player.CurrentCell.Y] == null)) {
+
+                    availableMoves.Add(Cells[player.CurrentCell.X+1, player.CurrentCell.Y]);
+                
+                }
+                if (!(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y] == null)) {
+
+                    availableMoves.Add(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y]);
+
+                }
+            
+            }
 
             return availableMoves;
         
@@ -179,11 +233,16 @@ namespace Model {
             // Corner center = Corners[x, y]; 
             // Corners[dir ? x : x + 1, dir ? y + 1 : y].Obstacles[dir ? 0 : 1, 1] = 1;
             throw new NotImplementedException("SetBlock is not implemented");
+        
         }
 
-        public GameField MovePlayer(int x, int y) {
-            throw new NotImplementedException("MovePlayer is not implemented");
-        }
+        public void MovePlayer(int x, int y, IPlayer player) {
+
+            player.CurrentCell.HasPlayer = false;
+            Cells[x, y].HasPlayer = true;
+            player.CurrentCell = Cells[x, y];
+            }
+
 
         private (bool, int) AStar(IPlayer player) {
 
