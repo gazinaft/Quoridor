@@ -174,16 +174,15 @@ namespace Model {
 
         }
 
-        public GameField SetBlock((Corner, bool) block) {
+        public GameField SetBlock(int x, int y, bool dir) {
             
+            // Corner center = Corners[x, y]; 
+            // Corners[dir ? x : x + 1, dir ? y + 1 : y].Obstacles[dir ? 0 : 1, 1] = 1;
             throw new NotImplementedException("SetBlock is not implemented");
-        
         }
 
-        public GameField MovePlayer(Cell cell) {
-            
+        public GameField MovePlayer(int x, int y) {
             throw new NotImplementedException("MovePlayer is not implemented");
-        
         }
 
         private (bool, int) AStar(IPlayer player) {

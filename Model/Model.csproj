@@ -47,8 +47,11 @@
     <Compile Include="Corner.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameField.cs" />
+    <Compile Include="ICommand.cs" />
     <Compile Include="IPlayer.cs" />
     <Compile Include="IPlayerStrategy.cs" />
+    <Compile Include="MovePlayerCommand.cs" />
+    <Compile Include="PlaceWallComand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
