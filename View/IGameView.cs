@@ -11,5 +11,13 @@ namespace View
         event Action PlacingTheWall;
 
         event Action PlayerMove;
+
+        int SelectedCellX { get; set; }
+
+        int SelectedCellY { get; set; }
+
+        int SelectedCornerX { get; set; }
+
+        int SelectedCornerY { get; set; }
     }
 }
