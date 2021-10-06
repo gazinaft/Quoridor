@@ -15,12 +15,10 @@ namespace Model
         }
 
 
-
         public int X { get; }
         public int Y { get; }
-        public bool HasPlayer { get; set; } // мені здається, що клітина не повинна містити гравця,
-
-        // лише має містити флаг, чи є клітина зайнятою
+        public bool HasPlayer { get; set; }
+        
 
 
         //public static bool operator <(Cell firstCell, Cell secondCell) {

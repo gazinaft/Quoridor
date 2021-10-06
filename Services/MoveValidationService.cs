@@ -15,9 +15,43 @@ namespace Services
 
             List<Cell> currentNeighbours = new List<Cell>();
 
-            if (field.Cells[player.CurrentCell.X + 1, player.CurrentCell.Y] != null) {
+            if (field.Cells[player.CurrentCell.X + 1, player.CurrentCell.Y] != null && !field.Cells[player.CurrentCell.X + 1, player.CurrentCell.Y].HasPlayer)
+            {
 
                 currentNeighbours.Add(field.Cells[player.CurrentCell.X + 1, player.CurrentCell.Y]);
+
+            }
+            else if(field.Cells[player.CurrentCell.X + 1, player.CurrentCell.Y].HasPlayer)
+            {
+
+                currentNeighbours.Remove(field.Cells[player.CurrentCell.X + 1, player.CurrentCell.Y]);
+
+                if (CanMoveBetween(field.Cells[player.CurrentCell.X + 1, player.CurrentCell.Y], field.Cells[player.CurrentCell.X + 2, player.CurrentCell.Y], field))
+                {
+
+                    possibleMoves.Add(field.Cells[player.CurrentCell.X + 2, player.CurrentCell.Y]);
+
+                }
+                else {
+
+                    if (CanMoveBetween(field.Cells[player.CurrentCell.X, player.CurrentCell.Y], field.Cells[player.CurrentCell.X + 1, player.CurrentCell.Y+1], field) &&
+                        
+                        field.Cells[player.CurrentCell.X+1,player.CurrentCell.Y+1]!=null) {
+
+                        possibleMoves.Add(field.Cells[player.CurrentCell.X + 1, player.CurrentCell.Y + 1]);
+                    
+                    }
+                    if (CanMoveBetween(field.Cells[player.CurrentCell.X, player.CurrentCell.Y], field.Cells[player.CurrentCell.X - 1, player.CurrentCell.Y + 1], field) &&
+
+                        field.Cells[player.CurrentCell.X - 1, player.CurrentCell.Y + 1] != null) {
+
+                        possibleMoves.Add(field.Cells[player.CurrentCell.X - 1, player.CurrentCell.Y + 1]);
+
+
+                    }
+                
+                }
+
             
             }
             if (field.Cells[player.CurrentCell.X - 1, player.CurrentCell.Y] != null)
@@ -39,7 +73,8 @@ namespace Services
 
             }
 
-            possibleMoves = currentNeighbours.FindAll(neighbour => CanMoveBetween(player.CurrentCell, neighbour, field));
+            currentNeighbours.FindAll(neighbour => field.CanMoveBetween(player.CurrentCell, neighbour)).ForEach(c => possibleMoves.Add(c));
+
 
             return possibleMoves;
             
@@ -48,7 +83,7 @@ namespace Services
         
 
 
-        public bool CanMoveBetween(Cell firstCell, Cell secondCell, GameField field) {
+        public static bool CanMoveBetween(Cell firstCell, Cell secondCell, GameField field) {
 
             if (firstCell.X == secondCell.X)
             {
@@ -88,6 +123,7 @@ namespace Services
             }
         
         }
+
 
     }
 }
