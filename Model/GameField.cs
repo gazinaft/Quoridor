@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace Model {
     public class GameField {
         
-        public int Heigth { get; }
+        public int Height { get; }
 
-        public int Weigth { get; }
+        public int Width { get; }
         
 
         
@@ -17,34 +17,31 @@ namespace Model {
             
             Cells = new Cell[x, y];
 
-            for (int i=0; i<=x; i++) {
+            for (int i = 0; i < x; i++) {
 
-                for (int j=0; j<=y; j++) {
+                for (int j = 0; j < y; j++) {
 
-                    Cell cell = new Cell(i, j);
-                    Cells[i, j] = cell;
+                    Cells[i, j] = new Cell(i, j);
                 
                 }
             
             }
             
-            Corners = new Corner[x+1, y+1];
+            Corners = new Corner[x + 1, y + 1];
 
-            for (int i = 0; i <= x + 1; i++) {
+            for (int i = 0; i < x + 1; i++) {
 
-                for (int j=0; j<y+1; j++) {
+                for (int j = 0; j < y + 1; j++) {
 
-                    Corner corner = new Corner(i, j);
-
-                    Corners[i, j] = corner;
+                    Corners[i, j] = new Corner(i, j);
                 
                 }
             
             }
 
-            Heigth = y;
+            Height = y;
 
-            Weigth = x;
+            Width = x;
         
         }
 
@@ -241,7 +238,7 @@ namespace Model {
             player.CurrentCell.HasPlayer = false;
             Cells[x, y].HasPlayer = true;
             player.CurrentCell = Cells[x, y];
-            }
+        }
 
 
         private (bool, int) AStar(IPlayer player) {
