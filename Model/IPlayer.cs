@@ -22,6 +22,8 @@ namespace Model {
         public IPlayerStrategy PlayerStrategy { get; set; } // таким чином не будемо переписувати реалізацію гравця в залежності від зміни алгоритму
 
         public void Decide();
+
+        public ICommand LastStep { get; set; }
     }
 
     public enum PlayerState

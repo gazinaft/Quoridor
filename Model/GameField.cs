@@ -276,12 +276,30 @@ namespace Model
 
         }
 
-        public GameField SetBlock(int x, int y, bool dir)
-        {
+        public GameField SetBlock(int x, int y, bool isHorizintal)
+        {        
+            
+            if (isHorizintal)
+            {
 
-            // Corner center = Corners[x, y]; 
-            // Corners[dir ? x : x + 1, dir ? y + 1 : y].Obstacles[dir ? 0 : 1, 1] = 1;
-            throw new NotImplementedException("SetBlock is not implemented");
+                this.Corners[x, y].Obstacles[0, 1] = true;
+                this.Corners[x, y].Obstacles[1, 1] = true;
+                this.Corners[x, y].Obstacles[2, 1] = true;
+                this.Corners[x + 1, y].Obstacles[0, 1] = true;
+                this.Corners[x - 1, y].Obstacles[2, 1] = true;
+
+            }
+            else {
+
+                this.Corners[x, y].Obstacles[1, 0] = true;
+                this.Corners[x, y].Obstacles[1, 1] = true;
+                this.Corners[x, y].Obstacles[1, 2] = true;
+                this.Corners[x, y + 1].Obstacles[1, 2] = true;
+                this.Corners[x, y - 1].Obstacles[1, 0] = true;
+
+            }
+
+            return this;
 
         }
 

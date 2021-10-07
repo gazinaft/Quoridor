@@ -6,12 +6,25 @@ using System.Threading.Tasks;
 
 namespace Model {
     public class Game {
+        
         private GameField Board;
         private IPlayer FirstPlayer;
         private IPlayer SecondPlayer;
         private Cell SelectedCell;
         private Corner SelectedCorner;
         private bool WallIsHorizintal;
+
+        public delegate void ChangeSelectedCell(Cell cell, IPlayer player);
+
+        public delegate void ChangeSelectedCorner(Cell firstCell, Cell secondCell, IPlayer player);
+
+        public event ChangeSelectedCell SelectedCellChanged;
+
+        public event ChangeSelectedCorner NotifyPlacingTheWall;
+
+        public delegate void NextPlayer();
+
+        public event NextPlayer NotifyPlayerHasChanged;
 
         private List<IPlayer> Players;
 
@@ -21,6 +34,8 @@ namespace Model {
         {
             Board = new GameField(9, 9);
             Players = new List<IPlayer>();
+
+            this.NotifyPlayerHasChanged += FindNextPlayer;
             
             //player1 = new IPlayer();
             //player1.IsActive = true;
@@ -31,7 +46,48 @@ namespace Model {
 
         }
 
-        public void GameLoop() {
+        public void PlaceTheWall(IPlayer player) {
+
+            Board.SetBlock(SelectedCorner.X, SelectedCorner.Y, WallIsHorizintal);
+
+            NotifyPlayerHasChanged?.Invoke();
+
+        }
+
+        
+
+        public void FindNextPlayer() {
+
+            if (Players.ElementAt(Players.FindIndex(pl => pl.PlayerIsActive && pl != null) + 1) != null)
+            {
+
+                Players.ElementAt(Players.FindIndex(pl => pl.PlayerIsActive && pl != null) + 1).PlayerIsActive = true;
+
+                ActivePlayer = Players.ElementAt(Players.FindIndex(pl => pl.PlayerIsActive && pl != null) + 1);
+
+            }
+            else
+            {
+
+                Players.ElementAt(0).PlayerIsActive = true;
+
+                ActivePlayer = Players.ElementAt(0);
+
+            }
+
+        }
+
+        public void ChangeTheCell() {
+
+            Board.MovePlayer(SelectedCell.X, SelectedCell.Y, ActivePlayer);
+
+            NotifyPlayerHasChanged?.Invoke();
+        
+        }
+
+        
+
+        /*public void GameLoop() {
 
             while (!(Players.Exists(player => player.VictoryRow == player.CurrentCell.Y))) {
 
@@ -67,17 +123,14 @@ namespace Model {
                             currentPlayer.PlayerIsActive = false;
 
                         }
-                        
-                        
-                    }
-                    
+
+                    }                    
 
                 }
 
-            
             }
 
-        }
+        }*/
     }
     
 }
