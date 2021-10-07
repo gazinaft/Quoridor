@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace Services
 {
-    public class PathFindingService
+    public class PathFindingService : IPathFindingService
     {
         public IAlgorithm SelectedAlgorithm { get; set; }
     }

@@ -7,7 +7,7 @@ using Model;
 
 namespace Services
 {
-    public class MoveValidationService
+    public class MoveValidationService : IMoveValidationService
     {
         public List<Cell> GetPossibleMoves(GameField field, IPlayer player) {
 
@@ -83,7 +83,7 @@ namespace Services
         
 
 
-        public static bool CanMoveBetween(Cell firstCell, Cell secondCell, GameField field) {
+        public bool CanMoveBetween(Cell firstCell, Cell secondCell, GameField field) {
 
             if (firstCell.X == secondCell.X)
             {
