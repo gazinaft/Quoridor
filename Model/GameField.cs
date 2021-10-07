@@ -49,6 +49,81 @@ namespace Model {
         
         public Corner[,] Corners { get; private set; }
 
+        public List<Cell> GetNeighbours(Cell currentCell) {
+
+            List<Cell> neighbours = new List<Cell>();
+
+            if (this.Cells[currentCell.X + 1, currentCell.Y]!=null) {
+
+                neighbours.Add(this.Cells[currentCell.X + 1, currentCell.Y]);
+            
+            }
+            if (this.Cells[currentCell.X, currentCell.Y + 1] != null)
+            {
+
+                neighbours.Add(this.Cells[currentCell.X, currentCell.Y + 1]);
+
+            }
+            if (this.Cells[currentCell.X - 1, currentCell.Y] != null)
+            {
+
+                neighbours.Add(this.Cells[currentCell.X - 1, currentCell.Y]);
+
+            }
+            if (this.Cells[currentCell.X, currentCell.Y - 1] != null)
+            {
+
+                neighbours.Add(this.Cells[currentCell.X, currentCell.Y - 1]);
+
+            }
+
+            return neighbours;
+
+        }
+
+        public bool CanMoveBetween(Cell firstCell, Cell secondCell) {
+
+            if (firstCell.X == secondCell.X)
+            {
+
+                if (firstCell.Y > secondCell.Y)
+                {
+
+                    return !(this.Corners[firstCell.X, secondCell.Y].Obstacles[2, 1] == 1);
+
+                }
+                else
+                {
+
+                    return !(this.Corners[secondCell.X, firstCell.Y].Obstacles[2, 1] == 1);
+
+                }
+
+            }
+            else
+            {
+
+                if (firstCell.X > secondCell.Y)
+                {
+
+
+                    return !(this.Corners[firstCell.X, secondCell.Y].Obstacles[1, 0] == 1);
+
+
+                }
+                else
+                {
+
+
+                    return !(this.Corners[secondCell.X, firstCell.Y].Obstacles[1, 0] == 1);
+
+
+                }
+
+            }
+
+        }
+
         public List<Cell> GetAvailableMoves(IPlayer player) {
 
             List<Cell> availableMoves = new List<Cell>();
@@ -302,6 +377,5 @@ namespace Model {
             
             throw new NotImplementedException("A* is not implemented");
         
-        }
     }
 }
