@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Model;
 
 namespace Services
@@ -73,57 +69,29 @@ namespace Services
 
             }
 
-            currentNeighbours.FindAll(neighbour => field.CanMoveBetween(player.CurrentCell, neighbour)).ForEach(c => possibleMoves.Add(c));
-
-
+            currentNeighbours.FindAll(neighbour => CanMoveBetween(player.CurrentCell, neighbour, field)).ForEach(c => possibleMoves.Add(c));
+            
             return possibleMoves;
             
         }
-
         
-
-
-        public bool CanMoveBetween(Cell firstCell, Cell secondCell, GameField field) {
-
-            if (firstCell.X == secondCell.X)
-            {
-
-                if (firstCell.Y > secondCell.Y)
-                {
-
-                        return !(field.Corners[firstCell.X, secondCell.Y].Obstacles[2, 1] == 1);
-
-                }
-                else
-                {
-
-                        return !(field.Corners[secondCell.X, firstCell.Y].Obstacles[2, 1] == 1);
-
-                }
-
-            }
-            else {
-
-                if (firstCell.X > secondCell.Y)
-                {
-
-                    
-                        return !(field.Corners[firstCell.X, secondCell.Y].Obstacles[1, 0] == 1);
-
-
-                }
-                else {
-
-
-                        return !(field.Corners[secondCell.X, firstCell.Y].Obstacles[1, 0] == 1);
-                   
-
-                }
-            
-            }
-        
+        private Cell MaxCell(Cell first, Cell second) {
+            if (first.X > second.X || first.Y > second.Y) return first;
+            return second;
         }
 
+        private bool IsXAxis(Cell first, Cell second) {
+            return first.Y == second.Y;
+        }
+
+
+        public bool CanMoveBetween(Cell first, Cell second, GameField field) {
+            Cell max = MaxCell(first, second);
+            return field.Corners[max.X, max.Y]
+                .Obstacles[IsXAxis(first, second) ? 1 : 2, IsXAxis(first, second) ? 0 : 1];
+        }
+        
+        
 
     }
 }
