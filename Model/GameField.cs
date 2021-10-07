@@ -298,59 +298,59 @@ namespace Model
         {
 
             /* int finalRow = 0;
- 
+
              List<Cell> allFinalCells = new List<Cell>();
- 
+
              if (player.PlayerId == 1)
              {
- 
+
                  finalRow = 0;
- 
+
              }
              else if (player.PlayerId == 2) {
- 
+
                  finalRow = Heigth;
-             
+
              }
- 
+
              foreach (Cell cell in Cells) {
- 
+
                  if (cell.Y == finalRow) {
- 
+
                      allFinalCells.Add(cell);
-                 
+
                  }
-             
+
              }
- 
+
              List<Cell> currentNeighbours = new List<Cell>();
- 
+
              double theLeastPath;
- 
+
              Cell nextCell;
-             
+
              foreach (Cell cell1 in GetAvailableMoves(player.CurrentCell)) {
- 
+
                  Cell firstCell = cell1;
- 
+
                  double pathLength = 0;
- 
+
                  List<double> allPathes = new List<double>();
- 
+
                  foreach (Cell cell2 in allFinalCells) {
- 
+
                      Cell finalCell = cell2;
- 
+
                      pathLength = Math.Sqrt( (Math.Abs(Math.Pow(cell1.X, 2) - Math.Pow(cell2.X, 2))) - (Math.Abs(Math.Pow(cell1.Y, 2) - Math.Pow(cell2.Y, 2))));
- 
+
                      allPathes.Add(pathLength);
- 
+
                  }
-             
+
              }
-             
+
              List<Cell> path = new List<Cell>();
- 
+
              */
 
 
