@@ -1,8 +1,7 @@
 using Model;
 using NUnit.Framework;
-using static Model.GameField;
 
-namespace Model
+namespace TestProject1
 {
     public class GameFieldTests
     {
