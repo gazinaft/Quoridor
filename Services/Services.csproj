@@ -49,6 +49,7 @@
     <Compile Include="Strategy\AStar.cs" />
     <Compile Include="Strategy\BFS.cs" />
     <Compile Include="Strategy\IAlgorithm.cs" />
+    <Compile Include="WallValidationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model\Model.csproj">
