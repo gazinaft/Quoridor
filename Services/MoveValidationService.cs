@@ -19,7 +19,7 @@ namespace Services
             List<Cell> neighbours = field.GetNeighbours(end);
             neighbours.Remove(start);
             Cell res = neighbours.FirstOrDefault(cell => (cell.X, cell.Y) == OverOneCell(start, end));
-            return res == null || CanMoveBetween(end, res, field)
+            return res == null || !CanMoveBetween(end, res, field)
                 ? neighbours.Where(cell => CanMoveBetween(end, cell, field)).ToList()
                 : new List<Cell> { res };
         }
