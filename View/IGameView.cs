@@ -19,5 +19,7 @@ namespace View
         int SelectedCornerX { get; set; }
 
         int SelectedCornerY { get; set; }
+
+        void DisplayTheField(GameFieldState state);
     }
 }

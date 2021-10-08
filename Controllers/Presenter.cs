@@ -4,15 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using View;
+using Model;
+using MappingProj;
 namespace Controllers
 {
     public class Presenter
     {
         private IGameView View;
 
-        public Presenter(IGameView view)
+        private Game Game;
+
+        private GameFieldMapper _gameFieldMapper;
+
+        public Presenter(IGameView view, Game game)
         {
             View = view;
+
+            Game = game;
+
+            _gameFieldMapper = new GameFieldMapper();
+
+            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game.Board));
 
             View.PlacingTheWall += PlaceTheWall;
 

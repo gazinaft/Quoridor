@@ -42,6 +42,11 @@ namespace View
 
         }
 
+        public void DisplayTheField(GameFieldState state)
+        {
+            throw new NotImplementedException();
+        }
+
         public void GameLoop() { }
     }
 }

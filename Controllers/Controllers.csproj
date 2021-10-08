@@ -45,6 +45,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MappingProj\MappingProj.csproj">
+      <Project>{ad5ba6cf-026f-48c8-86af-bc5f625787b7}</Project>
+      <Name>MappingProj</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{c1b7c91d-9211-4a7f-bc89-13f5b0cac5fc}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\View\View.csproj">
       <Project>{9527e525-4830-431c-b324-e49b178d5717}</Project>
       <Name>View</Name>

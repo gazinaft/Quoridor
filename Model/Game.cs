@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Model {
     public class Game {
         
-        private GameField Board;
+        public GameField Board { get; set; }
         private IPlayer FirstPlayer;
         private IPlayer SecondPlayer;
         private Cell SelectedCell;

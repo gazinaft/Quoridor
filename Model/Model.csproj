@@ -52,6 +52,7 @@
     <Compile Include="IPlayerStrategy.cs" />
     <Compile Include="MovePlayerCommand.cs" />
     <Compile Include="PlaceWallComand.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

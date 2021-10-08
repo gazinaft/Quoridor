@@ -13,6 +13,48 @@ namespace Model
 
         public int Width { get; }
 
+        public bool[,] GridForPlayers { get; set; }
+
+        public bool[,][,] GridForObstacles { get; set; }
+
+        public bool[,] FormGridForPlayers() {
+
+            bool[,] Grid = new bool[Height, Width];
+            
+            foreach (Cell cell in this.Cells) {
+
+                if (cell.HasPlayer) {
+
+                    Grid[cell.X, cell.Y] = true;
+                
+                }
+
+            }
+
+            GridForPlayers = Grid;
+
+            return Grid;
+        
+        }
+
+        public bool[,][,] FormGridForObstacles() {
+
+            bool[,][,] Grid = new bool[Height+1, Width+1][,];
+
+            foreach (var corner in Corners) {
+                
+                bool[,] curObstacles = corner.Obstacles;
+
+                Grid[corner.X, corner.Y] = curObstacles;
+
+            }
+
+            GridForObstacles = Grid;
+
+            return Grid;
+        
+        }
+
 
 
         public GameField(int x, int y)
