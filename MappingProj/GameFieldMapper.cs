@@ -11,7 +11,7 @@ namespace MappingProj
     {
         public GameFieldState FromModelToView(GameField model) {
 
-            return new GameFieldState() { GridForCorners = model.FormGridForObstacles(), GridForPlayers = model.FormGridForPlayers() };
+            return new GameFieldState() { GridForCorners = model.FormGridForObstacles(), GridForPlayers = model.FormGridForPlayers(), Height = model.Height, Width = model.Width };
         
         }
     }

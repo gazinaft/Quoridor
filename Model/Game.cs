@@ -35,6 +35,19 @@ namespace Model {
             Board = new GameField(9, 9);
             Players = new List<IPlayer>();
 
+            UserPlayer firstPLayer = new UserPlayer();
+
+            firstPLayer.CurrentCell = Board.Cells[4, 8];
+
+            UserPlayer secondPlayer = new UserPlayer();
+
+            secondPlayer.CurrentCell = Board.Cells[4, 0];
+
+            Players.Add(firstPLayer);
+            Players.Add(secondPlayer);
+
+            //firstPLayer.CurrentCell.X = 5;
+
             this.NotifyPlayerHasChanged += FindNextPlayer;
             
             //player1 = new IPlayer();

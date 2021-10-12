@@ -1,6 +1,6 @@
-﻿namespace View
+﻿namespace TestProgramm
 {
-    partial class GameViewWinForm
+    partial class Form1
     {
         /// <summary>
         /// Required designer variable.
@@ -28,30 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.GamePanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
-            // GamePanel
-            // 
-            this.GamePanel.Location = new System.Drawing.Point(28, 27);
-            this.GamePanel.Name = "GamePanel";
-            this.GamePanel.Size = new System.Drawing.Size(309, 326);
-            this.GamePanel.TabIndex = 0;
-            // 
-            // GameViewWinForm
+            // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(367, 411);
-            this.Controls.Add(this.GamePanel);
-            this.Name = "GameViewWinForm";
-            this.Text = "GameViewWinForm";
+            this.ClientSize = new System.Drawing.Size(653, 450);
+            this.Name = "Form1";
+            this.Text = "Form1";
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel GamePanel;
     }
 }
+
