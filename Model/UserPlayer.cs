@@ -8,7 +8,7 @@ namespace Model
 {
     public class UserPlayer : IPlayer
     {
-        public int PlayerId => throw new NotImplementedException();
+        public int PlayerId { get; }
 
         private Cell _currentCell;
 

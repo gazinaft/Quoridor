@@ -29,7 +29,11 @@ namespace Controllers
 
         public void MakeStep() {
 
-            throw new NotImplementedException();
+            Game.SelectedCell = Game.Board.Cells[View.SelectedCellX, View.SelectedCellY];
+            
+            Game.ChangeTheCell();
+
+            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game.Board));
 
         }
 

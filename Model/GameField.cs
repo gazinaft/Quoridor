@@ -100,25 +100,25 @@ namespace Model
 
             List<Cell> neighbours = new List<Cell>();
 
-            if (this.Cells[currentCell.X + 1, currentCell.Y] != null)
+            if (currentCell.X + 1 < Cells.GetLength(0))
             {
 
                 neighbours.Add(this.Cells[currentCell.X + 1, currentCell.Y]);
 
             }
-            if (this.Cells[currentCell.X, currentCell.Y + 1] != null)
+            if (currentCell.Y + 1 < Cells.GetLength(1))
             {
 
                 neighbours.Add(this.Cells[currentCell.X, currentCell.Y + 1]);
 
             }
-            if (this.Cells[currentCell.X - 1, currentCell.Y] != null)
+            if (currentCell.X-1 >= 0)
             {
 
                 neighbours.Add(this.Cells[currentCell.X - 1, currentCell.Y]);
 
             }
-            if (this.Cells[currentCell.X, currentCell.Y - 1] != null)
+            if (currentCell.Y - 1 >= 0 )
             {
 
                 neighbours.Add(this.Cells[currentCell.X, currentCell.Y - 1]);
@@ -137,174 +137,56 @@ namespace Model
 
             List<Cell> availableMoves = new List<Cell>();
 
-            if (Cells[player.CurrentCell.X, player.CurrentCell.Y + 1].HasPlayer)
-            {
+            foreach (Cell cell in GetNeighbours(player.CurrentCell)) {
 
-
-                if (!Cells[player.CurrentCell.X - 1, player.CurrentCell.Y].HasPlayer && !(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y] == null))
+                if (cell.HasPlayer)
                 {
 
-                    availableMoves.Add(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y]);
+                    if (cell.X - player.CurrentCell.X < 0)
+                    {
+
+                        if (cell.X - 1 > 0)
+                        {
+
+                            availableMoves.Add(Cells[player.CurrentCell.X - 2, player.CurrentCell.Y]);
+
+                        }
+
+                    }
+                    else if (cell.X - player.CurrentCell.X > 0)
+                    {
+
+                        if (cell.X + 1 < Cells.GetLength(0))
+                        {
+
+                            availableMoves.Add(Cells[player.CurrentCell.X + 2, player.CurrentCell.Y]);
+
+                        }
+
+                    }
+                    else if (cell.Y - 1 > 0)
+                    {
+
+                        availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y - 2]);
+
+                    }
+                    else if (cell.Y + 1 < Cells.GetLength(0))
+                    {
+
+                        availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y + 2]);
+
+                    }
 
                 }
+                else {
 
-                if (!Cells[player.CurrentCell.X + 1, player.CurrentCell.Y].HasPlayer && !(Cells[player.CurrentCell.X + 1, player.CurrentCell.Y] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X + 1, player.CurrentCell.Y]);
+                    availableMoves.Add(cell);
 
                 }
-
-                if (!Cells[player.CurrentCell.X, player.CurrentCell.Y - 1].HasPlayer && !(Cells[player.CurrentCell.X, player.CurrentCell.Y - 1] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y - 1]);
-
-                }
-
-
-                if (!Cells[player.CurrentCell.X, player.CurrentCell.Y + 2].HasPlayer && !(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y + 2] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y + 2]);
-
-                }
-
-            }
-            else if (Cells[player.CurrentCell.X - 1, player.CurrentCell.Y].HasPlayer)
-            {
-
-                if (!Cells[player.CurrentCell.X, player.CurrentCell.Y + 1].HasPlayer && !(Cells[player.CurrentCell.X, player.CurrentCell.Y + 1] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y + 1]);
-
-                }
-
-                if (!Cells[player.CurrentCell.X, player.CurrentCell.Y - 1].HasPlayer && !(Cells[player.CurrentCell.X, player.CurrentCell.Y - 1] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y - 1]);
-
-                }
-
-
-                if (!Cells[player.CurrentCell.X + 1, player.CurrentCell.Y].HasPlayer && !(Cells[player.CurrentCell.X + 1, player.CurrentCell.Y] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X + 1, player.CurrentCell.Y]);
-
-                }
-
-                if (!Cells[player.CurrentCell.X - 2, player.CurrentCell.Y].HasPlayer && !(Cells[player.CurrentCell.X - 2, player.CurrentCell.Y] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X - 2, player.CurrentCell.Y]);
-
-                }
-
-
+            
             }
 
-            else if (Cells[player.CurrentCell.X, player.CurrentCell.Y - 1].HasPlayer)
-            {
-
-                if (!Cells[player.CurrentCell.X, player.CurrentCell.Y - 2].HasPlayer && !(Cells[player.CurrentCell.X, player.CurrentCell.Y - 2] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y - 2]);
-
-                }
-
-                if (!Cells[player.CurrentCell.X + 1, player.CurrentCell.Y].HasPlayer && !(Cells[player.CurrentCell.X + 1, player.CurrentCell.Y] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X + 1, player.CurrentCell.Y]);
-
-                }
-
-
-                if (!Cells[player.CurrentCell.X - 1, player.CurrentCell.Y].HasPlayer && !(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y]);
-
-                }
-
-                if (!Cells[player.CurrentCell.X, player.CurrentCell.Y + 1].HasPlayer && !(Cells[player.CurrentCell.X, player.CurrentCell.Y + 1] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y + 1]);
-
-                }
-
-
-            }
-
-            else if (Cells[player.CurrentCell.X + 1, player.CurrentCell.Y].HasPlayer)
-            {
-
-                if (!Cells[player.CurrentCell.X, player.CurrentCell.Y + 1].HasPlayer && !(Cells[player.CurrentCell.X, player.CurrentCell.Y + 1] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y + 1]);
-
-                }
-
-                if (!Cells[player.CurrentCell.X, player.CurrentCell.Y - 1].HasPlayer && !(Cells[player.CurrentCell.X, player.CurrentCell.Y - 1] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y - 1]);
-
-                }
-
-
-                if (!Cells[player.CurrentCell.X - 1, player.CurrentCell.Y].HasPlayer && !(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y]);
-
-                }
-
-                if (!Cells[player.CurrentCell.X + 2, player.CurrentCell.Y].HasPlayer && !(Cells[player.CurrentCell.X + 2, player.CurrentCell.Y] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X + 2, player.CurrentCell.Y]);
-
-                }
-
-            }
-            else
-            {
-
-                if (!(Cells[player.CurrentCell.X, player.CurrentCell.Y + 1] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y + 1]);
-
-                }
-                if (!(Cells[player.CurrentCell.X, player.CurrentCell.Y - 1] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y - 1]);
-
-                }
-                if (!(Cells[player.CurrentCell.X + 1, player.CurrentCell.Y] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X + 1, player.CurrentCell.Y]);
-
-                }
-                if (!(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y]);
-
-                }
-
-            }
-
-            return availableMoves;
+            return GetNeighbours(player.CurrentCell);
 
         }
 
@@ -345,9 +227,17 @@ namespace Model
         public void MovePlayer(int x, int y, IPlayer player)
         {
 
-            player.CurrentCell.HasPlayer = false;
-            Cells[x, y].HasPlayer = true;
-            player.CurrentCell = Cells[x, y];
+            Cell selectedCell = Cells[x, y];
+
+            if (GetAvailableMoves(player).Contains(selectedCell)) {
+
+                player.CurrentCell.HasPlayer = false;                
+                Cells[x, y].HasPlayer = true;
+                player.CurrentCell = Cells[x, y];
+
+            }
+
+            
         }
 
 

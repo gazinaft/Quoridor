@@ -60,7 +60,9 @@ namespace View
 
                     if (CurrentState.GridForPlayers[i, j]) {
 
-                        ButtonGrid[i, j].Text = "PLAYER";
+                        //ButtonGrid[i, j].Text = "PLAYER";
+
+                        ButtonGrid[i, j].Image = Image.FromFile("C:\\Users\\Robert\\source\\repos\\Quoridor\\pictures\\fishka.jpg");
 
                     }
 
@@ -68,13 +70,39 @@ namespace View
 
                     ButtonGrid[i, j].Location = new Point( i * (int)buttonSize, j* (int)buttonSize);
 
+                    ButtonGrid[i, j].Click += GameViewWinForm_Click;
 
-                    //ButtonGrid[i, j].Text = "КНОПКА";
                 }
             
             }
 
             //throw new NotImplementedException();
+        }
+
+        private void GameViewWinForm_Click(object sender, EventArgs e)
+        {
+            Button selectedButton = (Button)sender;
+
+            SelectedCellX = selectedButton.Location.X / selectedButton.Width;
+
+            SelectedCellY = selectedButton.Location.Y / selectedButton.Height;
+
+            foreach (Button b in ButtonGrid) {
+
+                b.Dispose();
+            
+            }
+
+            ChangeTheCell();
+
+            //MessageBox.Show("Selected X: " + SelectedCellX + " Selected Y: " + SelectedCellY);
+
+        }
+
+        public void ChangeTheCell() {
+
+            PlayerMove.Invoke();
+
         }
     }
 }

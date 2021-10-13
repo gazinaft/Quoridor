@@ -7,7 +7,7 @@ namespace Model {
         public GameField Board { get; set; }
         private IPlayer FirstPlayer;
         private IPlayer SecondPlayer;
-        private Cell SelectedCell;
+        public Cell SelectedCell { get; set; }
         private Corner SelectedCorner;
         private bool WallIsHorizintal;
 
@@ -30,17 +30,20 @@ namespace Model {
         public Game()
         {
             Board = new GameField(9, 9);
+            
             Players = new List<IPlayer>();
 
-            UserPlayer firstPLayer = new UserPlayer();
+            UserPlayer firstPlayer = new UserPlayer();
 
-            firstPLayer.CurrentCell = Board.Cells[4, 8];
+            firstPlayer.CurrentCell = Board.Cells[4, 8];
 
             UserPlayer secondPlayer = new UserPlayer();
 
             secondPlayer.CurrentCell = Board.Cells[4, 0];
 
-            Players.Add(firstPLayer);
+            ActivePlayer = firstPlayer;
+
+            Players.Add(firstPlayer);
             Players.Add(secondPlayer);
 
             //firstPLayer.CurrentCell.X = 5;
