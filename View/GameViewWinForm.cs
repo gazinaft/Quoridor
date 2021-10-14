@@ -8,11 +8,11 @@ namespace View
     {
         Button[,] ButtonGrid;
 
+        Point[,] CornerGrid;
+
         public GameViewWinForm()
         {
             InitializeComponent();
-
-            
         }
 
         public GameViewWinForm(GameFieldState gameFieldState)
@@ -40,11 +40,15 @@ namespace View
 
             ButtonGrid = new Button[CurrentState.Height, CurrentState.Width];
 
+            CornerGrid = new Point[CurrentState.GridForCorners.GetLength(0), CurrentState.GridForCorners.GetLength(0)];
+
             GamePanel.Width = 2800;
 
             GamePanel.Height = 2800;
 
             double buttonSize = GamePanel.Width / state.GridForPlayers.Length;
+
+            double wallSize = buttonSize / 5;
 
             GamePanel.Height = GamePanel.Width;
 
@@ -68,12 +72,53 @@ namespace View
 
                     GamePanel.Controls.Add(ButtonGrid[i, j]);
 
-                    ButtonGrid[i, j].Location = new Point( i * (int)buttonSize, j* (int)buttonSize);
+                    ButtonGrid[i, j].Location = new Point( i * ((int)buttonSize + (int)wallSize), j* ((int)buttonSize + (int)wallSize));
 
                     ButtonGrid[i, j].Click += GameViewWinForm_Click;
 
                 }
+
+                
+
+            }
+
             
+            for (int i = 0; i < state.Width; i++)
+            {
+                for (int j = 1; j < state.Height; j++)
+                {
+                    
+
+                    Button rightWall = new Button();
+
+                    rightWall.Height = (2 * (int)buttonSize + (int)wallSize);
+
+                    rightWall.Width = (int)wallSize;
+
+                    rightWall.Location = new Point(ButtonGrid[i, j].Location.X - (int)wallSize, ButtonGrid[i, j].Location.Y - (int)buttonSize - (int)wallSize);
+
+                    GamePanel.Controls.Add(rightWall);
+
+                }
+
+            }
+
+            for (int i = 0; i < state.Width-1; i++)
+            {
+                for (int j = 1; j < state.Height; j++)
+                {
+                    Button higherWall = new Button();
+
+                    higherWall.Width = (2 * (int)buttonSize + (int)wallSize);
+
+                    higherWall.Height = (int)wallSize;
+
+                    higherWall.Location = new Point(ButtonGrid[i, j].Location.X, ButtonGrid[i, j].Location.Y - (int)wallSize);
+
+                    GamePanel.Controls.Add(higherWall);
+
+                }
+
             }
 
             //throw new NotImplementedException();
@@ -83,9 +128,11 @@ namespace View
         {
             Button selectedButton = (Button)sender;
 
-            SelectedCellX = selectedButton.Location.X / selectedButton.Width;
+            double wallSize = selectedButton.Width / 5;
 
-            SelectedCellY = selectedButton.Location.Y / selectedButton.Height;
+            SelectedCellX = selectedButton.Location.X / (selectedButton.Width + (int) wallSize);
+
+            SelectedCellY = selectedButton.Location.Y / (selectedButton.Width + (int)wallSize);
 
             foreach (Button b in ButtonGrid) {
 

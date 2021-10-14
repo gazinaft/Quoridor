@@ -10,10 +10,5 @@ namespace Model.Services
     {
         public IAlgorithm SelectedAlgorithm { get; set; }
 
-        bool CanPlaceTheWall(GameField field, IPlayer player)
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }

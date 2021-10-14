@@ -8,11 +8,11 @@ namespace Model.Services
 {
     public class WallValidationService
     {
-        public PathFindingService Pfs;
+        public PathFindingService _pathFindingService;
 
         public WallValidationService(PathFindingService pfs)
         {
-            Pfs = pfs;
+            _pathFindingService = pfs;
         }
 
         private List<(Corner, bool)> GetPossibleWalls(GameField field, IPlayer player)
@@ -39,14 +39,14 @@ namespace Model.Services
                        field.Corners[x, y].Obstacles[2, 1] ||
                        field.Corners[x + 1, y].Obstacles[0, 1] ||
                        field.Corners[x - 1, y].Obstacles[2, 1] ||
-                       Pfs.SelectedAlgorithm.FindThePath(player, field).Count == 0;
+                       _pathFindingService.SelectedAlgorithm.FindThePath(player, field).Count == 0;
             }
             return field.Corners[x, y].Obstacles[1, 0] ||
                    field.Corners[x, y].Obstacles[1, 1] ||
                    field.Corners[x, y].Obstacles[1, 2] ||
                    field.Corners[x, y + 1].Obstacles[1, 2] ||
                    field.Corners[x, y - 1].Obstacles[1, 0] ||
-                   Pfs.SelectedAlgorithm.FindThePath(player, field).Count == 0;
+                   _pathFindingService.SelectedAlgorithm.FindThePath(player, field).Count == 0;
         }
     }
 }

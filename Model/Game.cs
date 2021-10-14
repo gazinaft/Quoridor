@@ -1,16 +1,27 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Model.Services;
 
 namespace Model {
     public class Game {
         
         public GameField Board { get; set; }
+        
         private IPlayer FirstPlayer;
+        
         private IPlayer SecondPlayer;
         public Cell SelectedCell { get; set; }
+        
         private Corner SelectedCorner;
+        
         private bool WallIsHorizintal;
 
+        private PathFindingService _pathFindingService;
+
+        private MoveValidationService _moveValidationService;
+
+        private WallValidationService _wallValidationService;
+        
         public delegate void ChangeSelectedCell(Cell cell, IPlayer player);
 
         public delegate void ChangeSelectedCorner(Cell firstCell, Cell secondCell, IPlayer player);
@@ -30,6 +41,12 @@ namespace Model {
         public Game()
         {
             Board = new GameField(9, 9);
+
+            _pathFindingService = new PathFindingService();
+
+            _moveValidationService = new MoveValidationService();
+
+            _wallValidationService = new WallValidationService(_pathFindingService);
             
             Players = new List<IPlayer>();
 
