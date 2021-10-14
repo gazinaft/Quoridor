@@ -164,16 +164,22 @@ namespace Model
                         }
 
                     }
-                    else if (cell.Y - 1 > 0)
+                    else if (cell.Y - player.CurrentCell.Y > 0)
                     {
+                        if (cell.Y + 1 < Cells.GetLength(0)) {
 
-                        availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y - 2]);
+                            availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y + 2]);
+
+                        }
 
                     }
-                    else if (cell.Y + 1 < Cells.GetLength(0))
+                    else if (cell.Y - player.CurrentCell.Y < 0)
                     {
+                        if (cell.Y - 1 < Cells.GetLength(0)) {
 
-                        availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y + 2]);
+                            availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y - 2]);
+
+                        }
 
                     }
 
@@ -186,7 +192,7 @@ namespace Model
             
             }
 
-            return GetNeighbours(player.CurrentCell);
+            return availableMoves;
 
         }
 

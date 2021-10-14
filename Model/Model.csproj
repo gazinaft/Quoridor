@@ -54,6 +54,12 @@
     <Compile Include="PlaceWallComand.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\MoveValidationService.cs" />
+    <Compile Include="Services\PathFindingService.cs" />
+    <Compile Include="Services\WallValidationService.cs" />
+    <Compile Include="Strategy\AStar.cs" />
+    <Compile Include="Strategy\BFS.cs" />
+    <Compile Include="Strategy\IAlgorithm.cs" />
     <Compile Include="UserPlayer.cs" />
   </ItemGroup>
   <ItemGroup>

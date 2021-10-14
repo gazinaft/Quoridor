@@ -43,6 +43,8 @@ namespace Model {
 
             ActivePlayer = firstPlayer;
 
+            firstPlayer.PlayerIsActive = true;
+
             Players.Add(firstPlayer);
             Players.Add(secondPlayer);
 
@@ -71,16 +73,24 @@ namespace Model {
 
         public void FindNextPlayer() {
 
-            if (Players.ElementAt(Players.FindIndex(pl => pl.PlayerIsActive && pl != null) + 1) != null)
-            {
+            int _lastActivePlayerIndex = 0;
 
-                Players.ElementAt(Players.FindIndex(pl => pl.PlayerIsActive && pl != null) + 1).PlayerIsActive = true;
+            _lastActivePlayerIndex = Players.FindLastIndex(pl => pl.PlayerIsActive);
 
-                ActivePlayer = Players.ElementAt(Players.FindIndex(pl => pl.PlayerIsActive && pl != null) + 1);
+            if (_lastActivePlayerIndex + 1 != Players.Count)
+            {                
+
+                Players.ElementAt(_lastActivePlayerIndex).PlayerIsActive = false;
+
+                Players.ElementAt(_lastActivePlayerIndex + 1).PlayerIsActive = true;
+
+                ActivePlayer = Players.ElementAt(_lastActivePlayerIndex + 1);
 
             }
             else
             {
+                
+                Players.ElementAt(_lastActivePlayerIndex).PlayerIsActive = false;
 
                 Players.ElementAt(0).PlayerIsActive = true;
 
