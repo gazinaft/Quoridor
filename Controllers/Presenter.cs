@@ -20,6 +20,8 @@ namespace Controllers
 
             _gameFieldMapper = new GameFieldMapper();
 
+            View.DisplayPotentialWallsAndCorners(_gameFieldMapper.FromModelToView(Game.Board));
+
             View.DisplayTheField(_gameFieldMapper.FromModelToView(Game.Board));
 
             View.PlacingTheWall += PlaceTheWall;

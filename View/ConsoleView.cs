@@ -12,6 +12,11 @@ namespace View
         public event Action PlacingTheWall;
         public event Action PlayerMove;
 
+        public void DisplayPotentialWallsAndCorners(GameFieldState state)
+        {
+            throw new NotImplementedException();
+        }
+
         public void DisplayTheBoard(int firstPlayerX, int firstPlayerY, int secondPlayerX, int secondPlayerY) {
 
             

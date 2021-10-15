@@ -33,16 +33,17 @@
             // 
             // GamePanel
             // 
-            this.GamePanel.Location = new System.Drawing.Point(28, 27);
+            this.GamePanel.Location = new System.Drawing.Point(33, 33);
             this.GamePanel.Name = "GamePanel";
-            this.GamePanel.Size = new System.Drawing.Size(309, 326);
+            this.GamePanel.Size = new System.Drawing.Size(529, 515);
             this.GamePanel.TabIndex = 0;
             // 
             // GameViewWinForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(411, 411);
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ClientSize = new System.Drawing.Size(656, 619);
             this.Controls.Add(this.GamePanel);
             this.Name = "GameViewWinForm";
             this.Text = "GameViewWinForm";

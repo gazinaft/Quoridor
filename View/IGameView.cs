@@ -17,5 +17,7 @@ namespace View
         int SelectedCornerY { get; set; }
 
         void DisplayTheField(GameFieldState state);
+
+        void DisplayPotentialWallsAndCorners(GameFieldState state);
     }
 }

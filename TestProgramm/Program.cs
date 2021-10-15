@@ -20,11 +20,11 @@ namespace TestProgramm
 
             Application.EnableVisualStyles();
             
-            Application.SetCompatibleTextRenderingDefault(false);
-
-            GameViewWinForm form = new GameViewWinForm();            
+            Application.SetCompatibleTextRenderingDefault(false);    
 
             Game game = new Game();
+
+            GameViewWinForm form = new GameViewWinForm();
 
             Presenter presenter = new Presenter(form, game);
 
