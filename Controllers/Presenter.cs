@@ -24,9 +24,25 @@ namespace Controllers
 
             View.DisplayTheField(_gameFieldMapper.FromModelToView(Game.Board));
 
-            View.PlacingTheWall += PlaceTheWall;
+            View.PlacingTheWall += TryToPlaceTheWall;
 
             View.PlayerMove += MakeStep;
+
+            Game.NotifyPlacingTheWall += PlaceTheWall;
+
+            Game.NotifyCornerIsInvalid += WarnAboutInvalidCorner;
+        }
+
+        public void PlaceTheWall() {
+
+            View.PlaceTheWall();
+        
+        }
+
+        public void WarnAboutInvalidCorner() {
+
+            View.CantPlaceTheWall();
+        
         }
 
         public void MakeStep() {
@@ -39,9 +55,13 @@ namespace Controllers
 
         }
 
-        public void PlaceTheWall() {
 
-            throw new NotImplementedException();
+
+        public void TryToPlaceTheWall() {
+
+            Game.SelectedCorner = Game.Board.Corners[View.SelectedCornerX, View.SelectedCornerY];
+
+            Game.PlaceTheWall();
 
         }
 

@@ -12,9 +12,9 @@ namespace Model {
         private IPlayer SecondPlayer;
         public Cell SelectedCell { get; set; }
         
-        private Corner SelectedCorner;
+        public Corner SelectedCorner { get; set; }
         
-        private bool WallIsHorizintal;
+        public bool WallIsHorizintal { get; set; }
 
         private PathFindingService _pathFindingService;
 
@@ -22,15 +22,19 @@ namespace Model {
 
         private WallValidationService _wallValidationService;
         
-        public delegate void ChangeSelectedCell(Cell cell, IPlayer player);
+        public delegate void ChangeSelectedCell();
 
-        public delegate void ChangeSelectedCorner(Cell firstCell, Cell secondCell, IPlayer player);
+        public delegate void ChangeSelectedCorner();
 
         public event ChangeSelectedCell SelectedCellChanged;
 
         public event ChangeSelectedCorner NotifyPlacingTheWall;
 
         public delegate void NextPlayer();
+
+        public delegate void CornerIsInvalid();
+
+        public event CornerIsInvalid NotifyCornerIsInvalid;
 
         public event NextPlayer NotifyPlayerHasChanged;
 
@@ -54,9 +58,13 @@ namespace Model {
 
             firstPlayer.CurrentCell = Board.Cells[4, 8];
 
+            firstPlayer.VictoryRow = 0;
+
             UserPlayer secondPlayer = new UserPlayer();
 
             secondPlayer.CurrentCell = Board.Cells[4, 0];
+
+            secondPlayer.VictoryRow = 8;
 
             ActivePlayer = firstPlayer;
 
@@ -78,11 +86,24 @@ namespace Model {
 
         }
 
-        public void PlaceTheWall(IPlayer player) {
+        public void PlaceTheWall() {
 
-            Board.SetBlock(SelectedCorner.X, SelectedCorner.Y, WallIsHorizintal);
+            if (_wallValidationService.CornerInvalid(SelectedCorner.X, SelectedCorner.Y, WallIsHorizintal, Board, ActivePlayer))
+            {
 
-            NotifyPlayerHasChanged?.Invoke();
+                NotifyCornerIsInvalid?.Invoke();
+
+            }
+
+            else {
+
+                Board.SetBlock(SelectedCorner.X, SelectedCorner.Y, WallIsHorizintal);
+
+                NotifyPlacingTheWall?.Invoke();
+
+                NotifyPlayerHasChanged?.Invoke();
+
+            }
 
         }
 
@@ -125,52 +146,6 @@ namespace Model {
         
         }
 
-        
-
-        /*public void GameLoop() {
-
-            while (!(Players.Exists(player => player.VictoryRow == player.CurrentCell.Y))) {
-
-                foreach (IPlayer currentPlayer in Players) {
-
-                    if (currentPlayer.PlayerIsActive) {
-
-                        //if (currentPlayer.State == PlayerState.ChangeTheCell)
-                        //{
-
-                          //  Board.MovePlayer(SelectedCell, currentPlayer);
-
-                        //}
-                        //else if (currentPlayer.State == PlayerState.PlaceTheWall)
-                        //{
-
-                          //  Board.SetBlock(SelectedCorner.X, SelectedCorner.Y, WallIsHorizintal);
-
-                        //}
-
-
-                        if (Players.ElementAt(Players.FindIndex(pl => pl.PlayerIsActive && pl != null) + 1) != null)
-                        {
-
-                            Players.ElementAt(Players.FindIndex(pl => pl.PlayerIsActive && pl != null) + 1).PlayerIsActive = true;
-
-                            currentPlayer.PlayerIsActive = false;
-
-                        }
-                        else {
-
-                            Players.ElementAt(0).PlayerIsActive = true;
-                            currentPlayer.PlayerIsActive = false;
-
-                        }
-
-                    }                    
-
-                }
-
-            }
-
-        }*/
     }
     
 }

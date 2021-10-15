@@ -129,8 +129,21 @@ namespace Model
 
         }
 
-        public bool CanMoveBetween(Cell firstCell, Cell secondCell) {
-            throw new NotImplementedException("CanMoveBetween is not ready");
+        public bool CanMoveBetween(Cell first, Cell second, GameField field) {
+            Cell max = MaxCell(first, second);
+            return field.Corners[max.X, max.Y]
+                .Obstacles[IsXAxis(first, second) ? 1 : 2, IsXAxis(first, second) ? 0 : 1];
+        }
+
+        private Cell MaxCell(Cell first, Cell second)
+        {
+            if (first.X > second.X || first.Y > second.Y) return first;
+            return second;
+        }
+
+        private bool IsXAxis(Cell first, Cell second)
+        {
+            return first.Y == second.Y;
         }
 
         public List<Cell> GetAvailableMoves(IPlayer player) {

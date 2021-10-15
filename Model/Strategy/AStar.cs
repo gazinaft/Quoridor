@@ -42,7 +42,7 @@ namespace Model.Strategy
                 foreach (Cell cell in field.GetNeighbours(currentCell))
                 {
 
-                    if (field.CanMoveBetween(cell, currentCell) || !closed.Contains(cell))
+                    if (field.CanMoveBetween(cell, currentCell, field) || !closed.Contains(cell))
                     {
                         if (!open.Contains(cell) || (currentDistance > Math.Sqrt(Math.Pow((cell.X - FindTheNearestCellInARow(field, player).X), 2) - Math.Pow((cell.X - FindTheNearestCellInARow(field, player).Y), 2))))
                         {

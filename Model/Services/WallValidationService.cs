@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Model.Strategy;
 namespace Model.Services
 {
     public class WallValidationService
@@ -13,6 +13,8 @@ namespace Model.Services
         public WallValidationService(PathFindingService pfs)
         {
             _pathFindingService = pfs;
+
+            _pathFindingService.SelectedAlgorithm = new BFS();
         }
 
         private List<(Corner, bool)> GetPossibleWalls(GameField field, IPlayer player)
@@ -30,7 +32,7 @@ namespace Model.Services
             return res;
         }
 
-        private bool CornerInvalid(int x, int y, bool isHorizontal, GameField field, IPlayer player)
+        public bool CornerInvalid(int x, int y, bool isHorizontal, GameField field, IPlayer player)
         {
             if (isHorizontal)
             {

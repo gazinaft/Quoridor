@@ -8,6 +8,7 @@ namespace Model.Strategy
 {
     public class BFS : IAlgorithm
     {
+
         public List<Cell> FindThePath(IPlayer player, GameField field)
         {
             Queue<Cell> queue = new Queue<Cell>();
@@ -26,12 +27,11 @@ namespace Model.Strategy
 
             while (queue.Any())
             {
-
                 var V = queue.Dequeue();
 
                 path.Add(V);
 
-                foreach (Cell cell in field.GetNeighbours(V).FindAll(c => field.CanMoveBetween(V, c)))
+                foreach (Cell cell in field.GetNeighbours(V).FindAll(c => field.CanMoveBetween(V, c, field)))
                 {
 
                     if (!visited.Contains(cell))
@@ -90,7 +90,7 @@ namespace Model.Strategy
 
             Cell theNearestCell = field.Cells[0, FinalRowY];
 
-            for (int i = 0; i < field.Cells.Length; i++)
+            for (int i = 0; i < field.Cells.GetLength(0); i++)
             {
 
                 double currentLength = Math.Sqrt(Math.Pow((player.CurrentCell.X - field.Cells[i, FinalRowY].X), 2) - Math.Pow((player.CurrentCell.Y - field.Cells[i, FinalRowY].Y), 2));

@@ -11,7 +11,11 @@ namespace View
 
         Button[,] CornerGrid;
 
-        Dictionary<Button, Button> _cornerDictionary;
+        Button _lastSelectedWall;
+
+        Dictionary<Button, (int, int)> _cornerDictionary;
+
+        List<Button> _horizontalWalls;
 
         public GameViewWinForm()
         {
@@ -38,13 +42,17 @@ namespace View
         public int SelectedCornerX { get; set; }
         public int SelectedCornerY { get; set; }
 
+        public bool SelectedWallIsHorisontal { get; set; }
+
         public event Action PlacingTheWall;
         
         public event Action PlayerMove;
 
         public void DisplayPotentialWallsAndCorners(GameFieldState state) {
 
-            _cornerDictionary = new Dictionary<Button, Button>();
+            _horizontalWalls = new List<Button>();
+            
+            _cornerDictionary = new Dictionary<Button, (int, int)>();
             
             CurrentState = state;
 
@@ -128,7 +136,7 @@ namespace View
 
                     rightWall.Location = new Point(ButtonGrid[i, j].Location.X - (int)wallSize, ButtonGrid[i, j].Location.Y - (int)buttonSize - (int)wallSize);
 
-                    _cornerDictionary.Add(rightWall, CornerGrid[i, j]);
+                    _cornerDictionary.Add(rightWall, (i, j));
                     
                     GamePanel.Controls.Add(rightWall);
 
@@ -150,7 +158,9 @@ namespace View
 
                     higherWall.Location = new Point(ButtonGrid[i, j].Location.X, ButtonGrid[i, j].Location.Y - (int)wallSize);
 
-                    _cornerDictionary.Add(higherWall, CornerGrid[i+1, j]);
+                    _cornerDictionary.Add(higherWall, (i+1, j));
+
+                    _horizontalWalls.Add(higherWall);
 
                     GamePanel.Controls.Add(higherWall);
 
@@ -200,17 +210,37 @@ namespace View
         {
             Button selectedWall = (Button)sender;
 
-            Button selectedCorner = _cornerDictionary[selectedWall];
+            (int SelectedX, int SelectedY) = _cornerDictionary[selectedWall];
 
-            int wallSize = GamePanel.Width / CurrentState.GridForPlayers.Length / 5;
+            //int wallSize = GamePanel.Width / CurrentState.GridForPlayers.Length / 5;
 
-            int buttonSize = GamePanel.Width / CurrentState.GridForPlayers.Length;
+            //int buttonSize = GamePanel.Width / CurrentState.GridForPlayers.Length;
 
-            int selectedCornerX = selectedCorner.Location.X + wallSize - buttonSize;
+            //int selectedCornerX = selectedCorner.Location.X + wallSize - buttonSize;
 
-            int selectedCornerY = selectedCorner.Location.Y + wallSize - buttonSize;
+            //int selectedCornerY = selectedCorner.Location.Y + wallSize - buttonSize;
 
-            MessageBox.Show("SelectedCornerX: " + selectedCornerX + " SelectedCornerY: " + selectedCornerY);
+            //MessageBox.Show("SelectedCornerX: " + SelectedX + " SelectedCornerY: " + SelectedY);
+
+            SelectedCornerX = SelectedX;
+
+            SelectedCornerY = SelectedY;
+
+            _lastSelectedWall = selectedWall;
+
+            SelectedWallIsHorisontal = _horizontalWalls.Contains(selectedWall);
+
+            PlacingTheWall.Invoke();
+        }
+
+        public void PlaceTheWall() {
+
+            _lastSelectedWall.Enabled = false;
+            
+            _lastSelectedWall.BackColor = Color.Red;
+
+            _lastSelectedWall.BringToFront();
+        
         }
 
 
@@ -281,10 +311,17 @@ namespace View
 
         }
 
+
+
         public void ChangeTheCell() {
 
             PlayerMove.Invoke();
 
+        }
+
+        public void CantPlaceTheWall()
+        {
+            MessageBox.Show("Sorry, you can't place the wall this way.");
         }
     }
 }

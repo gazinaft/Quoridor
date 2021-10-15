@@ -12,6 +12,11 @@ namespace View
         public event Action PlacingTheWall;
         public event Action PlayerMove;
 
+        public void CantPlaceTheWall()
+        {
+            throw new NotImplementedException();
+        }
+
         public void DisplayPotentialWallsAndCorners(GameFieldState state)
         {
             throw new NotImplementedException();
@@ -49,5 +54,10 @@ namespace View
         }
 
         public void GameLoop() { }
+
+        public void PlaceTheWall()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
