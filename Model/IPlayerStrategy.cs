@@ -2,7 +2,7 @@
 {
     public interface IPlayerStrategy
     {
-        public void Think(GameField field);
+        public void Think(Game game);
     
     }
 }

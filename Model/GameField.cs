@@ -196,65 +196,7 @@ namespace Model
 
         public List<Cell> GetAvailableMoves(IPlayer player) {
 
-            /*List<Cell> availableMoves = new List<Cell>();
-
-            foreach (Cell cell in GetNeighbours(player.CurrentCell)) {
-
-                if (cell.HasPlayer)
-                {
-
-                    if (cell.X - player.CurrentCell.X < 0)
-                    {
-
-                        if (cell.X - 1 > 0)
-                        {
-
-                            availableMoves.Add(Cells[player.CurrentCell.X - 2, player.CurrentCell.Y]);
-
-                        }
-
-                    }
-                    else if (cell.X - player.CurrentCell.X > 0)
-                    {
-
-                        if (cell.X + 1 < Cells.GetLength(0))
-                        {
-
-                            availableMoves.Add(Cells[player.CurrentCell.X + 2, player.CurrentCell.Y]);
-
-                        }
-
-                    }
-                    else if (cell.Y - player.CurrentCell.Y > 0)
-                    {
-                        if (cell.Y + 1 < Cells.GetLength(0)) {
-
-                            availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y + 2]);
-
-                        }
-
-                    }
-                    else if (cell.Y - player.CurrentCell.Y < 0)
-                    {
-                        if (cell.Y - 1 < Cells.GetLength(0)) {
-
-                            availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y - 2]);
-
-                        }
-
-                    }
-
-                }
-                else {
-
-                    availableMoves.Add(cell);
-
-                }
-            
-            }*/
-
             List<Cell> possibleMoves = _moveValidationService.GetPossibleMoves(this, player);
-
 
             return possibleMoves;
 

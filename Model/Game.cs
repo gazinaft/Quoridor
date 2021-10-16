@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Model.Services;
-
+using Model.Strategy;
 namespace Model {
     public class Game {
         
@@ -34,6 +34,10 @@ namespace Model {
 
         public delegate void CornerIsInvalid();
 
+        public delegate void NextStep();
+
+        public event NextStep NotifyNextStep;
+
         public event CornerIsInvalid NotifyCornerIsInvalid;
 
         public event NextPlayer NotifyPlayerHasChanged;
@@ -42,6 +46,44 @@ namespace Model {
 
         public IPlayer ActivePlayer;
 
+        public Game(IAlgorithm enemyStrategy) {
+
+            _pathFindingService = new PathFindingService();
+
+            _moveValidationService = new MoveValidationService();
+
+            _wallValidationService = new WallValidationService(_pathFindingService);
+
+            Board = new GameField(_moveValidationService, _wallValidationService, _pathFindingService, 9, 9);
+
+            Players = new List<IPlayer>();
+
+            UserPlayer firstPlayer = new UserPlayer();
+
+            firstPlayer.CurrentCell = Board.Cells[4, 8];
+
+            firstPlayer.VictoryRow = 0;
+
+            UserPlayer secondPlayer = new UserPlayer();
+
+            secondPlayer.CurrentCell = Board.Cells[4, 0];
+
+            secondPlayer.VictoryRow = 8;
+
+            ActivePlayer = firstPlayer;
+
+            firstPlayer.PlayerIsActive = true;
+
+            Players.Add(firstPlayer);
+            Players.Add(secondPlayer);
+
+            //firstPLayer.CurrentCell.X = 5;
+
+            this.NotifyPlayerHasChanged += FindNextPlayer;
+
+
+        }
+        
         public Game()
         {
             
@@ -78,6 +120,8 @@ namespace Model {
             //firstPLayer.CurrentCell.X = 5;
 
             this.NotifyPlayerHasChanged += FindNextPlayer;
+
+            this.NotifyNextStep += MakeNextStep;
             
             //player1 = new IPlayer();
             //player1.IsActive = true;
@@ -86,6 +130,17 @@ namespace Model {
             //Players.Add();
 
 
+        }
+
+        public void MakeNextStep() {
+
+            if (ActivePlayer.PlayerStrategy !=null) {
+
+                //ActivePlayer.Decide();
+                NotifyPlayerHasChanged?.Invoke();
+            
+            }
+        
         }
 
         public void PlaceTheWall() {
@@ -137,6 +192,8 @@ namespace Model {
                 ActivePlayer = Players.ElementAt(0);
 
             }
+
+            NotifyNextStep?.Invoke();
 
         }
 
