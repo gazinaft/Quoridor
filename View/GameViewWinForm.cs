@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace View
@@ -263,7 +264,13 @@ namespace View
 
                         //ButtonGrid[i, j].Text = "PLAYER";
 
-                        ButtonGrid[i, j].Image = Image.FromFile("C:\\Users\\Robert\\source\\repos\\Quoridor\\pictures\\fishka.jpg");
+                        //ButtonGrid[i, j].Image = Image.FromFile("C:\\Users\\Robert\\source\\repos\\Quoridor\\pictures\\fishka.jpg");
+
+                        GraphicsPath p = new GraphicsPath();
+                        p.AddEllipse(ButtonGrid[i,j].Location.X, ButtonGrid[i, j].Location.Y, buttonSize, buttonSize);
+                        ButtonGrid[i, j].Region = new Region(p);
+
+                        ButtonGrid[i, j].BackColor = Color.Red;
 
                     }
 
