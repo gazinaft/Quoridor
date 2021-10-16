@@ -50,7 +50,7 @@ namespace Model.Services
         public bool CanMoveBetween(Cell first, Cell second, GameField field)
         {
             Cell max = MaxCell(first, second);
-            return field.Corners[max.X, max.Y]
+            return !field.Corners[max.X, max.Y]
                 .Obstacles[IsXAxis(first, second) ? 1 : 2, IsXAxis(first, second) ? 0 : 1];
         }
     }

@@ -212,16 +212,6 @@ namespace View
 
             (int SelectedX, int SelectedY) = _cornerDictionary[selectedWall];
 
-            //int wallSize = GamePanel.Width / CurrentState.GridForPlayers.Length / 5;
-
-            //int buttonSize = GamePanel.Width / CurrentState.GridForPlayers.Length;
-
-            //int selectedCornerX = selectedCorner.Location.X + wallSize - buttonSize;
-
-            //int selectedCornerY = selectedCorner.Location.Y + wallSize - buttonSize;
-
-            //MessageBox.Show("SelectedCornerX: " + SelectedX + " SelectedCornerY: " + SelectedY);
-
             SelectedCornerX = SelectedX;
 
             SelectedCornerY = SelectedY;

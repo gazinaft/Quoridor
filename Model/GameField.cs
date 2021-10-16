@@ -1,10 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Model.Services;
 namespace Model
 {
     public class GameField
     {
+
+        private MoveValidationService _moveValidationService;
+
+        private WallValidationService _wallValidationService;
+
+        private PathFindingService _pathFindingService;
+
+        public GameField(MoveValidationService moveValidationService, WallValidationService wallValidationService, PathFindingService pathFindingService, int x, int y)
+        {
+            Height = y;
+
+            Width = x;
+            
+            _moveValidationService = moveValidationService;
+
+            _wallValidationService = wallValidationService;
+
+            _pathFindingService = pathFindingService;
+
+            Cells = new Cell[x, y];
+
+            for (int i = 0; i < x; i++)
+            {
+
+                for (int j = 0; j < y; j++)
+                {
+
+                    Cells[i, j] = new Cell(i, j);
+
+                }
+
+            }
+
+            Corners = new Corner[x + 1, y + 1];
+
+            for (int i = 0; i < x + 1; i++)
+            {
+
+                for (int j = 0; j < y + 1; j++)
+                {
+
+                    Corners[i, j] = new Corner(i, j);
+
+                }
+
+            }
+
+        }
 
         public int Height { get; }
 
@@ -148,7 +196,7 @@ namespace Model
 
         public List<Cell> GetAvailableMoves(IPlayer player) {
 
-            List<Cell> availableMoves = new List<Cell>();
+            /*List<Cell> availableMoves = new List<Cell>();
 
             foreach (Cell cell in GetNeighbours(player.CurrentCell)) {
 
@@ -203,9 +251,12 @@ namespace Model
 
                 }
             
-            }
+            }*/
 
-            return availableMoves;
+            List<Cell> possibleMoves = _moveValidationService.GetPossibleMoves(this, player);
+
+
+            return possibleMoves;
 
         }
 

@@ -44,14 +44,16 @@ namespace Model {
 
         public Game()
         {
-            Board = new GameField(9, 9);
+            
 
             _pathFindingService = new PathFindingService();
 
             _moveValidationService = new MoveValidationService();
 
             _wallValidationService = new WallValidationService(_pathFindingService);
-            
+
+            Board = new GameField(_moveValidationService, _wallValidationService, _pathFindingService, 9, 9);
+
             Players = new List<IPlayer>();
 
             UserPlayer firstPlayer = new UserPlayer();
