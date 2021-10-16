@@ -178,9 +178,8 @@ namespace Model
         }
 
         public bool CanMoveBetween(Cell first, Cell second, GameField field) {
-            Cell max = MaxCell(first, second);
-            return field.Corners[max.X, max.Y]
-                .Obstacles[IsXAxis(first, second) ? 1 : 2, IsXAxis(first, second) ? 0 : 1];
+
+            return _moveValidationService.CanMoveBetween(first, second, field);
         }
 
         private Cell MaxCell(Cell first, Cell second)
@@ -227,8 +226,8 @@ namespace Model
                 this.Corners[x, y].Obstacles[1, 0] = true;
                 this.Corners[x, y].Obstacles[1, 1] = true;
                 this.Corners[x, y].Obstacles[1, 2] = true;
-                this.Corners[x, y + 1].Obstacles[1, 2] = true;
-                this.Corners[x, y - 1].Obstacles[1, 0] = true;
+                this.Corners[x, y + 1].Obstacles[1, 0] = true;
+                this.Corners[x, y - 1].Obstacles[1, 2] = true;
 
             }
 

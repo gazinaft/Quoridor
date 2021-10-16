@@ -46,8 +46,8 @@ namespace Model.Services
             return field.Corners[x, y].Obstacles[1, 0] ||
                    field.Corners[x, y].Obstacles[1, 1] ||
                    field.Corners[x, y].Obstacles[1, 2] ||
-                   field.Corners[x, y + 1].Obstacles[1, 2] ||
-                   field.Corners[x, y - 1].Obstacles[1, 0] ||
+                   field.Corners[x, y + 1].Obstacles[1, 0] ||
+                   field.Corners[x, y - 1].Obstacles[1, 2] ||
                    _pathFindingService.SelectedAlgorithm.FindThePath(player, field).Count == 0;
         }
     }

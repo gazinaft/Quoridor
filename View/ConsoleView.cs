@@ -8,6 +8,7 @@ namespace View
         public int SelectedCellY { get; set; }
         public int SelectedCornerX { get; set; }
         public int SelectedCornerY { get; set; }
+        public bool SelectedWallIsHorizontal { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public event Action PlacingTheWall;
         public event Action PlayerMove;

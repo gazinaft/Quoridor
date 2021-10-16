@@ -70,6 +70,8 @@ namespace Controllers
 
             Game.SelectedCorner = Game.Board.Corners[View.SelectedCornerX, View.SelectedCornerY];
 
+            Game.WallIsHorizintal = View.SelectedWallIsHorizontal;
+
             Game.PlaceTheWall();
 
         }

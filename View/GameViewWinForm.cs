@@ -43,7 +43,7 @@ namespace View
         public int SelectedCornerX { get; set; }
         public int SelectedCornerY { get; set; }
 
-        public bool SelectedWallIsHorisontal { get; set; }
+        public bool SelectedWallIsHorizontal { get; set; }
 
         public event Action PlacingTheWall;
         
@@ -222,7 +222,7 @@ namespace View
 
             _lastSelectedWall = selectedWall;
 
-            SelectedWallIsHorisontal = _horizontalWalls.Contains(selectedWall);
+            SelectedWallIsHorizontal = _horizontalWalls.Contains(selectedWall);
 
             PlacingTheWall.Invoke();
         }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Model.Strategy
 {
     public class BFS : IAlgorithm
@@ -11,7 +10,10 @@ namespace Model.Strategy
 
         public List<Cell> FindThePath(IPlayer player, GameField field)
         {
+
             Queue<Cell> queue = new Queue<Cell>();
+
+            Dictionary<Cell, Cell> parents = new Dictionary<Cell, Cell>();
 
             List<Cell> visited = new List<Cell>();
 
@@ -29,26 +31,50 @@ namespace Model.Strategy
             {
                 var V = queue.Dequeue();
 
-                path.Add(V);
-
                 foreach (Cell cell in field.GetNeighbours(V).FindAll(c => field.CanMoveBetween(V, c, field)))
                 {
 
                     if (!visited.Contains(cell))
                     {
-
+                        parents.Add(cell, V);
                         queue.Enqueue(cell);
 
-                    }
+                        if (cell.Y == player.VictoryRow)
+                        {
+                            //throw new Exception("YA GEY");
+                            return BFSResult(cell, parents);
 
-                    visited.Add(cell);
+                        }
+                        
+                        visited.Add(cell);
+
+                    }
 
                 }
 
             }
+            return new List<Cell>();
 
-            return path;
+        }
 
+        public List<Cell> BFSResult(Cell endCell, Dictionary<Cell, Cell> curParents) {
+
+            Cell temp = endCell;
+
+            List<Cell> finalList = new List<Cell> { temp };
+            
+            while (curParents.ContainsKey(temp)) {
+
+
+                finalList.Add(curParents[temp]);
+
+                temp = curParents[temp];
+
+
+            }
+
+            return finalList;
+        
         }
 
         public Cell FindTheNearestCell(List<Cell> openCells, Cell finalCell)
