@@ -36,6 +36,10 @@ namespace Model {
 
         public delegate void NextStep();
 
+        public delegate void BotStep();
+
+        public event BotStep NotifyBotHasDecided;
+
         public event NextStep NotifyNextStep;
 
         public event CornerIsInvalid NotifyCornerIsInvalid;
@@ -46,7 +50,7 @@ namespace Model {
 
         public IPlayer ActivePlayer;
 
-        public Game(IAlgorithm enemyStrategy) {
+        public Game(IPlayerStrategy enemyStrategy) {
 
             _pathFindingService = new PathFindingService();
 
@@ -66,6 +70,8 @@ namespace Model {
 
             UserPlayer secondPlayer = new UserPlayer();
 
+            secondPlayer.PlayerStrategy = enemyStrategy;
+
             secondPlayer.CurrentCell = Board.Cells[4, 0];
 
             secondPlayer.VictoryRow = 8;
@@ -81,13 +87,11 @@ namespace Model {
 
             this.NotifyPlayerHasChanged += FindNextPlayer;
 
-
+            this.NotifyNextStep += MakeNextStep;
         }
         
         public Game()
         {
-            
-
             _pathFindingService = new PathFindingService();
 
             _moveValidationService = new MoveValidationService();
@@ -136,7 +140,8 @@ namespace Model {
 
             if (ActivePlayer.PlayerStrategy !=null) {
 
-                //ActivePlayer.Decide();
+                ActivePlayer.Decide(this);
+                NotifyBotHasDecided?.Invoke();
                 NotifyPlayerHasChanged?.Invoke();
             
             }
@@ -163,8 +168,6 @@ namespace Model {
             }
 
         }
-
-        
 
         public void FindNextPlayer() {
 
@@ -193,7 +196,19 @@ namespace Model {
 
             }
 
-            NotifyNextStep?.Invoke();
+            if (ActivePlayer.PlayerStrategy!=null) {
+
+                ActivePlayer.Decide(this);
+
+                ActivePlayer.PlayerIsActive = false;
+
+                ActivePlayer = Players.ElementAt(0);
+
+                ActivePlayer.PlayerIsActive = true;
+
+            }
+
+            //NotifyNextStep?.Invoke();
 
         }
 

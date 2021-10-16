@@ -31,6 +31,9 @@ namespace Controllers
             Game.NotifyPlacingTheWall += PlaceTheWall;
 
             Game.NotifyCornerIsInvalid += WarnAboutInvalidCorner;
+
+            Game.NotifyBotHasDecided += MakeBotStep;
+
         }
 
         public void PlaceTheWall() {
@@ -43,6 +46,12 @@ namespace Controllers
 
             View.CantPlaceTheWall();
         
+        }
+
+        public void MakeBotStep() {
+
+            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game.Board));
+
         }
 
         public void MakeStep() {

@@ -20,9 +20,9 @@ namespace Model
         public IPlayerStrategy PlayerStrategy { get; set; }
         public ICommand LastStep { get; set; }
 
-        public void Decide()
+        public void Decide(Game game)
         {
-            throw new NotImplementedException();
+            PlayerStrategy.Think(game);
         }
     }
 }

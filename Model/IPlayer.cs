@@ -15,7 +15,7 @@
         
         public IPlayerStrategy PlayerStrategy { get; set; } // таким чином не будемо переписувати реалізацію гравця в залежності від зміни алгоритму
 
-        public void Decide();
+        public void Decide(Game game);
 
         public ICommand LastStep { get; set; }
     }

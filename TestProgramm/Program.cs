@@ -22,7 +22,7 @@ namespace TestProgramm
             
             Application.SetCompatibleTextRenderingDefault(false);    
 
-            Game game = new Game();
+            Game game = new Game(new DummyStrategy());
 
             GameViewWinForm form = new GameViewWinForm();
 

@@ -14,7 +14,7 @@ namespace Model
         public IPlayerStrategy PlayerStrategy { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public ICommand LastStep { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public void Decide()
+        public void Decide(Game game)
         {
             throw new NotImplementedException();
         }
