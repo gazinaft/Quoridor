@@ -50,7 +50,7 @@ namespace Model {
 
         public event NextPlayer NotifyPlayerHasChanged;
 
-        private List<IPlayer> Players;
+        public List<IPlayer> Players;
 
         public IPlayer ActivePlayer;
 
@@ -68,6 +68,8 @@ namespace Model {
 
             UserPlayer firstPlayer = new UserPlayer();
 
+            firstPlayer.PlayerId = 1;
+
             firstPlayer.CurrentCell = Board.Cells[4, 8];
 
             firstPlayer.VictoryRow = 0;
@@ -79,6 +81,8 @@ namespace Model {
             secondPlayer.CurrentCell = Board.Cells[4, 0];
 
             secondPlayer.VictoryRow = 8;
+
+            secondPlayer.PlayerId = 2;
 
             ActivePlayer = firstPlayer;
 
@@ -121,6 +125,10 @@ namespace Model {
             ActivePlayer = firstPlayer;
 
             firstPlayer.PlayerIsActive = true;
+
+            firstPlayer.PlayerId = 1;
+
+            secondPlayer.PlayerId = 2;
 
             Players.Add(firstPlayer);
             Players.Add(secondPlayer);

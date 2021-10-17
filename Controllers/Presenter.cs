@@ -20,9 +20,9 @@ namespace Controllers
 
             _gameFieldMapper = new GameFieldMapper();
 
-            View.DisplayPotentialWallsAndCorners(_gameFieldMapper.FromModelToView(Game.Board));
+            View.DisplayPotentialWallsAndCorners(_gameFieldMapper.FromModelToView(Game));
 
-            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game.Board));
+            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
 
             View.PlacingTheWall += TryToPlaceTheWall;
 
@@ -41,7 +41,7 @@ namespace Controllers
         public void PlaceTheWall() {
 
             View.PlaceTheWall();
-            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game.Board));
+            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
 
         }
 
@@ -53,7 +53,7 @@ namespace Controllers
 
         public void MakeBotStep() {
 
-            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game.Board));
+            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
 
         }
 
@@ -63,7 +63,7 @@ namespace Controllers
             
             Game.ChangeTheCell();
 
-            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game.Board));
+            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
 
         }
 

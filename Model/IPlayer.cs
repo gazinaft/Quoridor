@@ -1,9 +1,7 @@
 ﻿namespace Model {
     public interface IPlayer {
         
-        public int PlayerId { get; }
-
-        public PlayerState State { get; set; }
+        public int PlayerId { get; set; }
 
         public bool PlayerIsActive { get; set; }
 
@@ -20,11 +18,4 @@
         public ICommand LastStep { get; set; }
     }
 
-    public enum PlayerState
-    {
-
-        ChangeTheCell,
-        PlaceTheWall
-
-    }
 }

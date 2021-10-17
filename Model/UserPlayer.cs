@@ -8,11 +8,10 @@ namespace Model
 {
     public class UserPlayer : IPlayer
     {
-        public int PlayerId { get; }
+        public int PlayerId { get; set; }
 
         private Cell _currentCell;
 
-        public PlayerState State { get; set; }
         public bool PlayerIsActive { get; set; }
         public int VictoryRow { get; set; }
         public Cell CurrentCell { get { return _currentCell; } set { _currentCell = value; _currentCell.HasPlayer = true; } }

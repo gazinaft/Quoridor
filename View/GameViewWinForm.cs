@@ -21,6 +21,7 @@ namespace View
         public GameViewWinForm()
         {
             InitializeComponent();
+
         }
 
         public GameViewWinForm(GameFieldState gameFieldState)
@@ -90,6 +91,7 @@ namespace View
                         ButtonGrid[i, j].Region = new Region(p);
 
                         ButtonGrid[i, j].BackColor = Color.Red;
+
 
                     }
 
@@ -192,6 +194,19 @@ namespace View
             
             }
 
+            
+
+            foreach ((int id, int wC) in CurrentState._playersStates)
+            {
+
+                listBoxPlayers.Items.Add(id + "                  " + wC);
+
+            }
+
+            listBoxPlayers.Items.Clear();
+
+            labelCurPlayer.Text = "Current Player ID:" + CurrentState.CurrentPlayerID;
+
         }
 
         private void SelectedCorner(object sender, EventArgs e)
@@ -241,6 +256,8 @@ namespace View
                 b.Dispose();
 
             }
+
+            listBoxPlayers.Items.Clear();
 
         }
 
@@ -293,6 +310,17 @@ namespace View
                 }
 
             }
+            
+            foreach ((int id, int wC) in CurrentState._playersStates) {
+
+                listBoxPlayers.Items.Add(id + "                " + wC);
+            
+            }
+
+            labelCurPlayer.Text = "Current Player ID:" + CurrentState.CurrentPlayerID;
+
+            //listBoxPlayers.DataSource = CurrentState._playersStates;
+
 
         }
 
@@ -311,6 +339,8 @@ namespace View
                 b.Dispose();
             
             }
+
+            listBoxPlayers.Items.Clear();
 
             ChangeTheCell();
 
@@ -333,7 +363,7 @@ namespace View
 
         public void ThisIsTheEnd()
         {
-            MessageBox.Show("The Game is Ended.");
+            MessageBox.Show("The Game is Ended. Player number " + CurrentState.CurrentPlayerID + ".");
         }
     }
 }
