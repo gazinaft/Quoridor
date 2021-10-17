@@ -35,13 +35,8 @@ namespace Model.Strategy
                         parents.Add(cell, V);
                         queue.Enqueue(cell);
 
-                        if (cell.Y == player.VictoryRow)
-                        {
-                            //throw new Exception("YA GEY");
-                            return BFSResult(cell, parents);
+                        if (cell.Y == player.VictoryRow) return BFSResult(cell, parents);
 
-                        }
-                        
                         visited.Add(cell);
 
                     }
@@ -53,24 +48,19 @@ namespace Model.Strategy
 
         }
 
-        public List<Cell> BFSResult(Cell endCell, Dictionary<Cell, Cell> curParents) {
+        private List<Cell> BFSResult(Cell endCell, Dictionary<Cell, Cell> curParents) {
 
             Cell temp = endCell;
 
             List<Cell> finalList = new List<Cell> { temp };
             
             while (curParents.ContainsKey(temp)) {
-
-
+                
                 finalList.Add(curParents[temp]);
-
                 temp = curParents[temp];
 
-
             }
-
             return finalList;
-        
         }
 
         public Cell FindTheNearestCell(List<Cell> openCells, Cell finalCell)
