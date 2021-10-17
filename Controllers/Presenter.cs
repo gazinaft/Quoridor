@@ -34,6 +34,8 @@ namespace Controllers
 
             Game.NotifyBotHasDecided += MakeBotStep;
 
+            Game.NotifyAboutEnd += InformAboutEnd;
+
         }
 
         public void PlaceTheWall() {
@@ -77,6 +79,11 @@ namespace Controllers
 
         }
 
+        public void InformAboutEnd() {
+
+            View.ThisIsTheEnd();
+        
+        }
 
     }
 }

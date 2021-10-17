@@ -25,5 +25,7 @@ namespace View
         void CantPlaceTheWall();
 
         void PlaceTheWall();
+
+        void ThisIsTheEnd();
     }
 }

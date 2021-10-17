@@ -330,5 +330,10 @@ namespace View
         {
             MessageBox.Show("Sorry, you can't place the wall this way.");
         }
+
+        public void ThisIsTheEnd()
+        {
+            MessageBox.Show("The Game is Ended.");
+        }
     }
 }

@@ -60,5 +60,10 @@ namespace View
         {
             throw new NotImplementedException();
         }
+
+        public void ThisIsTheEnd()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

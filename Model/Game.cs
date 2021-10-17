@@ -38,6 +38,10 @@ namespace Model {
 
         public delegate void BotStep();
 
+        public delegate void TheGameIsEnded();
+
+        public event TheGameIsEnded NotifyAboutEnd;
+
         public event BotStep NotifyBotHasDecided;
 
         public event NextStep NotifyNextStep;
@@ -173,12 +177,20 @@ namespace Model {
 
         public void FindNextPlayer() {
 
+            if (ActivePlayer.CurrentCell.Y == ActivePlayer.VictoryRow)
+            {
+
+                NotifyAboutEnd?.Invoke();
+                return;
+
+            }
+
             int _lastActivePlayerIndex = 0;
 
             _lastActivePlayerIndex = Players.FindLastIndex(pl => pl.PlayerIsActive);
 
             if (_lastActivePlayerIndex + 1 != Players.Count)
-            {                
+            {
 
                 Players.ElementAt(_lastActivePlayerIndex).PlayerIsActive = false;
 
@@ -189,7 +201,7 @@ namespace Model {
             }
             else
             {
-                
+
                 Players.ElementAt(_lastActivePlayerIndex).PlayerIsActive = false;
 
                 Players.ElementAt(0).PlayerIsActive = true;
@@ -198,7 +210,8 @@ namespace Model {
 
             }
 
-            if (ActivePlayer.PlayerStrategy!=null) {
+            if (ActivePlayer.PlayerStrategy != null)
+            {
 
                 ActivePlayer.Decide(this);
 
