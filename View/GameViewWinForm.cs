@@ -360,7 +360,7 @@ namespace View
 
         public void ThisIsTheEnd()
         {
-            MessageBox.Show("The Game is Ended. Player number " + CurrentState.CurrentPlayerID + ".");
+            MessageBox.Show("The Game is Ended. Player number " + CurrentState.CurrentPlayerID + " has won. CONGRATULATIONS!");
             
             this.Close();
 
