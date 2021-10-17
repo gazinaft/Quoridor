@@ -8,9 +8,20 @@ namespace View
         public int SelectedCellY { get; set; }
         public int SelectedCornerX { get; set; }
         public int SelectedCornerY { get; set; }
+        public bool SelectedWallIsHorizontal { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public event Action PlacingTheWall;
         public event Action PlayerMove;
+
+        public void CantPlaceTheWall()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DisplayPotentialWallsAndCorners(GameFieldState state)
+        {
+            throw new NotImplementedException();
+        }
 
         public void DisplayTheBoard(int firstPlayerX, int firstPlayerY, int secondPlayerX, int secondPlayerY) {
 
@@ -44,5 +55,15 @@ namespace View
         }
 
         public void GameLoop() { }
+
+        public void PlaceTheWall()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ThisIsTheEnd()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

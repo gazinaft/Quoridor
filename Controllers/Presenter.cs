@@ -20,25 +20,70 @@ namespace Controllers
 
             _gameFieldMapper = new GameFieldMapper();
 
-            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game.Board));
+            View.DisplayPotentialWallsAndCorners(_gameFieldMapper.FromModelToView(Game));
 
-            View.PlacingTheWall += PlaceTheWall;
+            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
+
+            View.PlacingTheWall += TryToPlaceTheWall;
 
             View.PlayerMove += MakeStep;
-        }
 
-        public void MakeStep() {
+            Game.NotifyPlacingTheWall += PlaceTheWall;
 
-            throw new NotImplementedException();
+            Game.NotifyCornerIsInvalid += WarnAboutInvalidCorner;
+
+            Game.NotifyBotHasDecided += MakeBotStep;
+
+            Game.NotifyAboutEnd += InformAboutEnd;
 
         }
 
         public void PlaceTheWall() {
 
-            throw new NotImplementedException();
+            View.PlaceTheWall();
+            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
 
         }
 
+        public void WarnAboutInvalidCorner() {
+
+            View.CantPlaceTheWall();
+        
+        }
+
+        public void MakeBotStep() {
+
+            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
+
+        }
+
+        public void MakeStep() {
+
+            Game.SelectedCell = Game.Board.Cells[View.SelectedCellX, View.SelectedCellY];
+            
+            Game.ChangeTheCell();
+
+            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
+
+        }
+
+
+
+        public void TryToPlaceTheWall() {
+
+            Game.SelectedCorner = Game.Board.Corners[View.SelectedCornerX, View.SelectedCornerY];
+
+            Game.WallIsHorizontal = View.SelectedWallIsHorizontal;
+
+            Game.PlaceTheWall();
+
+        }
+
+        public void InformAboutEnd() {
+
+            View.ThisIsTheEnd();
+        
+        }
 
     }
 }

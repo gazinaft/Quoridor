@@ -1,10 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Model.Services;
 namespace Model
 {
     public class GameField
     {
+
+        private MoveValidationService _moveValidationService;
+
+        private WallValidationService _wallValidationService;
+
+        private PathFindingService _pathFindingService;
+
+        public GameField(MoveValidationService moveValidationService, WallValidationService wallValidationService, PathFindingService pathFindingService, int x, int y)
+        {
+            Height = y;
+            Width = x;
+            
+            _moveValidationService = moveValidationService;
+            _wallValidationService = wallValidationService;
+            _pathFindingService = pathFindingService;
+
+            Cells = new Cell[x, y];
+
+            for (int i = 0; i < x; i++) {
+                for (int j = 0; j < y; j++) {
+                    Cells[i, j] = new Cell(i, j);
+                }
+
+            }
+
+            Corners = new Corner[x + 1, y + 1];
+
+            for (int i = 0; i < x + 1; i++) {
+                for (int j = 0; j < y + 1; j++) {
+                    Corners[i, j] = new Corner(i, j);
+                }
+            }
+
+        }
 
         public int Height { get; }
 
@@ -19,17 +53,11 @@ namespace Model
             bool[,] Grid = new bool[Height, Width];
             
             foreach (Cell cell in this.Cells) {
-
                 if (cell.HasPlayer) {
-
                     Grid[cell.X, cell.Y] = true;
-                
                 }
-
             }
-
             GridForPlayers = Grid;
-
             return Grid;
         
         }
@@ -39,303 +67,90 @@ namespace Model
             bool[,][,] Grid = new bool[Height+1, Width+1][,];
 
             foreach (var corner in Corners) {
-                
                 bool[,] curObstacles = corner.Obstacles;
-
                 Grid[corner.X, corner.Y] = curObstacles;
-
             }
 
             GridForObstacles = Grid;
-
             return Grid;
-        
         }
 
 
 
         public GameField(int x, int y)
         {
-
             Cells = new Cell[x, y];
-
-            for (int i = 0; i < x; i++)
-            {
-
-                for (int j = 0; j < y; j++)
-                {
-
+            for (int i = 0; i < x; i++) {
+                for (int j = 0; j < y; j++) {
                     Cells[i, j] = new Cell(i, j);
-
                 }
-
             }
 
             Corners = new Corner[x + 1, y + 1];
 
-            for (int i = 0; i < x + 1; i++)
-            {
-
-                for (int j = 0; j < y + 1; j++)
-                {
-
+            for (int i = 0; i < x + 1; i++) {
+                for (int j = 0; j < y + 1; j++) {
                     Corners[i, j] = new Corner(i, j);
-
                 }
-
             }
-
             Height = y;
-
             Width = x;
-
         }
 
         public Cell[,] Cells { get; private set; }
-
         public Corner[,] Corners { get; private set; }
 
         public List<Cell> GetNeighbours(Cell currentCell)
         {
-
             List<Cell> neighbours = new List<Cell>();
-
-            if (this.Cells[currentCell.X + 1, currentCell.Y] != null)
+            if (currentCell.X + 1 < Cells.GetLength(0))
             {
-
-                neighbours.Add(this.Cells[currentCell.X + 1, currentCell.Y]);
-
+                neighbours.Add(Cells[currentCell.X + 1, currentCell.Y]);
             }
-            if (this.Cells[currentCell.X, currentCell.Y + 1] != null)
+            if (currentCell.Y + 1 < Cells.GetLength(1))
             {
-
-                neighbours.Add(this.Cells[currentCell.X, currentCell.Y + 1]);
-
+                neighbours.Add(Cells[currentCell.X, currentCell.Y + 1]);
             }
-            if (this.Cells[currentCell.X - 1, currentCell.Y] != null)
+            if (currentCell.X-1 >= 0)
             {
-
-                neighbours.Add(this.Cells[currentCell.X - 1, currentCell.Y]);
-
+                neighbours.Add(Cells[currentCell.X - 1, currentCell.Y]);
             }
-            if (this.Cells[currentCell.X, currentCell.Y - 1] != null)
+            if (currentCell.Y - 1 >= 0 )
             {
-
-                neighbours.Add(this.Cells[currentCell.X, currentCell.Y - 1]);
-
+                neighbours.Add(Cells[currentCell.X, currentCell.Y - 1]);
             }
 
             return neighbours;
-
         }
 
-        public bool CanMoveBetween(Cell firstCell, Cell secondCell) {
-            throw new NotImplementedException("CanMoveBetween is not ready");
+        public bool CanMoveBetween(Cell first, Cell second, GameField field) {
+            
+            return _moveValidationService.CanMoveBetween(first, second, field);
         }
 
         public List<Cell> GetAvailableMoves(IPlayer player) {
-
-            List<Cell> availableMoves = new List<Cell>();
-
-            if (Cells[player.CurrentCell.X, player.CurrentCell.Y + 1].HasPlayer)
-            {
-
-
-                if (!Cells[player.CurrentCell.X - 1, player.CurrentCell.Y].HasPlayer && !(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y]);
-
-                }
-
-                if (!Cells[player.CurrentCell.X + 1, player.CurrentCell.Y].HasPlayer && !(Cells[player.CurrentCell.X + 1, player.CurrentCell.Y] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X + 1, player.CurrentCell.Y]);
-
-                }
-
-                if (!Cells[player.CurrentCell.X, player.CurrentCell.Y - 1].HasPlayer && !(Cells[player.CurrentCell.X, player.CurrentCell.Y - 1] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y - 1]);
-
-                }
-
-
-                if (!Cells[player.CurrentCell.X, player.CurrentCell.Y + 2].HasPlayer && !(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y + 2] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y + 2]);
-
-                }
-
-            }
-            else if (Cells[player.CurrentCell.X - 1, player.CurrentCell.Y].HasPlayer)
-            {
-
-                if (!Cells[player.CurrentCell.X, player.CurrentCell.Y + 1].HasPlayer && !(Cells[player.CurrentCell.X, player.CurrentCell.Y + 1] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y + 1]);
-
-                }
-
-                if (!Cells[player.CurrentCell.X, player.CurrentCell.Y - 1].HasPlayer && !(Cells[player.CurrentCell.X, player.CurrentCell.Y - 1] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y - 1]);
-
-                }
-
-
-                if (!Cells[player.CurrentCell.X + 1, player.CurrentCell.Y].HasPlayer && !(Cells[player.CurrentCell.X + 1, player.CurrentCell.Y] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X + 1, player.CurrentCell.Y]);
-
-                }
-
-                if (!Cells[player.CurrentCell.X - 2, player.CurrentCell.Y].HasPlayer && !(Cells[player.CurrentCell.X - 2, player.CurrentCell.Y] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X - 2, player.CurrentCell.Y]);
-
-                }
-
-
-            }
-
-            else if (Cells[player.CurrentCell.X, player.CurrentCell.Y - 1].HasPlayer)
-            {
-
-                if (!Cells[player.CurrentCell.X, player.CurrentCell.Y - 2].HasPlayer && !(Cells[player.CurrentCell.X, player.CurrentCell.Y - 2] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y - 2]);
-
-                }
-
-                if (!Cells[player.CurrentCell.X + 1, player.CurrentCell.Y].HasPlayer && !(Cells[player.CurrentCell.X + 1, player.CurrentCell.Y] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X + 1, player.CurrentCell.Y]);
-
-                }
-
-
-                if (!Cells[player.CurrentCell.X - 1, player.CurrentCell.Y].HasPlayer && !(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y]);
-
-                }
-
-                if (!Cells[player.CurrentCell.X, player.CurrentCell.Y + 1].HasPlayer && !(Cells[player.CurrentCell.X, player.CurrentCell.Y + 1] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y + 1]);
-
-                }
-
-
-            }
-
-            else if (Cells[player.CurrentCell.X + 1, player.CurrentCell.Y].HasPlayer)
-            {
-
-                if (!Cells[player.CurrentCell.X, player.CurrentCell.Y + 1].HasPlayer && !(Cells[player.CurrentCell.X, player.CurrentCell.Y + 1] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y + 1]);
-
-                }
-
-                if (!Cells[player.CurrentCell.X, player.CurrentCell.Y - 1].HasPlayer && !(Cells[player.CurrentCell.X, player.CurrentCell.Y - 1] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y - 1]);
-
-                }
-
-
-                if (!Cells[player.CurrentCell.X - 1, player.CurrentCell.Y].HasPlayer && !(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y]);
-
-                }
-
-                if (!Cells[player.CurrentCell.X + 2, player.CurrentCell.Y].HasPlayer && !(Cells[player.CurrentCell.X + 2, player.CurrentCell.Y] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X + 2, player.CurrentCell.Y]);
-
-                }
-
-            }
-            else
-            {
-
-                if (!(Cells[player.CurrentCell.X, player.CurrentCell.Y + 1] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y + 1]);
-
-                }
-                if (!(Cells[player.CurrentCell.X, player.CurrentCell.Y - 1] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X, player.CurrentCell.Y - 1]);
-
-                }
-                if (!(Cells[player.CurrentCell.X + 1, player.CurrentCell.Y] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X + 1, player.CurrentCell.Y]);
-
-                }
-                if (!(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y] == null))
-                {
-
-                    availableMoves.Add(Cells[player.CurrentCell.X - 1, player.CurrentCell.Y]);
-
-                }
-
-            }
-
-            return availableMoves;
-
+            List<Cell> possibleMoves = _moveValidationService.GetPossibleMoves(this, player);
+            return possibleMoves;
         }
 
-        public List<(Corner, bool)> GetAvailableBlocks()
-        {
 
-            throw new NotImplementedException("GetAvailableBlocks is not implemented");
-
-        }
-
-        public GameField SetBlock(int x, int y, bool isHorizintal)
+        public GameField SetBlock(int x, int y, bool isHorizontal, bool toAdd = true)
         {        
             
-            if (isHorizintal)
+            if (isHorizontal)
             {
-
-                this.Corners[x, y].Obstacles[0, 1] = true;
-                this.Corners[x, y].Obstacles[1, 1] = true;
-                this.Corners[x, y].Obstacles[2, 1] = true;
-                this.Corners[x + 1, y].Obstacles[0, 1] = true;
-                this.Corners[x - 1, y].Obstacles[2, 1] = true;
-
+                Corners[x, y].Obstacles[0, 1] = toAdd;
+                Corners[x, y].Obstacles[1, 1] = toAdd;
+                Corners[x, y].Obstacles[2, 1] = toAdd;
+                Corners[x + 1, y].Obstacles[0, 1] = toAdd;
+                Corners[x - 1, y].Obstacles[2, 1] = toAdd;
             }
             else {
-
-                this.Corners[x, y].Obstacles[1, 0] = true;
-                this.Corners[x, y].Obstacles[1, 1] = true;
-                this.Corners[x, y].Obstacles[1, 2] = true;
-                this.Corners[x, y + 1].Obstacles[1, 2] = true;
-                this.Corners[x, y - 1].Obstacles[1, 0] = true;
-
+                Corners[x, y].Obstacles[1, 0] = toAdd;
+                Corners[x, y].Obstacles[1, 1] = toAdd;
+                Corners[x, y].Obstacles[1, 2] = toAdd;
+                Corners[x, y + 1].Obstacles[1, 0] = toAdd;
+                Corners[x, y - 1].Obstacles[1, 2] = toAdd;
             }
 
             return this;
@@ -345,74 +160,16 @@ namespace Model
         public void MovePlayer(int x, int y, IPlayer player)
         {
 
-            player.CurrentCell.HasPlayer = false;
-            Cells[x, y].HasPlayer = true;
-            player.CurrentCell = Cells[x, y];
+            Cell selectedCell = Cells[x, y];
+
+            if (GetAvailableMoves(player).Contains(selectedCell)) {
+
+                player.CurrentCell.HasPlayer = false;                
+                Cells[x, y].HasPlayer = true;
+                player.CurrentCell = Cells[x, y];
+
+            }
         }
-
-
-        private (bool, int) AStar(IPlayer player)
-        {
-
-            /* int finalRow = 0;
-
-             List<Cell> allFinalCells = new List<Cell>();
-
-             if (player.PlayerId == 1)
-             {
-
-                 finalRow = 0;
-
-             }
-             else if (player.PlayerId == 2) {
-
-                 finalRow = Heigth;
-
-             }
-
-             foreach (Cell cell in Cells) {
-
-                 if (cell.Y == finalRow) {
-
-                     allFinalCells.Add(cell);
-
-                 }
-
-             }
-
-             List<Cell> currentNeighbours = new List<Cell>();
-
-             double theLeastPath;
-
-             Cell nextCell;
-
-             foreach (Cell cell1 in GetAvailableMoves(player.CurrentCell)) {
-
-                 Cell firstCell = cell1;
-
-                 double pathLength = 0;
-
-                 List<double> allPathes = new List<double>();
-
-                 foreach (Cell cell2 in allFinalCells) {
-
-                     Cell finalCell = cell2;
-
-                     pathLength = Math.Sqrt( (Math.Abs(Math.Pow(cell1.X, 2) - Math.Pow(cell2.X, 2))) - (Math.Abs(Math.Pow(cell1.Y, 2) - Math.Pow(cell2.Y, 2))));
-
-                     allPathes.Add(pathLength);
-
-                 }
-
-             }
-
-             List<Cell> path = new List<Cell>();
-
-             */
-
-
-            throw new NotImplementedException("A* is not implemented");
-
-        }
+        
     }
 }
