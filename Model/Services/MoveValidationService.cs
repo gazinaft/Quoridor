@@ -53,5 +53,6 @@ namespace Model.Services
             return !field.Corners[max.X, max.Y]
                 .Obstacles[IsXAxis(first, second) ? 1 : 2, IsXAxis(first, second) ? 2 : 1];
         }
+        
     }
 }

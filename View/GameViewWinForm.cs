@@ -182,22 +182,14 @@ namespace View
             }
 
             foreach (Button b in CornerGrid) {
-
-                if (b != null) {
-
-                    b.BringToFront();
-                
-                }
-            
+                b?.BringToFront();
             }
 
             
 
             foreach ((int id, int wC) in CurrentState._playersStates)
             {
-
                 listBoxPlayers.Items.Add(id + "                  " + wC);
-
             }
 
             listBoxPlayers.Items.Clear();
@@ -209,13 +201,10 @@ namespace View
         private void SelectedCorner(object sender, EventArgs e)
         {
             Button selectedCorner = (Button)sender;
-
+            
             int wallSize = GamePanel.Width / CurrentState.GridForPlayers.Length / 5;
-
             int buttonSize = GamePanel.Width / CurrentState.GridForPlayers.Length;
-
             int selectedCornerX = selectedCorner.Location.X + wallSize - buttonSize;
-
             int selectedCornerY = selectedCorner.Location.Y + wallSize - buttonSize;
 
             MessageBox.Show("SelectedCornerX: " + selectedCornerX + " SelectedCornerY: " + selectedCornerY);
@@ -236,7 +225,7 @@ namespace View
 
             SelectedWallIsHorizontal = _horizontalWalls.Contains(selectedWall);
 
-            PlacingTheWall.Invoke();
+            PlacingTheWall?.Invoke();
         }
 
         public void PlaceTheWall() {
@@ -285,10 +274,6 @@ namespace View
                     ButtonGrid[i, j].Width = (int)buttonSize;
 
                     if (CurrentState.GridForPlayers[i, j]) {
-
-                        //ButtonGrid[i, j].Text = "PLAYER";
-
-                        //ButtonGrid[i, j].Image = Image.FromFile("C:\\Users\\Robert\\source\\repos\\Quoridor\\pictures\\fishka.jpg");
 
                         GraphicsPath p = new GraphicsPath();
                         p.AddEllipse(ButtonGrid[i,j].Location.X, ButtonGrid[i, j].Location.Y, buttonSize, buttonSize);
@@ -349,7 +334,7 @@ namespace View
 
         public void ChangeTheCell() {
 
-            PlayerMove.Invoke();
+            PlayerMove?.Invoke();
 
         }
 
@@ -362,11 +347,11 @@ namespace View
         {
             MessageBox.Show("The Game is Ended. Player number " + CurrentState.CurrentPlayerID + " has won. CONGRATULATIONS!");
             
-            this.Close();
+            Close();
 
             _parentForm.Show();
 
-            this.Dispose();
+            Dispose();
         }
     }
 }
