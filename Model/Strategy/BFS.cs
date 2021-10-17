@@ -17,10 +17,6 @@ namespace Model.Strategy
 
             List<Cell> visited = new List<Cell>();
 
-            List<Cell> path = new List<Cell>();
-
-            Cell finalCell = FindTheNearestCellInARow(field, player);
-
             Cell currentCell = player.CurrentCell;
 
             visited.Add(currentCell);

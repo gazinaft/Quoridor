@@ -24,15 +24,15 @@ namespace Model.Services
             {
                 for (int y = 1; y < field.Height; y++)
                 {
-                    if (!CornerInvalid(x, y, true, field, player)) res.Add((field.Corners[x, y], true));
-                    if (!CornerInvalid(x, y, false, field, player)) res.Add((field.Corners[x, y], false));
+                    if (!CornerInvalid(x, y, true, field, new List<IPlayer> {player})) res.Add((field.Corners[x, y], true));
+                    if (!CornerInvalid(x, y, false, field, new List<IPlayer> {player})) res.Add((field.Corners[x, y], false));
                 }
             }
 
             return res;
         }
 
-        public bool CornerInvalid(int x, int y, bool isHorizontal, GameField field, IPlayer player)
+        public bool CornerInvalid(int x, int y, bool isHorizontal, GameField field, List<IPlayer> players)
         {
             if (isHorizontal) {
                 return field.Corners[x, y].Obstacles[0, 1] ||
@@ -40,21 +40,26 @@ namespace Model.Services
                        field.Corners[x, y].Obstacles[2, 1] ||
                        field.Corners[x + 1, y].Obstacles[0, 1] ||
                        field.Corners[x - 1, y].Obstacles[2, 1] ||
-                       HasPath(x, y, true, field, player);
+                       HasNoPath(x, y, true, field, players);
             }
             return field.Corners[x, y].Obstacles[1, 0] ||
                    field.Corners[x, y].Obstacles[1, 1] ||
                    field.Corners[x, y].Obstacles[1, 2] ||
                    field.Corners[x, y + 1].Obstacles[1, 0] ||
                    field.Corners[x, y - 1].Obstacles[1, 2] ||
-                   HasPath(x, y, false, field, player);
+                   HasNoPath(x, y, false, field, players);
         }
 
-        private bool HasPath(int x, int y, bool isHorizontal, GameField field, IPlayer player) {
+        private bool HasNoPath(int x, int y, bool isHorizontal, GameField field, List<IPlayer> players) {
             field.SetBlock(x, y, isHorizontal);
-            bool res = _pathFindingService.SelectedAlgorithm.FindThePath(player, field).Count == 0;
+            foreach (IPlayer player in players) {
+                if (_pathFindingService.SelectedAlgorithm.FindThePath(player, field).Count == 0) {
+                    field.SetBlock(x, y, isHorizontal, false);
+                    return true;
+                }
+            }
             field.SetBlock(x, y, isHorizontal, false);
-            return res;
+            return false;
         }
         
     }

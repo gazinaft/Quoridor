@@ -150,7 +150,7 @@ namespace Model {
 
         public void PlaceTheWall() {
 
-            if (_wallValidationService.CornerInvalid(SelectedCorner.X, SelectedCorner.Y, WallIsHorizintal, Board, ActivePlayer))
+            if (_wallValidationService.CornerInvalid(SelectedCorner.X, SelectedCorner.Y, WallIsHorizintal, Board, Players))
             {
 
                 NotifyCornerIsInvalid?.Invoke();
