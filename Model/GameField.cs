@@ -208,26 +208,26 @@ namespace Model
 
         }
 
-        public GameField SetBlock(int x, int y, bool isHorizintal)
+        public GameField SetBlock(int x, int y, bool isHorizintal, bool toAdd = true)
         {        
             
             if (isHorizintal)
             {
 
-                this.Corners[x, y].Obstacles[0, 1] = true;
-                this.Corners[x, y].Obstacles[1, 1] = true;
-                this.Corners[x, y].Obstacles[2, 1] = true;
-                this.Corners[x + 1, y].Obstacles[0, 1] = true;
-                this.Corners[x - 1, y].Obstacles[2, 1] = true;
+                this.Corners[x, y].Obstacles[0, 1] = toAdd;
+                this.Corners[x, y].Obstacles[1, 1] = toAdd;
+                this.Corners[x, y].Obstacles[2, 1] = toAdd;
+                this.Corners[x + 1, y].Obstacles[0, 1] = toAdd;
+                this.Corners[x - 1, y].Obstacles[2, 1] = toAdd;
 
             }
             else {
 
-                this.Corners[x, y].Obstacles[1, 0] = true;
-                this.Corners[x, y].Obstacles[1, 1] = true;
-                this.Corners[x, y].Obstacles[1, 2] = true;
-                this.Corners[x, y + 1].Obstacles[1, 0] = true;
-                this.Corners[x, y - 1].Obstacles[1, 2] = true;
+                this.Corners[x, y].Obstacles[1, 0] = toAdd;
+                this.Corners[x, y].Obstacles[1, 1] = toAdd;
+                this.Corners[x, y].Obstacles[1, 2] = toAdd;
+                this.Corners[x, y + 1].Obstacles[1, 0] = toAdd;
+                this.Corners[x, y - 1].Obstacles[1, 2] = toAdd;
 
             }
 
