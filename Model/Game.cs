@@ -161,9 +161,9 @@ namespace Model {
 
                 Board.SetBlock(SelectedCorner.X, SelectedCorner.Y, WallIsHorizintal);
 
-                NotifyPlacingTheWall?.Invoke();
-
                 NotifyPlayerHasChanged?.Invoke();
+
+                NotifyPlacingTheWall?.Invoke();
 
             }
 

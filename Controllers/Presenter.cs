@@ -39,7 +39,8 @@ namespace Controllers
         public void PlaceTheWall() {
 
             View.PlaceTheWall();
-        
+            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game.Board));
+
         }
 
         public void WarnAboutInvalidCorner() {

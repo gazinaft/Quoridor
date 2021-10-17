@@ -234,7 +234,14 @@ namespace View
             _lastSelectedWall.BackColor = Color.Red;
 
             _lastSelectedWall.BringToFront();
-        
+
+            foreach (Button b in ButtonGrid)
+            {
+
+                b.Dispose();
+
+            }
+
         }
 
 
