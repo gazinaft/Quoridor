@@ -20,6 +20,11 @@ namespace Model
         public IPlayerStrategy PlayerStrategy { get; set; }
         public ICommand LastStep { get; set; }
 
+        public UserPlayer()
+        {
+            WallsCounter = 10;
+        }
+
         public void Decide(Game game)
         {
             PlayerStrategy.Think(game);

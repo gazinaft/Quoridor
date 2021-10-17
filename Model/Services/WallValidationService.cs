@@ -32,8 +32,23 @@ namespace Model.Services
             return res;
         }
 
+        public bool CornersAreEmpty(List<IPlayer> players) {
+
+            IPlayer _activePlayer = players.Find(pl => pl.PlayerIsActive);
+
+            return _activePlayer.WallsCounter <= 0;
+
+        
+        }
+
         public bool CornerInvalid(int x, int y, bool isHorizontal, GameField field, List<IPlayer> players)
         {
+            if (CornersAreEmpty(players)) {
+
+                return true;
+            
+            }
+            
             if (isHorizontal) {
                 return field.Corners[x, y].Obstacles[0, 1] ||
                        field.Corners[x, y].Obstacles[1, 1] ||
