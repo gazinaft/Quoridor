@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MappingProj", "MappingProj\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProgramm", "TestProgramm\TestProgramm.csproj", "{5BA2DDFC-9936-4214-9553-4654C1B4B006}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainMenu", "MainMenu\MainMenu.csproj", "{F68A7BC7-AD5B-429F-AFEA-F312875CA2C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{5BA2DDFC-9936-4214-9553-4654C1B4B006}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BA2DDFC-9936-4214-9553-4654C1B4B006}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BA2DDFC-9936-4214-9553-4654C1B4B006}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F68A7BC7-AD5B-429F-AFEA-F312875CA2C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F68A7BC7-AD5B-429F-AFEA-F312875CA2C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F68A7BC7-AD5B-429F-AFEA-F312875CA2C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F68A7BC7-AD5B-429F-AFEA-F312875CA2C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

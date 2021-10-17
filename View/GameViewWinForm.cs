@@ -18,23 +18,20 @@ namespace View
 
         List<Button> _horizontalWalls;
 
+        private Form _parentForm;
+
+        public GameViewWinForm(Form parentForm)
+        {
+            InitializeComponent();
+
+            _parentForm = parentForm;
+
+        }
+
         public GameViewWinForm()
         {
             InitializeComponent();
 
-        }
-
-        public GameViewWinForm(GameFieldState gameFieldState)
-        {
-            InitializeComponent();
-
-            CurrentState = gameFieldState;
-
-            DisplayPotentialWallsAndCorners(CurrentState);
-
-            ButtonGrid = new Button[CurrentState.Height, CurrentState.Width];
-
-            CornerGrid = new Button[CurrentState.GridForCorners.GetLength(0), CurrentState.GridForCorners.GetLength(0)];
         }
 
         public GameFieldState CurrentState { get; set; }
@@ -364,6 +361,12 @@ namespace View
         public void ThisIsTheEnd()
         {
             MessageBox.Show("The Game is Ended. Player number " + CurrentState.CurrentPlayerID + ".");
+            
+            this.Close();
+
+            _parentForm.Show();
+
+            this.Dispose();
         }
     }
 }

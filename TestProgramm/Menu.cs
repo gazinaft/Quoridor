@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace TestProgramm
 {
-    public partial class Form1 : Form
+    public partial class Menu : Form
     {
-        public Form1()
+        public Menu()
         {
             InitializeComponent();
         }
