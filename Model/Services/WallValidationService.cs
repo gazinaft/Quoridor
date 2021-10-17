@@ -34,21 +34,28 @@ namespace Model.Services
 
         public bool CornerInvalid(int x, int y, bool isHorizontal, GameField field, IPlayer player)
         {
-            if (isHorizontal)
-            {
+            if (isHorizontal) {
                 return field.Corners[x, y].Obstacles[0, 1] ||
                        field.Corners[x, y].Obstacles[1, 1] ||
                        field.Corners[x, y].Obstacles[2, 1] ||
                        field.Corners[x + 1, y].Obstacles[0, 1] ||
                        field.Corners[x - 1, y].Obstacles[2, 1] ||
-                       _pathFindingService.SelectedAlgorithm.FindThePath(player, field).Count == 0;
+                       HasPath(x, y, true, field, player);
             }
             return field.Corners[x, y].Obstacles[1, 0] ||
                    field.Corners[x, y].Obstacles[1, 1] ||
                    field.Corners[x, y].Obstacles[1, 2] ||
                    field.Corners[x, y + 1].Obstacles[1, 0] ||
                    field.Corners[x, y - 1].Obstacles[1, 2] ||
-                   _pathFindingService.SelectedAlgorithm.FindThePath(player, field).Count == 0;
+                   HasPath(x, y, false, field, player);
         }
+
+        private bool HasPath(int x, int y, bool isHorizontal, GameField field, IPlayer player) {
+            field.SetBlock(x, y, isHorizontal);
+            bool res = _pathFindingService.SelectedAlgorithm.FindThePath(player, field).Count == 0;
+            field.SetBlock(x, y, isHorizontal, false);
+            return res;
+        }
+        
     }
 }
