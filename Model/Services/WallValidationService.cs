@@ -17,7 +17,7 @@ namespace Model.Services
             _pathFindingService.SelectedAlgorithm = new BFS();
         }
 
-        private List<(Corner, bool)> GetPossibleWalls(GameField field, IPlayer player)
+        public List<(Corner, bool)> GetPossibleWalls(GameField field, IPlayer player)
         {
             var res = new List<(Corner, bool)>();
             for (int x = 1; x < field.Width; x++)
@@ -34,20 +34,16 @@ namespace Model.Services
 
         public bool CornersAreEmpty(List<IPlayer> players) {
 
-            IPlayer _activePlayer = players.Find(pl => pl.PlayerIsActive);
+            IPlayer activePlayer = players.Find(pl => pl.PlayerIsActive);
 
-            return _activePlayer.WallsCounter <= 0;
+            return activePlayer.WallsCounter <= 0;
 
         
         }
 
         public bool CornerInvalid(int x, int y, bool isHorizontal, GameField field, List<IPlayer> players)
         {
-            if (CornersAreEmpty(players)) {
-
-                return true;
-            
-            }
+            if (CornersAreEmpty(players)) return true;
             
             if (isHorizontal) {
                 return field.Corners[x, y].Obstacles[0, 1] ||
