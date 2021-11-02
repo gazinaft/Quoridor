@@ -10,6 +10,9 @@ namespace Model {
         private IPlayer FirstPlayer;
         
         private IPlayer SecondPlayer;
+
+        public bool TheWallIsPlaced { get; set; }
+        
         public Cell SelectedCell { get; set; }
         
         public Corner SelectedCorner { get; set; }
@@ -141,6 +144,9 @@ namespace Model {
             else {
                 Board.SetBlock(SelectedCorner.X, SelectedCorner.Y, WallIsHorizontal);
                 ActivePlayer.WallsCounter--;
+
+                TheWallIsPlaced = true;
+
                 NotifyPlayerHasChanged?.Invoke();
                 NotifyPlacingTheWall?.Invoke();
             }
@@ -183,6 +189,9 @@ namespace Model {
 
         public void ChangeTheCell() {
             Board.MovePlayer(SelectedCell.X, SelectedCell.Y, ActivePlayer);
+
+            TheWallIsPlaced = false;
+
             NotifyPlayerHasChanged?.Invoke();
         }
 
