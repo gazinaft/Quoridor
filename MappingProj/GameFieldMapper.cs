@@ -28,7 +28,7 @@ namespace MappingProj
 
             result.TheWallIsPlaced = model.TheWallIsPlaced;
 
-            result.TheWallIsHorisontal = model.WallIsHorizintal;
+            result.TheWallIsHorisontal = model.WallIsHorizontal; 
             
             List<(int, int)> playersStates = new List<(int, int)>();            
             
