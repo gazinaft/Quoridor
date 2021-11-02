@@ -5,29 +5,11 @@
         public Cell(int x, int y) {
             X = x;
             Y = y;
-            //Player = 0; 
         }
-
 
         public int X { get; }
         public int Y { get; }
         public bool HasPlayer { get; set; }
-        
-
-
-        //public static bool operator <(Cell firstCell, Cell secondCell) {
-
-          //  if (!(firstCell.X == secondCell.X)) {
-
-            //    return firstCell.Y < secondCell.Y;
-            
-            //}
-            //else (){ 
-            
-            
-            //}
-        
-        //}
 
     }
 }

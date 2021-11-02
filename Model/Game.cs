@@ -14,7 +14,7 @@ namespace Model {
         
         public Corner SelectedCorner { get; set; }
         
-        public bool WallIsHorizintal { get; set; }
+        public bool WallIsHorizontal { get; set; }
 
         private PathFindingService _pathFindingService;
 
@@ -67,21 +67,14 @@ namespace Model {
             Players = new List<IPlayer>();
 
             UserPlayer firstPlayer = new UserPlayer();
-
             firstPlayer.PlayerId = 1;
-
             firstPlayer.CurrentCell = Board.Cells[4, 8];
-
             firstPlayer.VictoryRow = 0;
-
+            
             UserPlayer secondPlayer = new UserPlayer();
-
             secondPlayer.PlayerStrategy = enemyStrategy;
-
             secondPlayer.CurrentCell = Board.Cells[4, 0];
-
             secondPlayer.VictoryRow = 8;
-
             secondPlayer.PlayerId = 2;
 
             ActivePlayer = firstPlayer;
@@ -91,61 +84,40 @@ namespace Model {
             Players.Add(firstPlayer);
             Players.Add(secondPlayer);
 
-            //firstPLayer.CurrentCell.X = 5;
-
-            this.NotifyPlayerHasChanged += FindNextPlayer;
-
-            this.NotifyNextStep += MakeNextStep;
+            NotifyPlayerHasChanged += FindNextPlayer;
+            NotifyNextStep += MakeNextStep;
         }
         
         public Game()
         {
             _pathFindingService = new PathFindingService();
-
             _moveValidationService = new MoveValidationService();
-
             _wallValidationService = new WallValidationService(_pathFindingService);
-
             Board = new GameField(_moveValidationService, _wallValidationService, _pathFindingService, 9, 9);
 
             Players = new List<IPlayer>();
 
             UserPlayer firstPlayer = new UserPlayer();
-
             firstPlayer.CurrentCell = Board.Cells[4, 8];
-
             firstPlayer.VictoryRow = 0;
 
             UserPlayer secondPlayer = new UserPlayer();
-
             secondPlayer.CurrentCell = Board.Cells[4, 0];
-
             secondPlayer.VictoryRow = 8;
 
             ActivePlayer = firstPlayer;
 
             firstPlayer.PlayerIsActive = true;
-
+            
             firstPlayer.PlayerId = 1;
-
             secondPlayer.PlayerId = 2;
-
+            
             Players.Add(firstPlayer);
             Players.Add(secondPlayer);
-
-            //firstPLayer.CurrentCell.X = 5;
-
-            this.NotifyPlayerHasChanged += FindNextPlayer;
-
-            this.NotifyNextStep += MakeNextStep;
             
-            //player1 = new IPlayer();
-            //player1.IsActive = true;
+            NotifyPlayerHasChanged += FindNextPlayer;
+            NotifyNextStep += MakeNextStep;
             
-            //player2 = new IPlayer();
-            //Players.Add();
-
-
         }
 
         public void MakeNextStep() {
@@ -162,85 +134,56 @@ namespace Model {
 
         public void PlaceTheWall() {
 
-            if (_wallValidationService.CornerInvalid(SelectedCorner.X, SelectedCorner.Y, WallIsHorizintal, Board, Players))
+            if (_wallValidationService.CornerInvalid(SelectedCorner.X, SelectedCorner.Y, WallIsHorizontal, Board, Players))
             {
-
                 NotifyCornerIsInvalid?.Invoke();
-
             }
-
             else {
-
-                Board.SetBlock(SelectedCorner.X, SelectedCorner.Y, WallIsHorizintal);
-
+                Board.SetBlock(SelectedCorner.X, SelectedCorner.Y, WallIsHorizontal);
                 ActivePlayer.WallsCounter--;
-
                 NotifyPlayerHasChanged?.Invoke();
-
                 NotifyPlacingTheWall?.Invoke();
-
             }
-
         }
 
         public void FindNextPlayer() {
 
             if (ActivePlayer.CurrentCell.Y == ActivePlayer.VictoryRow)
             {
-
                 NotifyAboutEnd?.Invoke();
                 return;
-
             }
 
-            int _lastActivePlayerIndex = 0;
+            int lastActivePlayerIndex = 0;
 
-            _lastActivePlayerIndex = Players.FindLastIndex(pl => pl.PlayerIsActive);
+            lastActivePlayerIndex = Players.FindLastIndex(pl => pl.PlayerIsActive);
 
-            if (_lastActivePlayerIndex + 1 != Players.Count)
+            if (lastActivePlayerIndex + 1 != Players.Count)
             {
-
-                Players.ElementAt(_lastActivePlayerIndex).PlayerIsActive = false;
-
-                Players.ElementAt(_lastActivePlayerIndex + 1).PlayerIsActive = true;
-
-                ActivePlayer = Players.ElementAt(_lastActivePlayerIndex + 1);
-
+                Players.ElementAt(lastActivePlayerIndex).PlayerIsActive = false;
+                Players.ElementAt(lastActivePlayerIndex + 1).PlayerIsActive = true;
+                ActivePlayer = Players.ElementAt(lastActivePlayerIndex + 1);
             }
             else
             {
-
-                Players.ElementAt(_lastActivePlayerIndex).PlayerIsActive = false;
-
+                Players.ElementAt(lastActivePlayerIndex).PlayerIsActive = false;
                 Players.ElementAt(0).PlayerIsActive = true;
-
                 ActivePlayer = Players.ElementAt(0);
-
             }
 
             if (ActivePlayer.PlayerStrategy != null)
             {
-
                 ActivePlayer.Decide(this);
-
                 ActivePlayer.PlayerIsActive = false;
-
                 ActivePlayer = Players.ElementAt(0);
-
                 ActivePlayer.PlayerIsActive = true;
-
             }
-
-            //NotifyNextStep?.Invoke();
 
         }
 
         public void ChangeTheCell() {
-
             Board.MovePlayer(SelectedCell.X, SelectedCell.Y, ActivePlayer);
-
             NotifyPlayerHasChanged?.Invoke();
-        
         }
 
     }
