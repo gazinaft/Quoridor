@@ -6,14 +6,21 @@
         private readonly bool _direction;
 
         
-        public PlaceWallCommand(int x, int y, bool direction) {
+        public PlaceWallCommand(int x, int y, bool isHorizontal) {
             _x = x;
             _y = y;
-            _direction = direction;
+            _direction = isHorizontal;
         }
         
-        public void Execute(GameField field) {
-            field.SetBlock(_x, _y, _direction);
+        public Game Execute(ref Game game) {
+            game.SelectedCorner = game.Board.Corners[_x, _y];
+            game.WallIsHorizontal = _direction;
+            game.PlaceTheWall();
+            return game;
+        }
+
+        public void Undo(ref Game game) {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Model
         {
             Random r = new Random();
             
-            int index = r.Next(0, game.Board.GetAvailableMoves(game.ActivePlayer).Count - 1);
+            int index = r.Next(game.Board.GetAvailableMoves(game.ActivePlayer).Count);
 
             game.SelectedCell = game.Board.GetAvailableMoves(game.ActivePlayer)[index];
             
