@@ -32,6 +32,7 @@
             this.listBoxPlayers = new System.Windows.Forms.ListBox();
             this.labelPlayersAndWalls = new System.Windows.Forms.Label();
             this.labelCurPlayer = new System.Windows.Forms.Label();
+            this.undoButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // GamePanel
@@ -71,6 +72,15 @@
             this.labelCurPlayer.TabIndex = 3;
             this.labelCurPlayer.Text = "CurrentPlayer :";
             // 
+            // undoButton
+            // 
+            this.undoButton.Location = new System.Drawing.Point(674, 519);
+            this.undoButton.Name = "undoButton";
+            this.undoButton.Size = new System.Drawing.Size(132, 23);
+            this.undoButton.TabIndex = 4;
+            this.undoButton.Text = "UNDO";
+            this.undoButton.UseVisualStyleBackColor = true;
+            // 
             // GameViewWinForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -78,6 +88,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.Orange;
             this.ClientSize = new System.Drawing.Size(853, 619);
+            this.Controls.Add(this.undoButton);
             this.Controls.Add(this.labelCurPlayer);
             this.Controls.Add(this.labelPlayersAndWalls);
             this.Controls.Add(this.listBoxPlayers);
@@ -95,5 +106,6 @@
         private System.Windows.Forms.ListBox listBoxPlayers;
         private System.Windows.Forms.Label labelPlayersAndWalls;
         private System.Windows.Forms.Label labelCurPlayer;
+        private System.Windows.Forms.Button undoButton;
     }
 }

@@ -47,6 +47,7 @@ namespace View
         
         public event Action PlayerMove;
         public event Action ChangePlayer;
+        public event Action DoUndo;
 
         public void DisplayPotentialWallsAndCorners(GameFieldState state) {
 
@@ -67,6 +68,8 @@ namespace View
             int buttonSize = GamePanel.Width / state.GridForPlayers.Length;
 
             int wallSize = buttonSize / 5;
+
+            undoButton.Click += UndoButton_Click;
 
             for (int i = 0; i < state.Width; i++)
             {
@@ -199,6 +202,20 @@ namespace View
 
         }
 
+        private void UndoButton_Click(object sender, EventArgs e)
+        {
+            foreach (Button b in ButtonGrid)
+            {
+
+                b.Dispose();
+
+            }
+
+            listBoxPlayers.Items.Clear();
+
+            DoUndo?.Invoke();
+        }
+
         private void SelectedCorner(object sender, EventArgs e)
         {
             Button selectedCorner = (Button)sender;
@@ -291,6 +308,13 @@ namespace View
                     ButtonGrid[i, j].Click += GameViewWinForm_Click;
 
                 }
+
+            }
+
+            foreach (Button b in ButtonGrid) 
+            {
+
+                b.BringToFront();
 
             }
             

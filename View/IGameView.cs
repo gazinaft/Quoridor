@@ -10,6 +10,8 @@ namespace View
 
         event Action ChangePlayer;
 
+        event Action DoUndo;
+
         bool SelectedWallIsHorizontal { get; set; }
 
         int SelectedCellX { get; set; }

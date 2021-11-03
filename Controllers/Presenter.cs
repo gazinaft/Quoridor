@@ -26,6 +26,8 @@ namespace Controllers
 
             View.ChangePlayer += ChangePlayers;
 
+            View.DoUndo += DoUndo;
+
             Game.NotifyPlacingTheWall += PlaceTheWall;
 
             Game.NotifyCornerIsInvalid += WarnAboutInvalidCorner;
@@ -44,6 +46,14 @@ namespace Controllers
 
             Game.ChangePlayers();
         
+        }
+
+        public void DoUndo() {
+
+            Game.Undo(Game.LastCommand);
+
+            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
+
         }
 
         public void PlaceTheWall() {

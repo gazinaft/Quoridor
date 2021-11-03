@@ -11,7 +11,7 @@ namespace Model {
         
         private IPlayer SecondPlayer;
 
-        ICommand LastCommand { get; set; }
+        public ICommand LastCommand { get; set; }
 
         public bool TheWallIsPlaced { get; set; }
         
@@ -65,6 +65,8 @@ namespace Model {
 
         public Game(IPlayerStrategy enemyStrategy) {
 
+            DoDisplayStep = true;
+            
             _stepsHistory = new LinkedList<ICommand>();
             
             _pathFindingService = new PathFindingService();
@@ -105,6 +107,8 @@ namespace Model {
 
         public Game Undo(ICommand terminalCommand) {
 
+            DoDisplayStep = false;
+            
             Players.ForEach(p => p.CurrentCell = p.StartCell);
             Players.ForEach(p => p.WallsCounter=10);
 
@@ -118,12 +122,16 @@ namespace Model {
 
             }
 
+            DoDisplayStep = true;
+
             return this;
         
         }
 
         public Game()
         {
+            DoDisplayStep = true;
+            
             _stepsHistory = new LinkedList<ICommand>();
 
             _pathFindingService = new PathFindingService();
@@ -134,11 +142,13 @@ namespace Model {
             Players = new List<IPlayer>();
 
             UserPlayer firstPlayer = new UserPlayer();
+            firstPlayer.StartCell = Board.Cells[4, 8];
             firstPlayer.CurrentCell = Board.Cells[4, 8];
             firstPlayer.VictoryRow = 0;
 
             UserPlayer secondPlayer = new UserPlayer();
             secondPlayer.CurrentCell = Board.Cells[4, 0];
+            secondPlayer.StartCell = Board.Cells[4, 0];
             secondPlayer.VictoryRow = 8;
 
             ActivePlayer = firstPlayer;
@@ -176,11 +186,15 @@ namespace Model {
             }
             else {
 
-                PlaceWallCommand _lastCommand = new PlaceWallCommand(SelectedCorner.X, SelectedCorner.Y, WallIsHorizontal);
+                if (DoDisplayStep) {
 
-                _stepsHistory.AddLast(_lastCommand);
+                    PlaceWallCommand _lastCommand = new PlaceWallCommand(SelectedCorner.X, SelectedCorner.Y, WallIsHorizontal);
 
-                LastCommand = _lastCommand;
+                    _stepsHistory.AddLast(_lastCommand);
+
+                    LastCommand = _lastCommand;
+
+                }
                 
                 Board.SetBlock(SelectedCorner.X, SelectedCorner.Y, WallIsHorizontal);
                 
@@ -262,12 +276,17 @@ namespace Model {
         }
 
         public void ChangeTheCell() {
+            
 
-            MovePlayerCommand _lastCommand = new MovePlayerCommand(SelectedCell.X, SelectedCell.Y, ActivePlayer);
+            if (DoDisplayStep) {
 
-            _stepsHistory.AddLast(_lastCommand);
+                MovePlayerCommand _lastCommand = new MovePlayerCommand(SelectedCell.X, SelectedCell.Y, ActivePlayer);
 
-            LastCommand = _lastCommand;
+                _stepsHistory.AddLast(_lastCommand);
+
+                LastCommand = _lastCommand;
+
+            }
             
             Board.MovePlayer(SelectedCell.X, SelectedCell.Y, ActivePlayer);
 

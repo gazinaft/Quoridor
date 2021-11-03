@@ -22,6 +22,7 @@ namespace View
         public event Action PlacingTheWall;
         public event Action PlayerMove;
         public event Action ChangePlayer;
+        public event Action DoUndo;
 
         public ConsoleView()
         {
