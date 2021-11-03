@@ -88,6 +88,7 @@ namespace Model {
             Players.Add(secondPlayer);
 
             NotifyPlayerHasChanged += FindNextPlayer;
+            
             NotifyNextStep += MakeNextStep;
         }
         
@@ -141,14 +142,18 @@ namespace Model {
             {
                 NotifyCornerIsInvalid?.Invoke();
             }
-            else {
+            else {                
+                
                 Board.SetBlock(SelectedCorner.X, SelectedCorner.Y, WallIsHorizontal);
+                
                 ActivePlayer.WallsCounter--;
 
                 TheWallIsPlaced = true;
 
                 NotifyPlayerHasChanged?.Invoke();
+
                 NotifyPlacingTheWall?.Invoke();
+
             }
         }
 
@@ -187,7 +192,31 @@ namespace Model {
 
         }
 
+        public void ChangePlayers() {
+
+            Players.Clear();
+            UserPlayer firstPlayer = new UserPlayer();
+            firstPlayer.PlayerId = 1;
+            firstPlayer.CurrentCell = Board.Cells[4, 0];
+            firstPlayer.VictoryRow = 8;
+
+            UserPlayer secondPlayer = new UserPlayer();
+            secondPlayer.PlayerStrategy = new DummyStrategy();
+            secondPlayer.CurrentCell = Board.Cells[4, 8];
+            secondPlayer.VictoryRow = 0;
+            secondPlayer.PlayerId = 2;
+
+            ActivePlayer = firstPlayer;
+
+            firstPlayer.PlayerIsActive = true;
+
+            Players.Add(firstPlayer);
+            Players.Add(secondPlayer);
+
+        }
+
         public void ChangeTheCell() {
+            
             Board.MovePlayer(SelectedCell.X, SelectedCell.Y, ActivePlayer);
 
             TheWallIsPlaced = false;

@@ -46,6 +46,7 @@ namespace View
         public event Action PlacingTheWall;
         
         public event Action PlayerMove;
+        public event Action ChangePlayer;
 
         public void DisplayPotentialWallsAndCorners(GameFieldState state) {
 

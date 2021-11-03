@@ -21,6 +21,7 @@ namespace View
 
         public event Action PlacingTheWall;
         public event Action PlayerMove;
+        public event Action ChangePlayer;
 
         public ConsoleView()
         {
@@ -93,7 +94,7 @@ namespace View
 
         public void CantPlaceTheWall()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("You can't place the wall in that way.");
         }
 
         public void DisplayPotentialWallsAndCorners(GameFieldState state)
@@ -164,7 +165,11 @@ namespace View
 
             }
 
-            CheckTheCommand();
+            Console.WriteLine("Choose white or black");
+
+            CheckTheFirstCommand();
+
+            //CheckTheCommand();
         }
 
         public void TryToMovePlayer() {
@@ -172,6 +177,30 @@ namespace View
 
             PlayerMove.Invoke();
 
+        
+        }
+
+        public void CheckTheFirstCommand() {
+
+            string selectedTeam = Console.ReadLine();
+
+            if (selectedTeam == "white") {
+
+                CheckTheCommand();
+
+            }
+            else if (selectedTeam =="black") {
+
+                ChangePlayer?.Invoke();
+                
+                SelectedCellX = 4;
+
+                SelectedCellY = 0;
+
+                TryToMovePlayer();
+            
+            }
+        
         
         }
 
@@ -183,9 +212,9 @@ namespace View
             {
                 string selectedCoordinates = command.Substring(5);
 
-                string XString = selectedCoordinates.Substring(0);
+                string XString = selectedCoordinates.Substring(0, 1);
 
-                string YString = selectedCoordinates.Substring(1);
+                string YString = selectedCoordinates.Substring(1, 1);
 
                 string isHorisontal = selectedCoordinates.Substring(2);
 
@@ -208,7 +237,7 @@ namespace View
 
                     SelectedCornerY = Convert.ToInt32(YString);
 
-                    PlaceTheWall();
+                    PlacingTheWall?.Invoke();
 
                 }
                 catch (Exception) {
@@ -386,7 +415,7 @@ namespace View
 
         public void PlaceTheWall()
         {
-            PlacingTheWall?.Invoke();
+            Console.WriteLine("The wall was placed successfully.");
         }
 
         public void ThisIsTheEnd()

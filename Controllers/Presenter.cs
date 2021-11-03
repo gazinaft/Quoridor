@@ -24,6 +24,8 @@ namespace Controllers
 
             View.PlayerMove += MakeStep;
 
+            View.ChangePlayer += ChangePlayers;
+
             Game.NotifyPlacingTheWall += PlaceTheWall;
 
             Game.NotifyCornerIsInvalid += WarnAboutInvalidCorner;
@@ -36,6 +38,12 @@ namespace Controllers
 
             View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
 
+        }
+
+        public void ChangePlayers() {
+
+            Game.ChangePlayers();
+        
         }
 
         public void PlaceTheWall() {
