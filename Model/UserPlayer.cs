@@ -10,6 +10,8 @@ namespace Model
     {
         public int PlayerId { get; set; }
 
+        public Cell StartCell { get; set; }
+        
         private Cell _currentCell;
 
         public bool PlayerIsActive { get; set; }

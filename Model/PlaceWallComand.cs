@@ -11,9 +11,14 @@
             _y = y;
             _direction = direction;
         }
-        
-        public void Execute(GameField field) {
-            field.SetBlock(_x, _y, _direction);
+
+        public void Execute(Game game) {
+            game.PlaceTheWall();
+        }
+
+        public void Undo(Game game)
+        {
+            game.Undo(this);
         }
     }
 }

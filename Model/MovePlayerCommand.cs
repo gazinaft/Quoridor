@@ -10,9 +10,16 @@
             _y = y;
             _player = player;
         }
-        
-        public void Execute(GameField field) {
-            field.MovePlayer(_x, _y, _player);
+
+        public void Execute(Game game) {
+
+            game.ChangeTheCell();
+
+        }
+
+        public void Undo(Game game)
+        {
+            game.Undo(this);
         }
     }
 }
