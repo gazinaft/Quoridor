@@ -10,6 +10,11 @@ namespace Model {
         private IPlayer FirstPlayer;
         
         private IPlayer SecondPlayer;
+
+        public ICommand LastCommand { get; set; }
+
+        public bool TheWallIsPlaced { get; set; }
+        
         public Cell SelectedCell { get; set; }
         
         public Corner SelectedCorner { get; set; }
@@ -54,8 +59,16 @@ namespace Model {
 
         public IPlayer ActivePlayer;
 
+        public LinkedList<ICommand> _stepsHistory;
+
+        public bool DoDisplayStep { get; set; }
+
         public Game(IPlayerStrategy enemyStrategy) {
 
+            DoDisplayStep = true;
+            
+            _stepsHistory = new LinkedList<ICommand>();
+            
             _pathFindingService = new PathFindingService();
 
             _moveValidationService = new MoveValidationService();
@@ -67,12 +80,15 @@ namespace Model {
             Players = new List<IPlayer>();
 
             UserPlayer firstPlayer = new UserPlayer();
+            firstPlayer.StartCell = Board.Cells[4, 8];
+
             firstPlayer.PlayerId = 1;
             firstPlayer.CurrentCell = Board.Cells[4, 8];
             firstPlayer.VictoryRow = 0;
             
             UserPlayer secondPlayer = new UserPlayer();
             secondPlayer.PlayerStrategy = enemyStrategy;
+            secondPlayer.StartCell = Board.Cells[4, 0];
             secondPlayer.CurrentCell = Board.Cells[4, 0];
             secondPlayer.VictoryRow = 8;
             secondPlayer.PlayerId = 2;
@@ -85,11 +101,39 @@ namespace Model {
             Players.Add(secondPlayer);
 
             NotifyPlayerHasChanged += FindNextPlayer;
+            
             NotifyNextStep += MakeNextStep;
         }
+
+        public Game Undo(ICommand terminalCommand) {
+
+            DoDisplayStep = false;
+            
+            Players.ForEach(p => p.CurrentCell = p.StartCell);
+            Players.ForEach(p => p.WallsCounter=10);
+
+            foreach (ICommand c in _stepsHistory) {
+
+                if (c!=terminalCommand) {
+
+                    c.Execute(this);
+                
+                }
+
+            }
+
+            DoDisplayStep = true;
+
+            return this;
         
+        }
+
         public Game()
         {
+            DoDisplayStep = true;
+            
+            _stepsHistory = new LinkedList<ICommand>();
+
             _pathFindingService = new PathFindingService();
             _moveValidationService = new MoveValidationService();
             _wallValidationService = new WallValidationService(_pathFindingService);
@@ -98,11 +142,13 @@ namespace Model {
             Players = new List<IPlayer>();
 
             UserPlayer firstPlayer = new UserPlayer();
+            firstPlayer.StartCell = Board.Cells[4, 8];
             firstPlayer.CurrentCell = Board.Cells[4, 8];
             firstPlayer.VictoryRow = 0;
 
             UserPlayer secondPlayer = new UserPlayer();
             secondPlayer.CurrentCell = Board.Cells[4, 0];
+            secondPlayer.StartCell = Board.Cells[4, 0];
             secondPlayer.VictoryRow = 8;
 
             ActivePlayer = firstPlayer;
@@ -139,10 +185,33 @@ namespace Model {
                 NotifyCornerIsInvalid?.Invoke();
             }
             else {
+
+                if (DoDisplayStep) {
+
+                    PlaceWallCommand _lastCommand = new PlaceWallCommand(SelectedCorner.X, SelectedCorner.Y, WallIsHorizontal);
+
+                    _stepsHistory.AddLast(_lastCommand);
+
+                    LastCommand = _lastCommand;
+
+                }
+                
                 Board.SetBlock(SelectedCorner.X, SelectedCorner.Y, WallIsHorizontal);
+                
                 ActivePlayer.WallsCounter--;
+
+                TheWallIsPlaced = true;
+
                 NotifyPlayerHasChanged?.Invoke();
-                NotifyPlacingTheWall?.Invoke();
+
+                if (DoDisplayStep) {
+
+                    NotifyPlacingTheWall?.Invoke();
+
+                }
+
+                
+
             }
         }
 
@@ -181,8 +250,48 @@ namespace Model {
 
         }
 
+        public void ChangePlayers() {
+
+            Players.Clear();
+            UserPlayer firstPlayer = new UserPlayer();
+            firstPlayer.PlayerId = 1;
+            firstPlayer.StartCell = Board.Cells[4, 0];
+            firstPlayer.CurrentCell = Board.Cells[4, 0];
+            firstPlayer.VictoryRow = 8;
+
+            UserPlayer secondPlayer = new UserPlayer();
+            secondPlayer.PlayerStrategy = new DummyStrategy();
+            secondPlayer.StartCell = Board.Cells[4, 8];
+            secondPlayer.CurrentCell = Board.Cells[4, 8];
+            secondPlayer.VictoryRow = 0;
+            secondPlayer.PlayerId = 2;
+
+            ActivePlayer = firstPlayer;
+
+            firstPlayer.PlayerIsActive = true;
+
+            Players.Add(firstPlayer);
+            Players.Add(secondPlayer);
+
+        }
+
         public void ChangeTheCell() {
+            
+
+            if (DoDisplayStep) {
+
+                MovePlayerCommand lastCommand = new MovePlayerCommand(SelectedCell, ActivePlayer);
+
+                _stepsHistory.AddLast(lastCommand);
+
+                LastCommand = lastCommand;
+
+            }
+            
             Board.MovePlayer(SelectedCell.X, SelectedCell.Y, ActivePlayer);
+
+            TheWallIsPlaced = false;
+
             NotifyPlayerHasChanged?.Invoke();
         }
 

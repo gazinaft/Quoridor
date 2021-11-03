@@ -12,15 +12,15 @@
             _direction = isHorizontal;
         }
         
-        public Game Execute(ref Game game) {
+        public Game Execute(Game game) {
             game.SelectedCorner = game.Board.Corners[_x, _y];
             game.WallIsHorizontal = _direction;
             game.PlaceTheWall();
             return game;
         }
 
-        public void Undo(ref Game game) {
-            throw new System.NotImplementedException();
+        public void Undo(Game game) {
+            game.Undo(this);
         }
     }
 }

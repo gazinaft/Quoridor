@@ -22,7 +22,16 @@ namespace Model
             int index = r.Next(game.Board.GetAvailableMoves(game.ActivePlayer).Count);
 
             game.SelectedCell = game.Board.GetAvailableMoves(game.ActivePlayer)[index];
-            
+
+            if (game.DoDisplayStep) {
+
+                MovePlayerCommand command = new MovePlayerCommand(game.SelectedCell, game.ActivePlayer);
+
+                game._stepsHistory.AddLast(command);
+
+
+            }
+
             game.ChangeTheCell();
 
         }

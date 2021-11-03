@@ -10,8 +10,27 @@ namespace MappingProj
 
             GameFieldState result = new GameFieldState() { GridForCorners = model.Board.FormGridForObstacles(), GridForPlayers = model.Board.FormGridForPlayers(), Height = model.Board.Height, Width = model.Board.Width, CurrentPlayerID = model.ActivePlayer.PlayerId };
 
-            List<(int, int)> playersStates = new List<(int, int)>();
+            if (model.SelectedCell!=null) {
+
+                result.SelectedCellX = model.SelectedCell.X;
+
+                result.SelectedCellY = model.SelectedCell.Y;
+
+            }
+
+            if (model.SelectedCorner!=null) {
+
+                result.SelectedCornerX = model.SelectedCorner.X;
+
+                result.SelectedCornerY = model.SelectedCorner.Y;
+
+            }
+
+            result.TheWallIsPlaced = model.TheWallIsPlaced;
+
+            result.TheWallIsHorisontal = model.WallIsHorizontal;
             
+            List<(int, int)> playersStates = new List<(int, int)>();            
             
             model.Players.ForEach(pl => playersStates.Add((pl.PlayerId, pl.WallsCounter)));
 

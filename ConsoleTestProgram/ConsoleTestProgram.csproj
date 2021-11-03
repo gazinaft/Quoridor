@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C1B7C91D-9211-4A7F-BC89-13F5B0CAC5FC}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Model</RootNamespace>
-    <AssemblyName>Model</AssemblyName>
+    <ProjectGuid>{7D2DF55B-0E59-488B-B46A-86224A99CB19}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ConsoleTestProgram</RootNamespace>
+    <AssemblyName>ConsoleTestProgram</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -21,16 +22,15 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -43,33 +43,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AI\ABPrune.cs" />
-    <Compile Include="AI\ABStrategy.cs" />
-    <Compile Include="AI\ABTree.cs" />
-    <Compile Include="AI\AI.cs" />
-    <Compile Include="AI\Node.cs" />
-    <Compile Include="Cell.cs" />
-    <Compile Include="Corner.cs" />
-    <Compile Include="DummyStrategy.cs" />
-    <Compile Include="Game.cs" />
-    <Compile Include="GameField.cs" />
-    <Compile Include="ICommand.cs" />
-    <Compile Include="IPlayer.cs" />
-    <Compile Include="IPlayerStrategy.cs" />
-    <Compile Include="MovePlayerCommand.cs" />
-    <Compile Include="PlaceWallComand.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\MoveValidationService.cs" />
-    <Compile Include="Services\PathFindingService.cs" />
-    <Compile Include="Services\WallValidationService.cs" />
-    <Compile Include="Strategy\AStar.cs" />
-    <Compile Include="Strategy\BFS.cs" />
-    <Compile Include="Strategy\IAlgorithm.cs" />
-    <Compile Include="UserPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="README.md" />
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Controllers\Controllers.csproj">
+      <Project>{89a5b380-a14d-40a5-ab60-95b1495e5536}</Project>
+      <Name>Controllers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{c1b7c91d-9211-4a7f-bc89-13f5b0cac5fc}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\View\View.csproj">
+      <Project>{9527e525-4830-431c-b324-e49b178d5717}</Project>
+      <Name>View</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

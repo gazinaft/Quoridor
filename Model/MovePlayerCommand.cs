@@ -9,14 +9,14 @@
             _player = player;
         }
         
-        public Game Execute(ref Game game) {
+        public Game Execute(Game game) {
             game.SelectedCell = _cell;
             game.ChangeTheCell();
             return game;
         }
 
-        public void Undo(ref Game game) {
-            throw new System.NotImplementedException();
+        public void Undo(Game game) {
+            game.Undo(this);
         }
     }
 }

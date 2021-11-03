@@ -20,13 +20,13 @@ namespace Controllers
 
             _gameFieldMapper = new GameFieldMapper();
 
-            View.DisplayPotentialWallsAndCorners(_gameFieldMapper.FromModelToView(Game));
-
-            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
-
             View.PlacingTheWall += TryToPlaceTheWall;
 
             View.PlayerMove += MakeStep;
+
+            View.ChangePlayer += ChangePlayers;
+
+            View.DoUndo += DoUndo;
 
             Game.NotifyPlacingTheWall += PlaceTheWall;
 
@@ -35,6 +35,24 @@ namespace Controllers
             Game.NotifyBotHasDecided += MakeBotStep;
 
             Game.NotifyAboutEnd += InformAboutEnd;
+
+            View.DisplayPotentialWallsAndCorners(_gameFieldMapper.FromModelToView(Game));
+
+            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
+
+        }
+
+        public void ChangePlayers() {
+
+            Game.ChangePlayers();
+        
+        }
+
+        public void DoUndo() {
+
+            Game.Undo(Game.LastCommand);
+
+            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
 
         }
 
