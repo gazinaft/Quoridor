@@ -11,6 +11,8 @@ namespace Model {
         
         private IPlayer SecondPlayer;
 
+        ICommand LastCommand { get; set; }
+
         public bool TheWallIsPlaced { get; set; }
         
         public Cell SelectedCell { get; set; }
@@ -174,7 +176,11 @@ namespace Model {
             }
             else {
 
-                _stepsHistory.AddLast(new PlaceWallCommand(SelectedCorner.X, SelectedCorner.Y, WallIsHorizontal));
+                PlaceWallCommand _lastCommand = new PlaceWallCommand(SelectedCorner.X, SelectedCorner.Y, WallIsHorizontal);
+
+                _stepsHistory.AddLast(_lastCommand);
+
+                LastCommand = _lastCommand;
                 
                 Board.SetBlock(SelectedCorner.X, SelectedCorner.Y, WallIsHorizontal);
                 
@@ -257,7 +263,11 @@ namespace Model {
 
         public void ChangeTheCell() {
 
-            _stepsHistory.AddLast(new MovePlayerCommand(SelectedCell.X, SelectedCell.Y, ActivePlayer));
+            MovePlayerCommand _lastCommand = new MovePlayerCommand(SelectedCell.X, SelectedCell.Y, ActivePlayer);
+
+            _stepsHistory.AddLast(_lastCommand);
+
+            LastCommand = _lastCommand;
             
             Board.MovePlayer(SelectedCell.X, SelectedCell.Y, ActivePlayer);
 
