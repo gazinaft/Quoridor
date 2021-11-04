@@ -26,9 +26,9 @@ namespace Model
             if (stepCounter % 2 == 0)
             {
 
-                int curIndexX = r.Next(game.Board.Corners.GetLength(0));
+                int curIndexX = r.Next(1, game.Board.Corners.GetLength(0)-2);
 
-                int curIndexY = r.Next(game.Board.Corners.GetLength(0));
+                int curIndexY = r.Next(1, game.Board.Corners.GetLength(0)-2);
 
                 int isHorisontal = r.Next(2);
 
@@ -45,9 +45,13 @@ namespace Model
 
                 }
 
+                game.TheWallIsPlaced = true;
+                
                 game.SelectedCorner = game.Board.Corners[curIndexX, curIndexY];
 
                 game.PlaceTheWall();
+
+                game.TheWallIsPlaced = false;
 
             }
             else {
@@ -66,13 +70,14 @@ namespace Model
 
                 }
 
-                game.ChangeTheCell();
+                game.TheWallIsPlaced = false;
 
-                stepCounter++;
+                game.ChangeTheCell();
 
 
             }
- 
+
+            stepCounter++;
         }
     }
 }

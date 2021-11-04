@@ -185,20 +185,27 @@ namespace View
 
             string selectedTeam = Console.ReadLine();
 
-            if (selectedTeam == "white") {
+            if (selectedTeam == "white")
+            {
 
                 CheckTheCommand();
 
             }
-            else if (selectedTeam =="black") {
+            else if (selectedTeam == "black")
+            {
 
                 ChangePlayer?.Invoke();
-                
+
                 SelectedCellX = 4;
 
                 SelectedCellY = 0;
 
                 TryToMovePlayer();
+
+            }
+            else {
+
+                CheckTheFirstCommand();
             
             }
         
@@ -388,16 +395,16 @@ namespace View
 
                 if (state.TheWallIsHorisontal) {
 
-                    int selectedCornerY = state.SelectedCornerY + 1;
+                    int selectedCornerY = state.SelectedCornerY;
 
-                    Console.WriteLine("wall " + _coordinatesCornersToLetters[state.SelectedCornerX + 1] + " " + selectedCornerY + "h");
+                    Console.WriteLine("wall " + _coordinatesCornersToLetters[state.SelectedCornerX] + selectedCornerY + "h");
 
                 }
                 else {
 
-                    int selectedCornerY = state.SelectedCornerY + 1;
+                    int selectedCornerY = state.SelectedCornerY;
 
-                    Console.WriteLine("wall " + _coordinatesCornersToLetters[state.SelectedCornerX + 1] + " " +  selectedCornerY + "h");
+                    Console.WriteLine("wall " + _coordinatesCornersToLetters[state.SelectedCornerX] +  selectedCornerY + "h");
                 
                 }
             
