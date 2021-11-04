@@ -18,7 +18,9 @@
         }
 
         public void Undo(Game game) {
-            game.Board.MovePlayer(_currentCell.X, _currentCell.Y, _player);
+
+            game.SelectedCell = _currentCell;
+            game.ChangeTheCell();
         }
     }
 }

@@ -23,6 +23,8 @@
             game.SelectedCorner = game.SelectedCorner = game.Board.Corners[_x, _y];
             game.WallIsHorizontal = _direction;
             game.Board.UnSetBlock(game.SelectedCorner.X, game.SelectedCorner.Y, game.WallIsHorizontal);
+            game.ActivePlayer.WallsCounter++;
+            game.FindNextPlayer();
         }
     }
 }
