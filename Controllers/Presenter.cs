@@ -18,6 +18,8 @@ namespace Controllers
 
             Game = game;
 
+            Game.DoDisplayStep = true;
+
             _gameFieldMapper = new GameFieldMapper();
 
             View.PlacingTheWall += TryToPlaceTheWall;
@@ -50,16 +52,18 @@ namespace Controllers
 
         public void DoUndo() {
 
-            Game.Undo(Game.LastCommand);
-
             View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
 
         }
 
         public void PlaceTheWall() {
 
-            View.PlaceTheWall();
-            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
+            if (Game.DoDisplayStep) {
+
+                View.PlaceTheWall();
+                View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
+
+            }
 
         }
 
@@ -71,17 +75,27 @@ namespace Controllers
 
         public void MakeBotStep() {
 
-            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
+            if (Game.DoDisplayStep) {
+
+                View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
+
+            }
 
         }
 
         public void MakeStep() {
 
             Game.SelectedCell = Game.Board.Cells[View.SelectedCellX, View.SelectedCellY];
-            
-            Game.ChangeTheCell();
 
-            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
+            Game.MovePlayerCommand = new MovePlayerCommand(Game.SelectedCell, Game.ActivePlayer);
+
+            Game.MovePlayerCommand.Execute(Game);
+
+            if (Game.DoDisplayStep) {
+
+                View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
+
+            }
 
         }
 
@@ -93,7 +107,9 @@ namespace Controllers
 
             Game.WallIsHorizontal = View.SelectedWallIsHorizontal;
 
-            Game.PlaceTheWall();
+            Game.PlaceTheWallCommand = new PlaceWallCommand(Game.SelectedCorner.X, Game.SelectedCorner.Y, Game.WallIsHorizontal);
+
+            Game.PlaceTheWallCommand.Execute(Game);
 
         }
 

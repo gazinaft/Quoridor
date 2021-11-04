@@ -100,7 +100,7 @@ namespace View
 
         public void DisplayPotentialWallsAndCorners(GameFieldState state)
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            /*Console.ForegroundColor = ConsoleColor.Yellow;
 
             Console.WriteLine("+++A+++++B+++++C+++++D+++++E+++++F+++++G+++++H+++++I+++");
             
@@ -164,7 +164,7 @@ namespace View
                 
                 
 
-            }
+            }*/
 
             Console.WriteLine("Choose white or black");
 
@@ -185,20 +185,27 @@ namespace View
 
             string selectedTeam = Console.ReadLine();
 
-            if (selectedTeam == "white") {
+            if (selectedTeam == "white")
+            {
 
                 CheckTheCommand();
 
             }
-            else if (selectedTeam =="black") {
+            else if (selectedTeam == "black")
+            {
 
                 ChangePlayer?.Invoke();
-                
+
                 SelectedCellX = 4;
 
                 SelectedCellY = 0;
 
                 TryToMovePlayer();
+
+            }
+            else {
+
+                CheckTheFirstCommand();
             
             }
         
@@ -316,7 +323,7 @@ namespace View
         public void DisplayTheField(GameFieldState state)
         {
 
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            /*Console.ForegroundColor = ConsoleColor.Yellow;
 
             Console.WriteLine("+++A+++++B+++++C+++++D+++++E+++++F+++++G+++++H+++++I+++");
 
@@ -382,32 +389,43 @@ namespace View
 
 
 
-            }
+            }*/
 
             if (state.TheWallIsPlaced) {
 
                 if (state.TheWallIsHorisontal) {
 
-                    int selectedCornerY = state.SelectedCornerY + 1;
+                    int selectedCornerY = state.SelectedCornerY;
 
-                    Console.WriteLine("wall " + _coordinatesCornersToLetters[state.SelectedCornerX + 1] + " " + selectedCornerY + "h");
+                    Console.WriteLine("wall " + _coordinatesCornersToLetters[state.SelectedCornerX] + selectedCornerY + "h");
 
                 }
                 else {
 
-                    int selectedCornerY = state.SelectedCornerY + 1;
+                    int selectedCornerY = state.SelectedCornerY;
 
-                    Console.WriteLine("wall " + _coordinatesCornersToLetters[state.SelectedCornerX + 1] + " " +  selectedCornerY + "h");
+                    Console.WriteLine("wall " + _coordinatesCornersToLetters[state.SelectedCornerX] +  selectedCornerY + "h");
                 
                 }
             
             }
             else {
 
-                int selectedCellY = state.SelectedCellY + 1;
+                if (state.IsJumping)
+                {
 
-                Console.WriteLine("move " + _coordinatesCellsToLetters[state.SelectedCellX + 1] +selectedCellY);
+                    int selectedCellY = state.SelectedCellY + 1;
 
+                    Console.WriteLine("jump " + _coordinatesCellsToLetters[state.SelectedCellX + 1] + selectedCellY);
+
+                }
+                else {
+
+                    int selectedCellY = state.SelectedCellY + 1;
+
+                    Console.WriteLine("move " + _coordinatesCellsToLetters[state.SelectedCellX + 1] + selectedCellY);
+
+                }
             
             }
 
@@ -416,7 +434,7 @@ namespace View
 
         public void PlaceTheWall()
         {
-            Console.WriteLine("The wall was placed successfully.");
+            //Console.WriteLine("The wall was placed successfully.");
         }
 
         public void ThisIsTheEnd()

@@ -157,6 +157,29 @@ namespace Model
 
         }
 
+        public GameField UnSetBlock(int x, int y, bool isHorizontal, bool toAdd = false) {
+
+            if (isHorizontal)
+            {
+                Corners[x, y].Obstacles[0, 1] = toAdd;
+                Corners[x, y].Obstacles[1, 1] = toAdd;
+                Corners[x, y].Obstacles[2, 1] = toAdd;
+                Corners[x + 1, y].Obstacles[0, 1] = toAdd;
+                Corners[x - 1, y].Obstacles[2, 1] = toAdd;
+            }
+            else
+            {
+                Corners[x, y].Obstacles[1, 0] = toAdd;
+                Corners[x, y].Obstacles[1, 1] = toAdd;
+                Corners[x, y].Obstacles[1, 2] = toAdd;
+                Corners[x, y + 1].Obstacles[1, 0] = toAdd;
+                Corners[x, y - 1].Obstacles[1, 2] = toAdd;
+            }
+
+            return this;
+
+        }
+
         public void MovePlayer(int x, int y, IPlayer player)
         {
 

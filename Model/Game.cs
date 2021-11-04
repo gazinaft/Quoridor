@@ -11,7 +11,11 @@ namespace Model {
         
         private IPlayer SecondPlayer;
 
-        public ICommand LastCommand { get; set; }
+        public ICommand PlaceTheWallCommand { get; set; }
+
+        public ICommand MovePlayerCommand { get; set; }
+
+
 
         public bool TheWallIsPlaced { get; set; }
         
@@ -20,6 +24,8 @@ namespace Model {
         public Corner SelectedCorner { get; set; }
         
         public bool WallIsHorizontal { get; set; }
+
+        public bool IsJumping { get; set; }
 
         private PathFindingService _pathFindingService;
 
@@ -185,16 +191,6 @@ namespace Model {
                 NotifyCornerIsInvalid?.Invoke();
             }
             else {
-
-                if (DoDisplayStep) {
-
-                    PlaceWallCommand _lastCommand = new PlaceWallCommand(SelectedCorner.X, SelectedCorner.Y, WallIsHorizontal);
-
-                    _stepsHistory.AddLast(_lastCommand);
-
-                    LastCommand = _lastCommand;
-
-                }
                 
                 Board.SetBlock(SelectedCorner.X, SelectedCorner.Y, WallIsHorizontal);
                 
@@ -260,11 +256,12 @@ namespace Model {
             firstPlayer.VictoryRow = 8;
 
             UserPlayer secondPlayer = new UserPlayer();
+            secondPlayer.PlayerId = 2;
             secondPlayer.PlayerStrategy = new DummyStrategy();
             secondPlayer.StartCell = Board.Cells[4, 8];
             secondPlayer.CurrentCell = Board.Cells[4, 8];
             secondPlayer.VictoryRow = 0;
-            secondPlayer.PlayerId = 2;
+            
 
             ActivePlayer = firstPlayer;
 
@@ -276,18 +273,20 @@ namespace Model {
         }
 
         public void ChangeTheCell() {
-            
 
-            if (DoDisplayStep) {
+            if (System.Math.Abs(SelectedCell.X - ActivePlayer.CurrentCell.X) + System.Math.Abs(SelectedCell.Y - ActivePlayer.CurrentCell.Y) > 1)
+            {
 
-                MovePlayerCommand lastCommand = new MovePlayerCommand(SelectedCell, ActivePlayer);
-
-                _stepsHistory.AddLast(lastCommand);
-
-                LastCommand = lastCommand;
+                IsJumping = true;
 
             }
-            
+            else
+            {
+
+                IsJumping = false;
+
+            }
+
             Board.MovePlayer(SelectedCell.X, SelectedCell.Y, ActivePlayer);
 
             TheWallIsPlaced = false;

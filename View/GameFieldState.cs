@@ -8,6 +8,8 @@ namespace View
 
         public bool[,][,] GridForCorners;
 
+        public bool IsJumping { get; set; }
+
         public bool TheWallIsPlaced { get; set; }
         
         public bool TheWallIsHorisontal { get; set; }
