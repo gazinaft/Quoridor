@@ -411,10 +411,21 @@ namespace View
             }
             else {
 
-                int selectedCellY = state.SelectedCellY + 1;
+                if (state.IsJumping)
+                {
 
-                Console.WriteLine("move " + _coordinatesCellsToLetters[state.SelectedCellX + 1] +selectedCellY);
+                    int selectedCellY = state.SelectedCellY + 1;
 
+                    Console.WriteLine("jump " + _coordinatesCellsToLetters[state.SelectedCellX + 1] + selectedCellY);
+
+                }
+                else {
+
+                    int selectedCellY = state.SelectedCellY + 1;
+
+                    Console.WriteLine("move " + _coordinatesCellsToLetters[state.SelectedCellX + 1] + selectedCellY);
+
+                }
             
             }
 

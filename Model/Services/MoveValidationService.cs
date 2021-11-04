@@ -42,6 +42,7 @@ namespace Model.Services
             return second;
         }
 
+
         private bool IsXAxis(Cell first, Cell second)
         {
             return first.Y == second.Y;

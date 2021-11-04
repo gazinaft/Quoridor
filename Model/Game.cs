@@ -21,6 +21,8 @@ namespace Model {
         
         public bool WallIsHorizontal { get; set; }
 
+        public bool IsJumping { get; set; }
+
         private PathFindingService _pathFindingService;
 
         private MoveValidationService _moveValidationService;
@@ -288,7 +290,20 @@ namespace Model {
                 LastCommand = lastCommand;
 
             }
-            
+
+            if (System.Math.Abs(SelectedCell.X - ActivePlayer.CurrentCell.X) + System.Math.Abs(SelectedCell.Y - ActivePlayer.CurrentCell.Y) > 1)
+            {
+
+                IsJumping = true;
+
+            }
+            else
+            {
+
+                IsJumping = false;
+
+            }
+
             Board.MovePlayer(SelectedCell.X, SelectedCell.Y, ActivePlayer);
 
             TheWallIsPlaced = false;

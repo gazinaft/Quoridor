@@ -26,6 +26,8 @@ namespace MappingProj
 
             }
 
+            result.IsJumping = model.IsJumping;
+
             result.TheWallIsPlaced = model.TheWallIsPlaced;
 
             result.TheWallIsHorisontal = model.WallIsHorizontal;
