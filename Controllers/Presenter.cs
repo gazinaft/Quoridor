@@ -18,6 +18,8 @@ namespace Controllers
 
             Game = game;
 
+            Game.DoDisplayStep = true;
+
             _gameFieldMapper = new GameFieldMapper();
 
             View.PlacingTheWall += TryToPlaceTheWall;
@@ -56,8 +58,12 @@ namespace Controllers
 
         public void PlaceTheWall() {
 
-            View.PlaceTheWall();
-            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
+            if (Game.DoDisplayStep) {
+
+                View.PlaceTheWall();
+                View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
+
+            }
 
         }
 
@@ -69,7 +75,11 @@ namespace Controllers
 
         public void MakeBotStep() {
 
-            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
+            if (Game.DoDisplayStep) {
+
+                View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
+
+            }
 
         }
 
@@ -81,7 +91,11 @@ namespace Controllers
 
             Game.MovePlayerCommand.Execute(Game);
 
-            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
+            if (Game.DoDisplayStep) {
+
+                View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
+
+            }
 
         }
 
