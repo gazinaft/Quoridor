@@ -50,8 +50,6 @@ namespace Controllers
 
         public void DoUndo() {
 
-            Game.Undo(Game.LastCommand);
-
             View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
 
         }
@@ -78,8 +76,10 @@ namespace Controllers
         public void MakeStep() {
 
             Game.SelectedCell = Game.Board.Cells[View.SelectedCellX, View.SelectedCellY];
-            
-            Game.ChangeTheCell();
+
+            Game.MovePlayerCommand = new MovePlayerCommand(Game.SelectedCell, Game.ActivePlayer);
+
+            Game.MovePlayerCommand.Execute(Game);
 
             View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
 
@@ -93,7 +93,9 @@ namespace Controllers
 
             Game.WallIsHorizontal = View.SelectedWallIsHorizontal;
 
-            Game.PlaceTheWall();
+            Game.PlaceTheWallCommand = new PlaceWallCommand(Game.SelectedCorner.X, Game.SelectedCorner.Y, Game.WallIsHorizontal);
+
+            Game.PlaceTheWallCommand.Execute(Game);
 
         }
 

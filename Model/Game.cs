@@ -11,7 +11,11 @@ namespace Model {
         
         private IPlayer SecondPlayer;
 
-        public ICommand LastCommand { get; set; }
+        public ICommand PlaceTheWallCommand { get; set; }
+
+        public ICommand MovePlayerCommand { get; set; }
+
+
 
         public bool TheWallIsPlaced { get; set; }
         
@@ -187,16 +191,6 @@ namespace Model {
                 NotifyCornerIsInvalid?.Invoke();
             }
             else {
-
-                if (DoDisplayStep) {
-
-                    PlaceWallCommand _lastCommand = new PlaceWallCommand(SelectedCorner.X, SelectedCorner.Y, WallIsHorizontal);
-
-                    _stepsHistory.AddLast(_lastCommand);
-
-                    LastCommand = _lastCommand;
-
-                }
                 
                 Board.SetBlock(SelectedCorner.X, SelectedCorner.Y, WallIsHorizontal);
                 
@@ -279,17 +273,6 @@ namespace Model {
         }
 
         public void ChangeTheCell() {
-            
-
-            if (DoDisplayStep) {
-
-                MovePlayerCommand lastCommand = new MovePlayerCommand(SelectedCell, ActivePlayer);
-
-                _stepsHistory.AddLast(lastCommand);
-
-                LastCommand = lastCommand;
-
-            }
 
             if (System.Math.Abs(SelectedCell.X - ActivePlayer.CurrentCell.X) + System.Math.Abs(SelectedCell.Y - ActivePlayer.CurrentCell.Y) > 1)
             {

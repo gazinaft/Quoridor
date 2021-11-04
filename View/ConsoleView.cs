@@ -100,7 +100,7 @@ namespace View
 
         public void DisplayPotentialWallsAndCorners(GameFieldState state)
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            /*Console.ForegroundColor = ConsoleColor.Yellow;
 
             Console.WriteLine("+++A+++++B+++++C+++++D+++++E+++++F+++++G+++++H+++++I+++");
             
@@ -164,7 +164,7 @@ namespace View
                 
                 
 
-            }
+            }*/
 
             Console.WriteLine("Choose white or black");
 
@@ -323,7 +323,7 @@ namespace View
         public void DisplayTheField(GameFieldState state)
         {
 
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            /*Console.ForegroundColor = ConsoleColor.Yellow;
 
             Console.WriteLine("+++A+++++B+++++C+++++D+++++E+++++F+++++G+++++H+++++I+++");
 
@@ -389,7 +389,7 @@ namespace View
 
 
 
-            }
+            }*/
 
             if (state.TheWallIsPlaced) {
 
@@ -434,7 +434,7 @@ namespace View
 
         public void PlaceTheWall()
         {
-            Console.WriteLine("The wall was placed successfully.");
+            //Console.WriteLine("The wall was placed successfully.");
         }
 
         public void ThisIsTheEnd()

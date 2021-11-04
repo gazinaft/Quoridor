@@ -45,6 +45,8 @@ namespace Model
 
                 }
 
+
+
                 game.TheWallIsPlaced = true;
                 
                 game.SelectedCorner = game.Board.Corners[curIndexX, curIndexY];
