@@ -3,11 +3,15 @@
 
         public Node Parent;
         public int Level;
+        public ICommand Command;
         
-        public Node(int level, Node parent = null) {
+        public Node(ICommand command, int level, Node parent = null) {
+            Command = command;
             Parent = parent;
             Level = level;
         }
 
+        
+        
     }
 }

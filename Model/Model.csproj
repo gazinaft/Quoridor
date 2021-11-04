@@ -51,6 +51,7 @@
     <Compile Include="Cell.cs" />
     <Compile Include="Corner.cs" />
     <Compile Include="DummyStrategy.cs" />
+    <Compile Include="EmptyCommand.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameField.cs" />
     <Compile Include="ICommand.cs" />

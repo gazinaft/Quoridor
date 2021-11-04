@@ -8,7 +8,7 @@
         }
         
         public void Think(Game game) {
-            _ai.GetBestMove(game).Execute(ref game);
+            _ai.GetBestMove(game).Execute(game);
         }
     }
 }
