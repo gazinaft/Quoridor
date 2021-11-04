@@ -10,30 +10,69 @@ namespace Model
     {
         MoveValidationService _moveValidationService;
 
+        int stepCounter;
+
         public DummyStrategy()
         {
             _moveValidationService = new MoveValidationService();
+
+            stepCounter = 0;
         }
 
         public void Think(Game game)
         {
             Random r = new Random();
-            
-            int index = r.Next(game.Board.GetAvailableMoves(game.ActivePlayer).Count);
 
-            game.SelectedCell = game.Board.GetAvailableMoves(game.ActivePlayer)[index];
+            if (stepCounter % 2 == 0)
+            {
 
-            if (game.DoDisplayStep) {
+                int curIndexX = r.Next(game.Board.Corners.GetLength(0));
 
-                MovePlayerCommand command = new MovePlayerCommand(game.SelectedCell, game.ActivePlayer);
+                int curIndexY = r.Next(game.Board.Corners.GetLength(0));
 
-                game._stepsHistory.AddLast(command);
+                int isHorisontal = r.Next(2);
+
+                if (isHorisontal == 1)
+                {
+
+                    game.WallIsHorizontal = true;
+
+                }
+                else
+                {
+
+                    game.WallIsHorizontal = false;
+
+                }
+
+                game.SelectedCorner = game.Board.Corners[curIndexX, curIndexY];
+
+                game.PlaceTheWall();
+
+            }
+            else {
+
+                int index = r.Next(game.Board.GetAvailableMoves(game.ActivePlayer).Count);
+
+                game.SelectedCell = game.Board.GetAvailableMoves(game.ActivePlayer)[index];
+
+                if (game.DoDisplayStep)
+                {
+
+                    MovePlayerCommand command = new MovePlayerCommand(game.SelectedCell, game.ActivePlayer);
+
+                    game._stepsHistory.AddLast(command);
+
+
+                }
+
+                game.ChangeTheCell();
+
+                stepCounter++;
 
 
             }
-
-            game.ChangeTheCell();
-
+ 
         }
     }
 }
