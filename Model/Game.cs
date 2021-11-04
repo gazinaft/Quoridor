@@ -281,11 +281,11 @@ namespace Model {
 
             if (DoDisplayStep) {
 
-                MovePlayerCommand _lastCommand = new MovePlayerCommand(SelectedCell.X, SelectedCell.Y, ActivePlayer);
+                MovePlayerCommand lastCommand = new MovePlayerCommand(SelectedCell, ActivePlayer);
 
-                _stepsHistory.AddLast(_lastCommand);
+                _stepsHistory.AddLast(lastCommand);
 
-                LastCommand = _lastCommand;
+                LastCommand = lastCommand;
 
             }
             

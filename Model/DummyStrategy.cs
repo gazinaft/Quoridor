@@ -19,13 +19,13 @@ namespace Model
         {
             Random r = new Random();
             
-            int index = r.Next(0, game.Board.GetAvailableMoves(game.ActivePlayer).Count - 1);
+            int index = r.Next(game.Board.GetAvailableMoves(game.ActivePlayer).Count);
 
             game.SelectedCell = game.Board.GetAvailableMoves(game.ActivePlayer)[index];
 
             if (game.DoDisplayStep) {
 
-                MovePlayerCommand command = new MovePlayerCommand(game.SelectedCell.X, game.SelectedCell.Y, game.ActivePlayer);
+                MovePlayerCommand command = new MovePlayerCommand(game.SelectedCell, game.ActivePlayer);
 
                 game._stepsHistory.AddLast(command);
 

@@ -1,24 +1,21 @@
 ﻿namespace Model {
     public class MovePlayerCommand: ICommand {
-        
-        private readonly int _x;
-        private readonly int _y;
+
+        private readonly Cell _cell;
         private IPlayer _player;
         
-        public MovePlayerCommand(int x, int y, IPlayer player) {
-            _x = x;
-            _y = y;
+        public MovePlayerCommand(Cell cell, IPlayer player) {
+            _cell = cell;
             _player = player;
         }
-
-        public void Execute(Game game) {
-
+        
+        public Game Execute(Game game) {
+            game.SelectedCell = _cell;
             game.ChangeTheCell();
-
+            return game;
         }
 
-        public void Undo(Game game)
-        {
+        public void Undo(Game game) {
             game.Undo(this);
         }
     }
