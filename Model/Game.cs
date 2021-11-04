@@ -260,11 +260,12 @@ namespace Model {
             firstPlayer.VictoryRow = 8;
 
             UserPlayer secondPlayer = new UserPlayer();
+            secondPlayer.PlayerId = 2;
             secondPlayer.PlayerStrategy = new DummyStrategy();
             secondPlayer.StartCell = Board.Cells[4, 8];
             secondPlayer.CurrentCell = Board.Cells[4, 8];
             secondPlayer.VictoryRow = 0;
-            secondPlayer.PlayerId = 2;
+            
 
             ActivePlayer = firstPlayer;
 
