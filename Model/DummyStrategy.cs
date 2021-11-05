@@ -65,10 +65,8 @@ namespace Model
                 if (game.DoDisplayStep)
                 {
 
-                    MovePlayerCommand command = new MovePlayerCommand(game.SelectedCell, game.ActivePlayer);
-
+                    MovePlayerCommand command = new MovePlayerCommand(game.SelectedCell);
                     game._stepsHistory.AddLast(command);
-
 
                 }
 

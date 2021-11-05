@@ -87,7 +87,7 @@ namespace Controllers
 
             Game.SelectedCell = Game.Board.Cells[View.SelectedCellX, View.SelectedCellY];
 
-            Game.MovePlayerCommand = new MovePlayerCommand(Game.SelectedCell, Game.ActivePlayer);
+            Game.MovePlayerCommand = new MovePlayerCommand(Game.SelectedCell);
 
             Game.MovePlayerCommand.Execute(Game);
 
