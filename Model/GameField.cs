@@ -7,10 +7,7 @@ namespace Model
     {
 
         private MoveValidationService _moveValidationService;
-
         private WallValidationService _wallValidationService;
-
-        private PathFindingService _pathFindingService;
 
         public GameField(MoveValidationService moveValidationService, WallValidationService wallValidationService, PathFindingService pathFindingService, int x, int y)
         {
@@ -19,7 +16,6 @@ namespace Model
             
             _moveValidationService = moveValidationService;
             _wallValidationService = wallValidationService;
-            _pathFindingService = pathFindingService;
 
             Cells = new Cell[x, y];
 
@@ -64,15 +60,15 @@ namespace Model
 
         public bool[,][,] FormGridForObstacles() {
 
-            bool[,][,] Grid = new bool[Height+1, Width+1][,];
+            bool[,][,] grid = new bool[Height+1, Width+1][,];
 
             foreach (var corner in Corners) {
                 bool[,] curObstacles = corner.Obstacles;
-                Grid[corner.X, corner.Y] = curObstacles;
+                grid[corner.X, corner.Y] = curObstacles;
             }
 
-            GridForObstacles = Grid;
-            return Grid;
+            GridForObstacles = grid;
+            return grid;
         }
 
 
@@ -133,6 +129,9 @@ namespace Model
             return possibleMoves;
         }
 
+        public List<(Corner, bool)> GetAvailableWalls(List<IPlayer> players) {
+            return _wallValidationService.GetPossibleWalls(this, players);
+        }
 
         public GameField SetBlock(int x, int y, bool isHorizontal, bool toAdd = true)
         {        
@@ -146,29 +145,6 @@ namespace Model
                 Corners[x - 1, y].Obstacles[2, 1] = toAdd;
             }
             else {
-                Corners[x, y].Obstacles[1, 0] = toAdd;
-                Corners[x, y].Obstacles[1, 1] = toAdd;
-                Corners[x, y].Obstacles[1, 2] = toAdd;
-                Corners[x, y + 1].Obstacles[1, 0] = toAdd;
-                Corners[x, y - 1].Obstacles[1, 2] = toAdd;
-            }
-
-            return this;
-
-        }
-
-        public GameField UnSetBlock(int x, int y, bool isHorizontal, bool toAdd = false) {
-
-            if (isHorizontal)
-            {
-                Corners[x, y].Obstacles[0, 1] = toAdd;
-                Corners[x, y].Obstacles[1, 1] = toAdd;
-                Corners[x, y].Obstacles[2, 1] = toAdd;
-                Corners[x + 1, y].Obstacles[0, 1] = toAdd;
-                Corners[x - 1, y].Obstacles[2, 1] = toAdd;
-            }
-            else
-            {
                 Corners[x, y].Obstacles[1, 0] = toAdd;
                 Corners[x, y].Obstacles[1, 1] = toAdd;
                 Corners[x, y].Obstacles[1, 2] = toAdd;
