@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Model.Strategy;
 namespace Model.Services
 {
@@ -17,15 +14,15 @@ namespace Model.Services
             _pathFindingService.SelectedAlgorithm = new BFS();
         }
 
-        public List<(Corner, bool)> GetPossibleWalls(GameField field, IPlayer player)
+        public List<(Corner, bool)> GetPossibleWalls(GameField field, List<IPlayer> players)
         {
             var res = new List<(Corner, bool)>();
             for (int x = 1; x < field.Width; x++)
             {
                 for (int y = 1; y < field.Height; y++)
                 {
-                    if (!CornerInvalid(x, y, true, field, new List<IPlayer> {player})) res.Add((field.Corners[x, y], true));
-                    if (!CornerInvalid(x, y, false, field, new List<IPlayer> {player})) res.Add((field.Corners[x, y], false));
+                    if (!CornerInvalid(x, y, true, field, players)) res.Add((field.Corners[x, y], true));
+                    if (!CornerInvalid(x, y, false, field, players)) res.Add((field.Corners[x, y], false));
                 }
             }
 
@@ -37,8 +34,6 @@ namespace Model.Services
             IPlayer activePlayer = players.Find(pl => pl.PlayerIsActive);
 
             return activePlayer.WallsCounter <= 0;
-
-        
         }
 
         public bool CornerInvalid(int x, int y, bool isHorizontal, GameField field, List<IPlayer> players)
@@ -63,12 +58,13 @@ namespace Model.Services
 
         private bool HasNoPath(int x, int y, bool isHorizontal, GameField field, List<IPlayer> players) {
             field.SetBlock(x, y, isHorizontal);
-            foreach (IPlayer player in players) {
-                if (_pathFindingService.SelectedAlgorithm.FindThePath(player, field).Count == 0) {
+            for (var i = 0; i < players.Count; i++) {
+                if (_pathFindingService.SelectedAlgorithm.FindThePath(players[i], field).Count == 0) {
                     field.SetBlock(x, y, isHorizontal, false);
                     return true;
                 }
             }
+
             field.SetBlock(x, y, isHorizontal, false);
             return false;
         }

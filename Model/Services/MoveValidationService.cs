@@ -23,7 +23,15 @@ namespace Model.Services
         {
             List<Cell> neighbours = field.GetNeighbours(end);
             neighbours.Remove(start);
-            Cell res = neighbours.FirstOrDefault(cell => (cell.X, cell.Y) == OverOneCell(start, end));
+            Cell res = null;
+            for (var i = 0; i < neighbours.Count; i++) {
+                var cell = neighbours[i];
+                if ((cell.X, cell.Y) == OverOneCell(start, end)) {
+                    res = cell;
+                    break;
+                }
+            }
+
             return res == null || !CanMoveBetween(end, res, field)
                 ? neighbours.Where(cell => CanMoveBetween(end, cell, field)).ToList()
                 : new List<Cell> { res };

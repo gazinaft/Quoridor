@@ -6,59 +6,35 @@ namespace Model {
     public class Game {
         
         public GameField Board { get; set; }
-        
-        private IPlayer FirstPlayer;
-        
-        private IPlayer SecondPlayer;
-
         public ICommand PlaceTheWallCommand { get; set; }
-
         public ICommand MovePlayerCommand { get; set; }
-
-
+        
 
         public bool TheWallIsPlaced { get; set; }
-        
         public Cell SelectedCell { get; set; }
-        
         public Corner SelectedCorner { get; set; }
-        
         public bool WallIsHorizontal { get; set; }
-
         public bool IsJumping { get; set; }
+        
 
         private PathFindingService _pathFindingService;
-
         private MoveValidationService _moveValidationService;
-
         private WallValidationService _wallValidationService;
         
         public delegate void ChangeSelectedCell();
-
         public delegate void ChangeSelectedCorner();
-
         public event ChangeSelectedCell SelectedCellChanged;
-
         public event ChangeSelectedCorner NotifyPlacingTheWall;
-
         public delegate void NextPlayer();
-
         public delegate void CornerIsInvalid();
-
         public delegate void NextStep();
-
         public delegate void BotStep();
-
         public delegate void TheGameIsEnded();
-
+        
         public event TheGameIsEnded NotifyAboutEnd;
-
         public event BotStep NotifyBotHasDecided;
-
         public event NextStep NotifyNextStep;
-
         public event CornerIsInvalid NotifyCornerIsInvalid;
-
         public event NextPlayer NotifyPlayerHasChanged;
 
         public List<IPlayer> Players;
@@ -76,9 +52,7 @@ namespace Model {
             _stepsHistory = new LinkedList<ICommand>();
             
             _pathFindingService = new PathFindingService();
-
             _moveValidationService = new MoveValidationService();
-
             _wallValidationService = new WallValidationService(_pathFindingService);
 
             Board = new GameField(_moveValidationService, _wallValidationService, _pathFindingService, 9, 9);
@@ -274,24 +248,30 @@ namespace Model {
 
         public void ChangeTheCell() {
 
-            if (System.Math.Abs(SelectedCell.X - ActivePlayer.CurrentCell.X) + System.Math.Abs(SelectedCell.Y - ActivePlayer.CurrentCell.Y) > 1)
-            {
-
-                IsJumping = true;
-
-            }
-            else
-            {
-
-                IsJumping = false;
-
-            }
+            // if travel more than 1 cell than it's a jump
+            IsJumping = System.Math.Abs(SelectedCell.X - ActivePlayer.CurrentCell.X) +
+                System.Math.Abs(SelectedCell.Y - ActivePlayer.CurrentCell.Y) > 1;
 
             Board.MovePlayer(SelectedCell.X, SelectedCell.Y, ActivePlayer);
 
             TheWallIsPlaced = false;
 
             NotifyPlayerHasChanged?.Invoke();
+        }
+
+        public List<ICommand> GetLegalActions() {
+            var res = new List<ICommand>();
+
+            var list = Board.GetAvailableMoves(ActivePlayer);
+            for (var i = 0; i < list.Count; i++) {
+                res.Add(new MovePlayerCommand(list[i]));
+            }
+            
+            foreach (var (c, isHorizontal) in Board.GetAvailableWalls(Players)) {
+                res.Add(new PlaceWallCommand(c.X, c.Y, isHorizontal));
+            }
+
+            return res;
         }
 
     }
