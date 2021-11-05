@@ -6,11 +6,8 @@ namespace View
     public class ConsoleView : IGameView
     {
         Dictionary<string, int> _lettersToCellCoordinates;
-
         Dictionary<string, int> _lettersToCornerCorodinates;
-
         Dictionary<int, string> _coordinatesCornersToLetters;
-
         Dictionary<int, string> _coordinatesCellsToLetters;
 
         public int SelectedCellX { get ; set; }
@@ -176,7 +173,7 @@ namespace View
         public void TryToMovePlayer() {
 
 
-            PlayerMove.Invoke();
+            PlayerMove?.Invoke();
 
         
         }
