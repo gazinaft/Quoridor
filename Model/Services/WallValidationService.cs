@@ -17,9 +17,9 @@ namespace Model.Services
         public List<(Corner, bool)> GetPossibleWalls(GameField field, List<IPlayer> players)
         {
             var res = new List<(Corner, bool)>();
-            for (int x = 1; x < field.Width; x++)
+            for (int x = 1; x < field.Width-1; x++)
             {
-                for (int y = 1; y < field.Height; y++)
+                for (int y = 1; y < field.Height-1; y++)
                 {
                     if (!CornerInvalid(x, y, true, field, players)) res.Add((field.Corners[x, y], true));
                     if (!CornerInvalid(x, y, false, field, players)) res.Add((field.Corners[x, y], false));

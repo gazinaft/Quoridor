@@ -76,15 +76,15 @@ namespace View
             _coordinatesCornersToLetters.Add(7, "Y");
             _coordinatesCornersToLetters.Add(8, "Z");
 
-            _coordinatesCellsToLetters.Add(1, "A");
-            _coordinatesCellsToLetters.Add(2, "B");
-            _coordinatesCellsToLetters.Add(3, "C");
-            _coordinatesCellsToLetters.Add(4, "D");
-            _coordinatesCellsToLetters.Add(5, "E");
-            _coordinatesCellsToLetters.Add(6, "F");
-            _coordinatesCellsToLetters.Add(7, "G");
-            _coordinatesCellsToLetters.Add(8, "H");
-            _coordinatesCellsToLetters.Add(9, "I");
+            _coordinatesCellsToLetters.Add(0, "A");
+            _coordinatesCellsToLetters.Add(1, "B");
+            _coordinatesCellsToLetters.Add(2, "C");
+            _coordinatesCellsToLetters.Add(3, "D");
+            _coordinatesCellsToLetters.Add(4, "E");
+            _coordinatesCellsToLetters.Add(5, "F");
+            _coordinatesCellsToLetters.Add(6, "G");
+            _coordinatesCellsToLetters.Add(7, "H");
+            _coordinatesCellsToLetters.Add(8, "I");
 
 
 
@@ -92,7 +92,7 @@ namespace View
 
         public void CantPlaceTheWall()
         {
-            Console.WriteLine("You can't place the wall in that way.");
+            //Console.WriteLine("You can't place the wall in that way.");
         }
 
         public void DisplayPotentialWallsAndCorners(GameFieldState state)
@@ -163,7 +163,7 @@ namespace View
 
             }*/
 
-            Console.WriteLine("Choose white or black");
+            //Console.WriteLine("Choose white or black");
 
             CheckTheFirstCommand();
 
@@ -185,7 +185,13 @@ namespace View
             if (selectedTeam == "white")
             {
 
-                CheckTheCommand();
+                //CheckTheCommand();
+
+                SelectedCellX = 4;
+
+                SelectedCellY = 8;
+
+                TryToMovePlayer();
 
             }
             else if (selectedTeam == "black")
@@ -413,14 +419,14 @@ namespace View
 
                     int selectedCellY = state.SelectedCellY + 1;
 
-                    Console.WriteLine("jump " + _coordinatesCellsToLetters[state.SelectedCellX + 1] + selectedCellY);
+                    Console.WriteLine("jump " + _coordinatesCellsToLetters[state.SelectedCellX] + selectedCellY);
 
                 }
                 else {
 
                     int selectedCellY = state.SelectedCellY + 1;
 
-                    Console.WriteLine("move " + _coordinatesCellsToLetters[state.SelectedCellX + 1] + selectedCellY);
+                    Console.WriteLine("move " + _coordinatesCellsToLetters[state.SelectedCellX] + selectedCellY);
 
                 }
             
