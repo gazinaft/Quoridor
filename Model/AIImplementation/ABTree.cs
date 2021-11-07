@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Model.Services;
 namespace Model {
 
     public delegate float SEV(Game game);
@@ -8,10 +8,22 @@ namespace Model {
         
         private Node _root;
         private SEV _sev;
-
-        public ABTree(SEV sev, int depth) {
-            _sev = sev;
+        private PathFindingService _pathFindingService;
+        public ABTree(int depth) {
+            
             _root = new Node(new EmptyCommand(), depth);
+            
+            _pathFindingService = new PathFindingService();
+
+            _sev = GetStateSuccess;
+
+        }
+
+        public float GetStateSuccess(Game game) {
+
+            return game.ActivePlayer.WallsCounter + _pathFindingService.SelectedAlgorithm.FindThePath(game.ActivePlayer, game.Board).Count 
+                - game.InActivePlayer.WallsCounter - _pathFindingService.SelectedAlgorithm.FindThePath(game.InActivePlayer, game.Board).Count; 
+        
         }
         
         private void MiniMax(Game game) {

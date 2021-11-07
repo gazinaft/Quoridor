@@ -41,6 +41,8 @@ namespace Model {
 
         public IPlayer ActivePlayer;
 
+        public IPlayer InActivePlayer;
+
         public LinkedList<ICommand> _stepsHistory;
 
         public bool DoDisplayStep { get; set; }
@@ -74,6 +76,8 @@ namespace Model {
             secondPlayer.PlayerId = 2;
 
             ActivePlayer = firstPlayer;
+
+            InActivePlayer = secondPlayer;
 
             firstPlayer.PlayerIsActive = true;
 
@@ -132,6 +136,8 @@ namespace Model {
             secondPlayer.VictoryRow = 8;
 
             ActivePlayer = firstPlayer;
+
+            InActivePlayer = secondPlayer;
 
             firstPlayer.PlayerIsActive = true;
             
@@ -199,12 +205,14 @@ namespace Model {
 
             if (lastActivePlayerIndex + 1 != Players.Count)
             {
+                InActivePlayer = Players.ElementAt(lastActivePlayerIndex);
                 Players.ElementAt(lastActivePlayerIndex).PlayerIsActive = false;
                 Players.ElementAt(lastActivePlayerIndex + 1).PlayerIsActive = true;
                 ActivePlayer = Players.ElementAt(lastActivePlayerIndex + 1);
             }
             else
             {
+                InActivePlayer = Players.ElementAt(lastActivePlayerIndex);
                 Players.ElementAt(lastActivePlayerIndex).PlayerIsActive = false;
                 Players.ElementAt(0).PlayerIsActive = true;
                 ActivePlayer = Players.ElementAt(0);
