@@ -306,7 +306,7 @@ namespace View
                 }
                 catch (Exception){
 
-                    Console.WriteLine("Can't parse the command:(((");
+                    Console.WriteLine("Can't parse the command:((");
 
                 }
 
