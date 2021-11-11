@@ -175,7 +175,7 @@ namespace View
 
                     _horizontalWalls.Add(higherWall);
 
-                    _cornerToButtonDictionary.Add((i, j, true), higherWall);
+                    _cornerToButtonDictionary.Add((i+1, j, true), higherWall);
 
                     GamePanel.Controls.Add(higherWall);
 
