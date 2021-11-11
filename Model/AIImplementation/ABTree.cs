@@ -46,7 +46,7 @@ namespace Model {
                     var backTrack = new Node(actions[0], current.Level - 1, current, !current.Max) { BackTrack = true };
                     stack.Push(backTrack);
                     for (int i = 1; i < actions.Count; i++) {
-                        stack.Push(new Node(actions[i], current.Level - 1, current));
+                        stack.Push(new Node(actions[i], current.Level - 1, current, !current.Max));
                     }
                 }
             }
