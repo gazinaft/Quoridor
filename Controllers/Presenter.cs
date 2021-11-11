@@ -60,7 +60,7 @@ namespace Controllers
 
             if (Game.DoDisplayStep) {
 
-                View.PlaceTheWall();
+                View.PlaceTheWall(_gameFieldMapper.FromModelToView(Game));
                 View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
 
             }

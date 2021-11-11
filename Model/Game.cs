@@ -222,6 +222,7 @@ namespace Model {
             {
                 ActivePlayer.Decide(this);
                 ActivePlayer.PlayerIsActive = false;
+                InActivePlayer = ActivePlayer;
                 ActivePlayer = Players.ElementAt(0);
                 ActivePlayer.PlayerIsActive = true;
             }

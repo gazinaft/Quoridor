@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Model.Services;
+using Model.Strategy;
 namespace Model {
 
     public delegate float SEV(Game game);
@@ -14,6 +15,8 @@ namespace Model {
             _root = new Node(new EmptyCommand(), depth);
             
             _pathFindingService = new PathFindingService();
+
+            _pathFindingService.SelectedAlgorithm = new BFS();
 
             _sev = GetStateSuccess;
 
@@ -47,10 +50,12 @@ namespace Model {
                     }
                 }
             }
+            
         }
 
         public ICommand GetBestMove(Game game) {
             MiniMax(game);
+
             return _root.BestNode.Command;
         }
     }

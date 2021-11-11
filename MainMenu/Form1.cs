@@ -21,7 +21,9 @@ namespace MainMenu
 
         private void SinglePlayerButton_Click(object sender, EventArgs e)
         {
-            Game game = new Game(new DummyStrategy());
+            Game game = new Game(new ABStrategy(new ABTree(4)));
+
+            //Game game = new Game(new DummyStrategy());
 
             GameViewWinForm form = new GameViewWinForm(this);
 

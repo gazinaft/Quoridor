@@ -435,7 +435,7 @@ namespace View
             CheckTheCommand();
         }
 
-        public void PlaceTheWall()
+        public void PlaceTheWall(GameFieldState state)
         {
             //Console.WriteLine("The wall was placed successfully.");
         }
