@@ -19,5 +19,6 @@
             game.SelectedCell = _currentCell;
             game.ChangeTheCell();
         }
+
     }
 }

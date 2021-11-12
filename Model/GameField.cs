@@ -163,7 +163,7 @@ namespace Model
 
             if (GetAvailableMoves(player).Contains(selectedCell)) {
 
-                player.CurrentCell.HasPlayer = false;                
+                player.CurrentCell.HasPlayer = false;  
                 Cells[x, y].HasPlayer = true;
                 player.CurrentCell = Cells[x, y];
 

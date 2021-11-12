@@ -51,7 +51,7 @@ namespace Model {
 
         public GameStateModel GetGameState() {
 
-            GameStateModel currentState = new GameStateModel(SecondPlayer, FirstPlayer, Board) { Players = this.Players };
+            GameStateModel currentState = new GameStateModel(this) { Players = this.Players };
 
             return currentState;
         
