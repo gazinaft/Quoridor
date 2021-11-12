@@ -29,5 +29,6 @@
         public void Undo(GameStateModel gsm) {
             gsm.MakeMove(_currentCell.X, _selectedCell.Y);
         }
+
     }
 }

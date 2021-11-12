@@ -8,15 +8,12 @@ namespace Model {
         public GameField Board { get; set; }
         public ICommand PlaceTheWallCommand { get; set; }
         public ICommand MovePlayerCommand { get; set; }
-        
-        public GameStateModel State { get; set; }
 
         public bool TheWallIsPlaced { get; set; }
         public Cell SelectedCell { get; set; }
         public Corner SelectedCorner { get; set; }
         public bool WallIsHorizontal { get; set; }
-        public bool IsJumping { get; set; }
-        
+        public bool IsJumping { get; set; }        
 
         private PathFindingService _pathFindingService;
         private MoveValidationService _moveValidationService;
@@ -51,6 +48,14 @@ namespace Model {
         public LinkedList<ICommand> _stepsHistory;
 
         public bool DoDisplayStep { get; set; }
+
+        public GameStateModel GetGameState() {
+
+            GameStateModel currentState = new GameStateModel(this) { Players = this.Players };
+
+            return currentState;
+        
+        }
 
         public Game(IPlayerStrategy enemyStrategy) {
 
@@ -165,11 +170,7 @@ namespace Model {
 
             if (ActivePlayer.PlayerStrategy !=null) {
 
-                if (DoDisplayStep) {
-
-                    ActivePlayer.Decide(this);
-
-                }               
+                ActivePlayer.Decide(this);           
                 NotifyBotHasDecided?.Invoke();
                 NotifyPlayerHasChanged?.Invoke();
             
@@ -193,11 +194,7 @@ namespace Model {
 
                 NotifyPlayerHasChanged?.Invoke();
 
-                if (DoDisplayStep) {
-
-                    NotifyPlacingTheWall?.Invoke();
-
-                }
+                NotifyPlacingTheWall?.Invoke();
 
             }
         }

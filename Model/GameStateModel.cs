@@ -16,33 +16,75 @@ namespace Model
 
         public GameField Board { get; set; }
 
-        public GameStateModel(IPlayer firstP, IPlayer secondP, GameField board)
+        public IPlayer ActivePlayer { get; set; }
+
+        public IPlayer InActivePlayer { get; set; }
+
+        public GameStateModel(Game game)
         {
-            HasToWin = firstP; 
+            HasToWin = game.FirstPlayer; 
 
-            HasToLose = secondP;
+            HasToLose = game.SecondPlayer;
 
-            Board = board;
+            ActivePlayer = game.ActivePlayer;
+
+            InActivePlayer = game.InActivePlayer;
+
+            ActivePlayer.PlayerIsActive = true;
+
+            Board = game.Board;
 
             Players = new List<IPlayer>();
 
-            Players.Add(firstP);
+            Players.Add(HasToWin);
 
-            Players.Add(secondP);
+            Players.Add(HasToWin);
 
         }
 
-        public void MakeMove(int x, int y, IPlayer activePlayer) {
+        public void DefineNextPlayer() {
 
-            Board.MovePlayer(x, y, activePlayer);
+            if (HasToWin.PlayerIsActive)
+            {
+
+                HasToWin.PlayerIsActive = false;
+
+                HasToLose.PlayerIsActive = true;
+
+                InActivePlayer = ActivePlayer;
+
+                ActivePlayer = HasToLose;
+
+            }
+            else {
+
+                HasToWin.PlayerIsActive = true;
+
+                HasToLose.PlayerIsActive = false;
+
+                InActivePlayer = ActivePlayer;
+
+                ActivePlayer = HasToWin;
+
+            }
         
         }
 
-        public void PlaceTheWall(int x, int y, bool isHorizontal, IPlayer activePlayer) {
+        public void MakeMove(int x, int y) {
 
-            Board.SetBlock(x, y, isHorizontal);
+            Board.MovePlayer(x, y, ActivePlayer);
 
-            activePlayer.WallsCounter--;
+            DefineNextPlayer();
+        
+        }
+
+        public void PlaceTheWall(int x, int y, bool isHorizontal, bool ToAdd = true) {
+
+            Board.SetBlock(x, y, isHorizontal, ToAdd);
+
+            ActivePlayer.WallsCounter +=  ToAdd ? - 1 : 1;
+
+            DefineNextPlayer();
 
         }
 
