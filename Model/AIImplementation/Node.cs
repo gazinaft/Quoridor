@@ -34,7 +34,7 @@ namespace Model {
             }
         }
         
-        public void Undo(Game game) {
+        public void Undo(GameStateModel game) {
             Parent?.BestForDepth(this);
             Command.Undo(game);
             if(BackTrack) Parent?.Undo(game);

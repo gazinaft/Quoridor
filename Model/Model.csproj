@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AIImplementation\ABPrune.cs" />
     <Compile Include="AIImplementation\ABStrategy.cs" />
     <Compile Include="AIImplementation\ABTree.cs" />
     <Compile Include="AIImplementation\AI.cs" />

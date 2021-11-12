@@ -4,7 +4,6 @@
         private readonly int _x;
         private readonly int _y;
         private readonly bool _direction;
-
         
         public PlaceWallCommand(int x, int y, bool isHorizontal) {
             _x = x;
@@ -17,6 +16,15 @@
             game.WallIsHorizontal = _direction;
             game.PlaceTheWall();
             return game;
+        }
+
+        public GameStateModel Execute(GameStateModel game) {
+            game.PlaceTheWall(_x, _y, _direction);
+            return game;
+        }
+
+        public void Undo(GameStateModel gsm) {
+            gsm.PlaceTheWall(_x, _y, _direction);
         }
 
         public void Undo(Game game) {
