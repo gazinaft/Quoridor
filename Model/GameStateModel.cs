@@ -18,7 +18,7 @@ namespace Model
 
         public GameStateModel(IPlayer firstP, IPlayer secondP, GameField board)
         {
-            HasToWin = firstP;
+            HasToWin = firstP; 
 
             HasToLose = secondP;
 
