@@ -24,8 +24,8 @@ namespace Model {
 
         public float GetStateSuccess(Game game) {
 
-            return game.ActivePlayer.WallsCounter + _pathFindingService.SelectedAlgorithm.FindThePath(game.ActivePlayer, game.Board).Count 
-                - game.InActivePlayer.WallsCounter - _pathFindingService.SelectedAlgorithm.FindThePath(game.InActivePlayer, game.Board).Count; 
+            return game.SecondPlayer.WallsCounter + _pathFindingService.SelectedAlgorithm.FindThePath(game.SecondPlayer, game.Board).Count 
+                - game.FirstPlayer.WallsCounter - _pathFindingService.SelectedAlgorithm.FindThePath(game.FirstPlayer, game.Board).Count; 
         
         }
         
@@ -54,8 +54,32 @@ namespace Model {
         }
 
         public ICommand GetBestMove(Game game) {
+
+            //game.DoDisplayStep = false;
+            // here we are going to make a deepClone of the game
+            
+            //Game gameClone = new Game();
+
+            //gameClone.InActivePlayer = game.InActivePlayer;
+
+            //gameClone.ActivePlayer = game.ActivePlayer;
+
+            //gameClone.Board = game.Board;
+
+            //gameClone.PlaceTheWallCommand = game.PlaceTheWallCommand;
+
+            //gameClone.WallIsHorizontal = game.WallIsHorizontal;
+
+            //gameClone.MovePlayerCommand = game.MovePlayerCommand;
+
+            //gameClone.DoDisplayStep = false;
+
+            //game.DoDisplayStep = false;
+            
             MiniMax(game);
 
+            //game.DoDisplayStep = true;
+            //game.DoDisplayStep = true;
             return _root.BestNode.Command;
         }
     }

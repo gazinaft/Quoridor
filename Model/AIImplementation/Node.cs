@@ -35,9 +35,9 @@ namespace Model {
         }
         
         public void Undo(Game game) {
-            Parent.BestForDepth(this);
+            Parent?.BestForDepth(this);
             Command.Undo(game);
-            if(BackTrack) Parent.Undo(game);
+            if(BackTrack) Parent?.Undo(game);
         }
 
     }

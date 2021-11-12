@@ -9,6 +9,7 @@ namespace Model {
         public ICommand PlaceTheWallCommand { get; set; }
         public ICommand MovePlayerCommand { get; set; }
         
+        public GameStateModel State { get; set; }
 
         public bool TheWallIsPlaced { get; set; }
         public Cell SelectedCell { get; set; }
@@ -42,6 +43,10 @@ namespace Model {
         public IPlayer ActivePlayer;
 
         public IPlayer InActivePlayer;
+
+        public IPlayer FirstPlayer { get; }
+
+        public IPlayer SecondPlayer { get; }
 
         public LinkedList<ICommand> _stepsHistory;
 
@@ -130,10 +135,14 @@ namespace Model {
             firstPlayer.CurrentCell = Board.Cells[4, 8];
             firstPlayer.VictoryRow = 0;
 
+            FirstPlayer = firstPlayer;
+            
             UserPlayer secondPlayer = new UserPlayer();
             secondPlayer.CurrentCell = Board.Cells[4, 0];
             secondPlayer.StartCell = Board.Cells[4, 0];
             secondPlayer.VictoryRow = 8;
+
+            SecondPlayer = secondPlayer;
 
             ActivePlayer = firstPlayer;
 
@@ -156,7 +165,11 @@ namespace Model {
 
             if (ActivePlayer.PlayerStrategy !=null) {
 
-                ActivePlayer.Decide(this);
+                if (DoDisplayStep) {
+
+                    ActivePlayer.Decide(this);
+
+                }               
                 NotifyBotHasDecided?.Invoke();
                 NotifyPlayerHasChanged?.Invoke();
             
@@ -186,9 +199,35 @@ namespace Model {
 
                 }
 
-                
+            }
+        }
+
+        public void DefineNextPlayer() {
+
+            if (FirstPlayer.PlayerIsActive)
+            {
+
+                FirstPlayer.PlayerIsActive = false;
+
+                SecondPlayer.PlayerIsActive = true;
+
+                ActivePlayer = SecondPlayer;
+
+                InActivePlayer = FirstPlayer;
 
             }
+            else {
+
+                SecondPlayer.PlayerIsActive = false;
+
+                FirstPlayer.PlayerIsActive = true;
+
+                InActivePlayer = SecondPlayer;
+
+                ActivePlayer = FirstPlayer;
+            
+            }
+        
         }
 
         public void FindNextPlayer() {
@@ -220,7 +259,8 @@ namespace Model {
 
             if (ActivePlayer.PlayerStrategy != null)
             {
-                ActivePlayer.Decide(this);
+
+                ActivePlayer.Decide(this);               
                 ActivePlayer.PlayerIsActive = false;
                 InActivePlayer = ActivePlayer;
                 ActivePlayer = Players.ElementAt(0);

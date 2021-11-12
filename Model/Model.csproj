@@ -54,6 +54,7 @@
     <Compile Include="EmptyCommand.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameField.cs" />
+    <Compile Include="GameStateModel.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="IPlayer.cs" />
     <Compile Include="IPlayerStrategy.cs" />

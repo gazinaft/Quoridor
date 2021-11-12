@@ -115,8 +115,12 @@ namespace Controllers
 
         public void InformAboutEnd() {
 
-            View.ThisIsTheEnd();
-        
+            if (Game.DoDisplayStep) {
+
+                View.ThisIsTheEnd();
+
+            }
+
         }
 
     }
