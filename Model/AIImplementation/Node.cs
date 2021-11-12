@@ -16,6 +16,7 @@ namespace Model {
             Parent = parent;
             Level = level;
             Max = max;
+            BestValue = max ? -100 : 100;
         }
 
         private void BestForDepth(Node child) {

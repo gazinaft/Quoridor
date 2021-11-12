@@ -43,6 +43,11 @@ namespace Model {
                 }
                 else {
                     var actions = game.GetLegalActions();
+                    if (game.ActivePlayer.VictoryRow == game.ActivePlayer.CurrentCell.Y) {
+                        current.BestValue = game.HasToWin == game.ActivePlayer ? 1000 : -1000;
+                        current.Undo(game);
+                        continue;
+                    }
                     // LIFO will recursively go up because it will be the last child node iterating and go up
                     var backTrack = new Node(actions[0], current.Level - 1, current, !current.Max) { BackTrack = true };
                     stack.Push(backTrack);

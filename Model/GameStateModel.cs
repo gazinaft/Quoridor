@@ -34,11 +34,7 @@ namespace Model
 
             Board = game.Board;
 
-            Players = new List<IPlayer>();
-
-            Players.Add(HasToWin);
-
-            Players.Add(HasToWin);
+            Players = new List<IPlayer> { HasToLose, HasToWin };
 
         }
 
@@ -92,7 +88,7 @@ namespace Model
         {
             var res = new List<ICommand>();
 
-            var list = Board.GetAvailableMoves(HasToWin);
+            var list = Board.GetAvailableMoves(ActivePlayer);
             for (var i = 0; i < list.Count; i++)
             {
                 res.Add(new MovePlayerCommand(list[i]));

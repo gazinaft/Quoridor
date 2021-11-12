@@ -24,7 +24,7 @@
         }
 
         public void Undo(GameStateModel gsm) {
-            gsm.PlaceTheWall(_x, _y, _direction);
+            gsm.PlaceTheWall(_x, _y, _direction, false);
         }
 
         public void Undo(Game game) {
