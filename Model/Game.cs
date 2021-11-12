@@ -85,6 +85,10 @@ namespace Model {
             secondPlayer.VictoryRow = 8;
             secondPlayer.PlayerId = 2;
 
+            FirstPlayer = firstPlayer;
+
+            SecondPlayer = secondPlayer;
+
             ActivePlayer = firstPlayer;
 
             InActivePlayer = secondPlayer;
