@@ -272,7 +272,7 @@ namespace Model {
 
         public void ChangePlayers() {
 
-            Players.Clear();
+            /*Players.Clear();
             UserPlayer firstPlayer = new UserPlayer();
             firstPlayer.PlayerId = 1;
             firstPlayer.StartCell = Board.Cells[4, 0];
@@ -292,7 +292,34 @@ namespace Model {
             firstPlayer.PlayerIsActive = true;
 
             Players.Add(firstPlayer);
-            Players.Add(secondPlayer);
+            Players.Add(secondPlayer);*/
+
+            FirstPlayer.StartCell = Board.Cells[4, 0];
+
+            FirstPlayer.CurrentCell = Board.Cells[4, 0];
+
+            FirstPlayer.VictoryRow = 8;
+
+            SecondPlayer.StartCell = Board.Cells[4, 8];
+
+            SecondPlayer.CurrentCell = Board.Cells[4, 8];
+
+            SecondPlayer.VictoryRow = 0;
+
+            Players.Clear();
+
+            Players.Add(FirstPlayer);
+
+            Players.Add(SecondPlayer);
+
+            ActivePlayer = SecondPlayer;
+
+            SecondPlayer.PlayerIsActive = true;
+
+            InActivePlayer = FirstPlayer;
+
+            FirstPlayer.PlayerIsActive = false;
+
 
         }
 

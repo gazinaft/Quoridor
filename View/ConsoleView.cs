@@ -187,9 +187,11 @@ namespace View
 
                 //CheckTheCommand();
 
+                ChangePlayer?.Invoke();
+
                 SelectedCellX = 4;
 
-                SelectedCellY = 8;
+                SelectedCellY = 7;
 
                 TryToMovePlayer();
 
@@ -197,13 +199,9 @@ namespace View
             else if (selectedTeam == "black")
             {
 
-                ChangePlayer?.Invoke();
+                //ChangePlayer?.Invoke();
 
-                SelectedCellX = 4;
-
-                SelectedCellY = 0;
-
-                TryToMovePlayer();
+                CheckTheCommand();
 
             }
             else {
@@ -263,7 +261,7 @@ namespace View
             {
                 string selectedCoordinates = command.Substring(5);
 
-                string XString = selectedCoordinates.Substring(0);
+                string XString = selectedCoordinates.Substring(0, 1);
 
                 string YString = selectedCoordinates.Substring(1);
 
@@ -407,7 +405,7 @@ namespace View
 
                     int selectedCornerY = state.SelectedCornerY;
 
-                    Console.WriteLine("wall " + _coordinatesCornersToLetters[state.SelectedCornerX] +  selectedCornerY + "h");
+                    Console.WriteLine("wall " + _coordinatesCornersToLetters[state.SelectedCornerX] +  selectedCornerY + "v");
                 
                 }
             
@@ -442,7 +440,7 @@ namespace View
 
         public void ThisIsTheEnd()
         {
-            Console.WriteLine("The Game is ended.");
+            //Console.WriteLine("The Game is ended.");
         }
     }
 }
