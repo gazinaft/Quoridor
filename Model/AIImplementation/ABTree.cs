@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Model.Services;
 using Model.Strategy;
 namespace Model {
@@ -25,7 +24,7 @@ namespace Model {
 
         
 
-        private float Minimax(Node node, ref float alpha, ref float beta) {
+        private float Minimax(Node node, float alpha, float beta) {
             if (node.Level == 0 || node.Gsm.IsTerminal()) return _sev(node.Gsm);
 
             var children = node.Gsm.GetChildren();
@@ -35,7 +34,7 @@ namespace Model {
  
                 for (int i = 0; i < children.Count; i++) {
                     var child = new Node(children[i], node.Level - 1, false);
-                    float val = Minimax(child, ref alpha, ref beta);
+                    float val = Minimax(child, alpha, beta);
                     if (val > best) {
                         best = val;
                         node.BestNode = child;
@@ -43,8 +42,8 @@ namespace Model {
                     alpha = Math.Max(alpha, best);
  
                     // Alpha Beta Pruning
-                    // if (beta <= alpha)
-                    //     break;
+                    if (beta <= alpha)
+                        break;
                 }
                 return best;
             }
@@ -54,7 +53,7 @@ namespace Model {
                 for (int i = 0; i < children.Count; i++) {
 
                     var child = new Node(children[i], node.Level - 1);
-                    float val = Minimax(child, ref alpha, ref beta);
+                    float val = Minimax(child, alpha, beta);
                     if (val < best) {
                         best = val;
                         node.BestNode = child;
@@ -62,8 +61,8 @@ namespace Model {
                     beta = Math.Min(beta, best);
  
                     // Alpha Beta Pruning
-                    // if (beta <= alpha)
-                    //     break;
+                    if (beta <= alpha)
+                        break;
                 }
                 return best;
             }
@@ -74,7 +73,7 @@ namespace Model {
             _root = new Node(gsm, _depth);
             float max = 1000;
             float min = -1000;
-            Minimax(_root, ref min, ref max);
+            Minimax(_root, min, max);
             return _root.BestNode.Gsm.ComToGet;
         }
         
@@ -82,7 +81,7 @@ namespace Model {
             var winLen = _pathFindingService.SelectedAlgorithm.FindThePath(game.HasToWin, game.Board).Count;
             var loseLen = _pathFindingService.SelectedAlgorithm.FindThePath(game.HasToLose, game.Board).Count;
             // return 5 * loseLen - 5 * winLen;
-            return 10 / (winLen + 0.001f) - 10 / (loseLen + 0.01f);
+            return (float)(1000 / Math.Pow((winLen + 0.001f), 3) - 1000 / Math.Pow(loseLen + 0.01f, 3));
         }
 
         // NonWorking iterative MiniMax

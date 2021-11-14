@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Model.Services;
 namespace Model
 {
@@ -130,8 +129,8 @@ namespace Model
             return possibleMoves;
         }
 
-        public List<(Corner, bool)> GetAvailableWalls(List<IPlayer> players) {
-            return _wallValidationService.GetPossibleWalls(this, players);
+        public List<(Corner, bool)> GetAvailableWalls(List<IPlayer> players, IPlayer enemy) {
+            return _wallValidationService.GetPossibleWalls(this, players, enemy.CurrentCell);
         }
 
         public GameField SetBlock(int x, int y, bool isHorizontal, bool toAdd = true)
