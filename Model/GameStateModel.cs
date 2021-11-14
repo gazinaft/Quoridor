@@ -48,8 +48,8 @@ namespace Model
             Board = new GameField(other.Board);
             HasToWin = other.HasToWin.InfoClone(Board);
             HasToLose = other.HasToLose.InfoClone(Board);
-            InActivePlayer = other.InActivePlayer.InfoClone(Board);
-            ActivePlayer = other.ActivePlayer.InfoClone(Board);
+            InActivePlayer = HasToLose;
+            ActivePlayer = HasToWin;
             Players = new List<IPlayer> { HasToLose, HasToWin };
         }
 

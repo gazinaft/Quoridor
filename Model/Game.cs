@@ -309,20 +309,6 @@ namespace Model {
             NotifyPlayerHasChanged?.Invoke();
         }
 
-        public List<ICommand> GetLegalActions() {
-            var res = new List<ICommand>();
-
-            var list = Board.GetAvailableMoves(ActivePlayer);
-            for (var i = 0; i < list.Count; i++) {
-                res.Add(new MovePlayerCommand(list[i]));
-            }
-            
-            foreach (var (c, isHorizontal) in Board.GetAvailableWalls(Players)) {
-                res.Add(new PlaceWallCommand(c.X, c.Y, isHorizontal));
-            }
-
-            return res;
-        }
 
     }
     

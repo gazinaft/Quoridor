@@ -51,8 +51,6 @@ namespace Model {
             else {
                 float best = 1000;
  
-                // Recur for left and
-                // right children
                 for (int i = 0; i < children.Count; i++) {
 
                     var child = new Node(children[i], node.Level - 1);
@@ -84,7 +82,7 @@ namespace Model {
             var winLen = _pathFindingService.SelectedAlgorithm.FindThePath(game.HasToWin, game.Board).Count;
             var loseLen = _pathFindingService.SelectedAlgorithm.FindThePath(game.HasToLose, game.Board).Count;
             // return 5 * loseLen - 5 * winLen;
-            return 5 / (winLen + 0.001f) - 5 / (loseLen + 0.01f);
+            return 10 / (winLen + 0.001f) - 10 / (loseLen + 0.01f);
         }
 
         // NonWorking iterative MiniMax
