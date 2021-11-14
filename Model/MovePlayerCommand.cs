@@ -15,9 +15,20 @@
             return game;
         }
 
+        public GameStateModel Execute(GameStateModel game) {
+            _currentCell = game.ActivePlayer.CurrentCell;
+            game.MakeMove(_selectedCell.X, _selectedCell.Y);
+            return game;
+        }
+
         public void Undo(Game game) {
             game.SelectedCell = _currentCell;
             game.ChangeTheCell();
         }
+
+        public void Undo(GameStateModel gsm) {
+            gsm.MakeMove(_currentCell.X, _selectedCell.Y);
+        }
+
     }
 }

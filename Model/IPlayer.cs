@@ -18,6 +18,10 @@
         public void Decide(Game game);
 
         public ICommand LastStep { get; set; }
+
+        public bool IsVictory();
+
+        public IPlayer InfoClone(GameField board);
     }
 
 }

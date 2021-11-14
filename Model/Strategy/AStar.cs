@@ -1,25 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Model.Strategy
 {
     public class AStar : IAlgorithm
     {
-        public List<Cell> FindThePath(IPlayer player, GameField field)
-        {
+        public List<Cell> FindThePath(IPlayer player, GameField field) {
 
-            List<Cell> open = new List<Cell>();
+            List<Cell> open = field.GetNeighbours(player.CurrentCell);
 
-            List<Cell> closed = new List<Cell>();
+            List<Cell> closed = new List<Cell>{ player.CurrentCell };
 
             Cell currentCell = player.CurrentCell;
 
-            double currentDistance = Math.Sqrt(Math.Pow((currentCell.X - FindTheNearestCellInARow(field, player).X), 2) - Math.Pow((currentCell.X - FindTheNearestCellInARow(field, player).Y), 2));
+            double currentDistance = Math.Abs(currentCell.Y - player.VictoryRow);
 
-            field.GetNeighbours(player.CurrentCell).ForEach(c => open.Add(c));
 
             open.Add(player.CurrentCell);
 
@@ -107,7 +103,7 @@ namespace Model.Strategy
 
             Cell theNearestCell = field.Cells[0, FinalRowY];
 
-            for (int i = 0; i < field.Cells.Length; i++)
+            for (int i = 0; i < Math.Sqrt(field.Cells.Length); i++)
             {
 
                 double currentLength = Math.Sqrt(Math.Pow((player.CurrentCell.X - field.Cells[i, FinalRowY].X), 2) - Math.Pow((player.CurrentCell.Y - field.Cells[i, FinalRowY].Y), 2));

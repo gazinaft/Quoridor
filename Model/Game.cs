@@ -1,21 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Model.Services;
-using Model.Strategy;
+
 namespace Model {
     public class Game {
         
         public GameField Board { get; set; }
         public ICommand PlaceTheWallCommand { get; set; }
         public ICommand MovePlayerCommand { get; set; }
-        
 
         public bool TheWallIsPlaced { get; set; }
         public Cell SelectedCell { get; set; }
         public Corner SelectedCorner { get; set; }
         public bool WallIsHorizontal { get; set; }
-        public bool IsJumping { get; set; }
-        
+        public bool IsJumping { get; set; }        
 
         private PathFindingService _pathFindingService;
         private MoveValidationService _moveValidationService;
@@ -43,9 +41,21 @@ namespace Model {
 
         public IPlayer InActivePlayer;
 
+        public IPlayer FirstPlayer { get; }
+
+        public IPlayer SecondPlayer { get; }
+
         public LinkedList<ICommand> _stepsHistory;
 
         public bool DoDisplayStep { get; set; }
+
+        public GameStateModel GetGameState() {
+
+            GameStateModel currentState = new GameStateModel(this) { Players = this.Players };
+
+            return currentState;
+        
+        }
 
         public Game(IPlayerStrategy enemyStrategy) {
 
@@ -57,7 +67,7 @@ namespace Model {
             _moveValidationService = new MoveValidationService();
             _wallValidationService = new WallValidationService(_pathFindingService);
 
-            Board = new GameField(_moveValidationService, _wallValidationService, _pathFindingService, 9, 9);
+            Board = new GameField(_moveValidationService, _wallValidationService, 9, 9);
 
             Players = new List<IPlayer>();
 
@@ -74,6 +84,10 @@ namespace Model {
             secondPlayer.CurrentCell = Board.Cells[4, 0];
             secondPlayer.VictoryRow = 8;
             secondPlayer.PlayerId = 2;
+
+            FirstPlayer = firstPlayer;
+
+            SecondPlayer = secondPlayer;
 
             ActivePlayer = firstPlayer;
 
@@ -121,7 +135,7 @@ namespace Model {
             _pathFindingService = new PathFindingService();
             _moveValidationService = new MoveValidationService();
             _wallValidationService = new WallValidationService(_pathFindingService);
-            Board = new GameField(_moveValidationService, _wallValidationService, _pathFindingService, 9, 9);
+            Board = new GameField(_moveValidationService, _wallValidationService, 9, 9);
 
             Players = new List<IPlayer>();
 
@@ -130,10 +144,14 @@ namespace Model {
             firstPlayer.CurrentCell = Board.Cells[4, 8];
             firstPlayer.VictoryRow = 0;
 
+            FirstPlayer = firstPlayer;
+            
             UserPlayer secondPlayer = new UserPlayer();
             secondPlayer.CurrentCell = Board.Cells[4, 0];
             secondPlayer.StartCell = Board.Cells[4, 0];
             secondPlayer.VictoryRow = 8;
+
+            SecondPlayer = secondPlayer;
 
             ActivePlayer = firstPlayer;
 
@@ -156,7 +174,7 @@ namespace Model {
 
             if (ActivePlayer.PlayerStrategy !=null) {
 
-                ActivePlayer.Decide(this);
+                ActivePlayer.Decide(this);           
                 NotifyBotHasDecided?.Invoke();
                 NotifyPlayerHasChanged?.Invoke();
             
@@ -180,15 +198,37 @@ namespace Model {
 
                 NotifyPlayerHasChanged?.Invoke();
 
-                if (DoDisplayStep) {
-
-                    NotifyPlacingTheWall?.Invoke();
-
-                }
-
-                
+                NotifyPlacingTheWall?.Invoke();
 
             }
+        }
+
+        public void DefineNextPlayer() {
+
+            if (FirstPlayer.PlayerIsActive)
+            {
+
+                FirstPlayer.PlayerIsActive = false;
+
+                SecondPlayer.PlayerIsActive = true;
+
+                ActivePlayer = SecondPlayer;
+
+                InActivePlayer = FirstPlayer;
+
+            }
+            else {
+
+                SecondPlayer.PlayerIsActive = false;
+
+                FirstPlayer.PlayerIsActive = true;
+
+                InActivePlayer = SecondPlayer;
+
+                ActivePlayer = FirstPlayer;
+            
+            }
+        
         }
 
         public void FindNextPlayer() {
@@ -220,8 +260,10 @@ namespace Model {
 
             if (ActivePlayer.PlayerStrategy != null)
             {
-                ActivePlayer.Decide(this);
+
+                ActivePlayer.Decide(this);               
                 ActivePlayer.PlayerIsActive = false;
+                InActivePlayer = ActivePlayer;
                 ActivePlayer = Players.ElementAt(0);
                 ActivePlayer.PlayerIsActive = true;
             }
@@ -230,7 +272,7 @@ namespace Model {
 
         public void ChangePlayers() {
 
-            Players.Clear();
+            /*Players.Clear();
             UserPlayer firstPlayer = new UserPlayer();
             firstPlayer.PlayerId = 1;
             firstPlayer.StartCell = Board.Cells[4, 0];
@@ -250,7 +292,34 @@ namespace Model {
             firstPlayer.PlayerIsActive = true;
 
             Players.Add(firstPlayer);
-            Players.Add(secondPlayer);
+            Players.Add(secondPlayer);*/
+
+            FirstPlayer.StartCell = Board.Cells[4, 0];
+
+            FirstPlayer.CurrentCell = Board.Cells[4, 0];
+
+            FirstPlayer.VictoryRow = 8;
+
+            SecondPlayer.StartCell = Board.Cells[4, 8];
+
+            SecondPlayer.CurrentCell = Board.Cells[4, 8];
+
+            SecondPlayer.VictoryRow = 0;
+
+            Players.Clear();
+
+            Players.Add(FirstPlayer);
+
+            Players.Add(SecondPlayer);
+
+            ActivePlayer = SecondPlayer;
+
+            SecondPlayer.PlayerIsActive = true;
+
+            InActivePlayer = FirstPlayer;
+
+            FirstPlayer.PlayerIsActive = false;
+
 
         }
 
@@ -267,20 +336,6 @@ namespace Model {
             NotifyPlayerHasChanged?.Invoke();
         }
 
-        public List<ICommand> GetLegalActions() {
-            var res = new List<ICommand>();
-
-            var list = Board.GetAvailableMoves(ActivePlayer);
-            for (var i = 0; i < list.Count; i++) {
-                res.Add(new MovePlayerCommand(list[i]));
-            }
-            
-            foreach (var (c, isHorizontal) in Board.GetAvailableWalls(Players)) {
-                res.Add(new PlaceWallCommand(c.X, c.Y, isHorizontal));
-            }
-
-            return res;
-        }
 
     }
     

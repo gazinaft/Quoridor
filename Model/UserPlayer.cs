@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Model
+﻿namespace Model
 {
     public class UserPlayer : IPlayer
     {
@@ -28,7 +22,24 @@ namespace Model
 
         public void Decide(Game game)
         {
-            PlayerStrategy.Think(game);
+            PlayerStrategy?.Think(game);
+        }
+
+        private UserPlayer(UserPlayer other, GameField board) {
+            WallsCounter = other.WallsCounter + 0;
+            StartCell = other.StartCell;
+            _currentCell = board.Cells[other._currentCell.X, other._currentCell.Y];
+            _currentCell.HasPlayer = true;
+            VictoryRow = other.VictoryRow;
+            PlayerIsActive = other.PlayerIsActive;
+        }
+
+        public IPlayer InfoClone(GameField board) {
+            return new UserPlayer(this, board);
+        }
+
+        public bool IsVictory() {
+            return _currentCell.Y == VictoryRow;
         }
     }
 }

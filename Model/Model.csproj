@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AIImplementation\ABPrune.cs" />
     <Compile Include="AIImplementation\ABStrategy.cs" />
     <Compile Include="AIImplementation\ABTree.cs" />
     <Compile Include="AIImplementation\AI.cs" />
@@ -54,6 +53,7 @@
     <Compile Include="EmptyCommand.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameField.cs" />
+    <Compile Include="GameStateModel.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="IPlayer.cs" />
     <Compile Include="IPlayerStrategy.cs" />

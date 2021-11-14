@@ -28,7 +28,7 @@ namespace View
 
         void CantPlaceTheWall();
 
-        void PlaceTheWall();
+        void PlaceTheWall(GameFieldState state);
 
         void ThisIsTheEnd();
     }

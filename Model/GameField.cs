@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Model.Services;
 namespace Model
 {
@@ -9,7 +8,7 @@ namespace Model
         private MoveValidationService _moveValidationService;
         private WallValidationService _wallValidationService;
 
-        public GameField(MoveValidationService moveValidationService, WallValidationService wallValidationService, PathFindingService pathFindingService, int x, int y)
+        public GameField(MoveValidationService moveValidationService, WallValidationService wallValidationService, int x, int y)
         {
             Height = y;
             Width = x;
@@ -34,6 +33,29 @@ namespace Model
                 }
             }
 
+        }
+
+        public GameField(GameField other) {
+            _wallValidationService = other._wallValidationService;
+            _moveValidationService = other._moveValidationService;
+            Height = other.Height;
+            Width = other.Width;
+            
+            Cells = new Cell[Width, Height];
+
+            for (int i = 0; i < Width; i++) {
+                for (int j = 0; j < Height; j++) {
+                    Cells[i, j] = new Cell(i, j) {HasPlayer = other.Cells[i, j].HasPlayer};
+                }
+            }
+
+            Corners = new Corner[Width + 1, Height + 1];
+
+            for (int i = 0; i < Width + 1; i++) {
+                for (int j = 0; j < Height + 1; j++) {
+                    Corners[i, j] = new Corner(other.Corners[i, j]);
+                }
+            }
         }
 
         public int Height { get; }
@@ -69,28 +91,6 @@ namespace Model
 
             GridForObstacles = grid;
             return grid;
-        }
-
-
-
-        public GameField(int x, int y)
-        {
-            Cells = new Cell[x, y];
-            for (int i = 0; i < x; i++) {
-                for (int j = 0; j < y; j++) {
-                    Cells[i, j] = new Cell(i, j);
-                }
-            }
-
-            Corners = new Corner[x + 1, y + 1];
-
-            for (int i = 0; i < x + 1; i++) {
-                for (int j = 0; j < y + 1; j++) {
-                    Corners[i, j] = new Corner(i, j);
-                }
-            }
-            Height = y;
-            Width = x;
         }
 
         public Cell[,] Cells { get; private set; }
@@ -129,8 +129,8 @@ namespace Model
             return possibleMoves;
         }
 
-        public List<(Corner, bool)> GetAvailableWalls(List<IPlayer> players) {
-            return _wallValidationService.GetPossibleWalls(this, players);
+        public List<(Corner, bool)> GetAvailableWalls(List<IPlayer> players, IPlayer enemy) {
+            return _wallValidationService.GetPossibleWalls(this, players, enemy.CurrentCell);
         }
 
         public GameField SetBlock(int x, int y, bool isHorizontal, bool toAdd = true)
@@ -163,7 +163,7 @@ namespace Model
 
             if (GetAvailableMoves(player).Contains(selectedCell)) {
 
-                player.CurrentCell.HasPlayer = false;                
+                player.CurrentCell.HasPlayer = false;  
                 Cells[x, y].HasPlayer = true;
                 player.CurrentCell = Cells[x, y];
 

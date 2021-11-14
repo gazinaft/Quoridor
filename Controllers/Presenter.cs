@@ -1,5 +1,4 @@
-﻿using System;
-using View;
+﻿using View;
 using Model;
 using MappingProj;
 namespace Controllers
@@ -57,13 +56,9 @@ namespace Controllers
         }
 
         public void PlaceTheWall() {
-
-            if (Game.DoDisplayStep) {
-
-                View.PlaceTheWall();
-                View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
-
-            }
+  
+            View.PlaceTheWall(_gameFieldMapper.FromModelToView(Game));
+            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
 
         }
 
@@ -75,12 +70,7 @@ namespace Controllers
 
         public void MakeBotStep() {
 
-            if (Game.DoDisplayStep) {
-
-                View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
-
-            }
-
+            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
         }
 
         public void MakeStep() {
@@ -91,11 +81,7 @@ namespace Controllers
 
             Game.MovePlayerCommand.Execute(Game);
 
-            if (Game.DoDisplayStep) {
-
-                View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
-
-            }
+            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
 
         }
 
@@ -116,7 +102,7 @@ namespace Controllers
         public void InformAboutEnd() {
 
             View.ThisIsTheEnd();
-        
+
         }
 
     }

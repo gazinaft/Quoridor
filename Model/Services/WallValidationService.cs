@@ -14,12 +14,14 @@ namespace Model.Services
             _pathFindingService.SelectedAlgorithm = new BFS();
         }
 
-        public List<(Corner, bool)> GetPossibleWalls(GameField field, List<IPlayer> players)
+        public List<(Corner, bool)> GetPossibleWalls(GameField field, List<IPlayer> players, Cell radius)
         {
             var res = new List<(Corner, bool)>();
-            for (int x = 1; x < field.Width-1; x++)
+            int dx = 3;
+
+            for (int x = Math.Max(1, radius.X - dx); x < Math.Min(field.Width, radius.X + dx); x++)
             {
-                for (int y = 1; y < field.Height-1; y++)
+                for (int y = Math.Max(1, radius.Y - dx); y < Math.Min(field.Height, radius.Y + dx); y++)
                 {
                     if (!CornerInvalid(x, y, true, field, players)) res.Add((field.Corners[x, y], true));
                     if (!CornerInvalid(x, y, false, field, players)) res.Add((field.Corners[x, y], false));
@@ -39,7 +41,7 @@ namespace Model.Services
         public bool CornerInvalid(int x, int y, bool isHorizontal, GameField field, List<IPlayer> players)
         {
             if (CornersAreEmpty(players)) return true;
-            
+
             if (isHorizontal) {
                 return field.Corners[x, y].Obstacles[0, 1] ||
                        field.Corners[x, y].Obstacles[1, 1] ||

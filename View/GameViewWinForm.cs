@@ -16,6 +16,8 @@ namespace View
 
         Dictionary<Button, (int, int)> _cornerDictionary;
 
+        Dictionary<(int, int, bool), Button> _cornerToButtonDictionary;
+
         List<Button> _horizontalWalls;
 
         private Form _parentForm;
@@ -54,6 +56,8 @@ namespace View
             _horizontalWalls = new List<Button>();
             
             _cornerDictionary = new Dictionary<Button, (int, int)>();
+
+            _cornerToButtonDictionary = new Dictionary<(int, int, bool), Button>();
             
             CurrentState = state;
 
@@ -144,6 +148,8 @@ namespace View
                     rightWall.Location = new Point(ButtonGrid[i, j].Location.X - (int)wallSize, ButtonGrid[i, j].Location.Y - (int)buttonSize - (int)wallSize);
 
                     _cornerDictionary.Add(rightWall, (i, j));
+
+                    _cornerToButtonDictionary.Add((i, j, false), rightWall);
                     
                     GamePanel.Controls.Add(rightWall);
 
@@ -168,6 +174,8 @@ namespace View
                     _cornerDictionary.Add(higherWall, (i+1, j));
 
                     _horizontalWalls.Add(higherWall);
+
+                    _cornerToButtonDictionary.Add((i+1, j, true), higherWall);
 
                     GamePanel.Controls.Add(higherWall);
 
@@ -246,8 +254,10 @@ namespace View
             PlacingTheWall?.Invoke();
         }
 
-        public void PlaceTheWall() {
+        public void PlaceTheWall(GameFieldState state) {
 
+            _lastSelectedWall = _cornerToButtonDictionary[(state.SelectedCornerX, state.SelectedCornerY, state.TheWallIsHorisontal)];
+            
             _lastSelectedWall.Enabled = false;
             
             _lastSelectedWall.BackColor = Color.Red;
