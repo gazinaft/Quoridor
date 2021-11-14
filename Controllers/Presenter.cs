@@ -1,5 +1,4 @@
-﻿using System;
-using View;
+﻿using View;
 using Model;
 using MappingProj;
 namespace Controllers

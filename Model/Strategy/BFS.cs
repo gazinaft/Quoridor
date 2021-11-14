@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 namespace Model.Strategy
 {
     public class BFS : IAlgorithm
@@ -27,7 +25,7 @@ namespace Model.Strategy
             {
                 var V = queue.Dequeue();
 
-                var all = field.GetNeighbours(V).FindAll(c => field.CanMoveBetween(V, c, field));
+                var all = FindAllCanMoveBetween(field.GetNeighbours(V), V, field);
                 for (var i = 0; i < all.Count; i++) {
                     Cell cell = all[i];
                     if (!visited.Contains(cell)) {
@@ -43,6 +41,18 @@ namespace Model.Strategy
             return new List<Cell>();
 
         }
+
+        private List<Cell> FindAllCanMoveBetween(List<Cell> neighbours, Cell first, GameField field) {
+            List<Cell> res = new List<Cell>();
+            for (int i = 0; i < neighbours.Count; ++i) {
+                var cell = neighbours[i];
+                if (field.CanMoveBetween(first, cell, field)) {
+                    res.Add(cell);
+                }
+            }
+
+            return res;
+        } 
 
         private List<Cell> BFSResult(Cell endCell, Dictionary<Cell, Cell> curParents) {
 

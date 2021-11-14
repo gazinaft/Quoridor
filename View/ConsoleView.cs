@@ -302,9 +302,9 @@ namespace View
                     TryToMovePlayer();
 
                 }
-                catch (Exception){
+                catch (Exception e){
 
-                    Console.WriteLine("Can't parse the command:((");
+                    Console.WriteLine(e);
 
                 }
 

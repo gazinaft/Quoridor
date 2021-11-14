@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Model
 {
@@ -124,7 +120,7 @@ namespace Model
                 res.Add(new MovePlayerCommand(list[i]));
             }
 
-            foreach (var (c, isHorizontal) in Board.GetAvailableWalls(Players))
+            foreach (var (c, isHorizontal) in Board.GetAvailableWalls(Players, InActivePlayer))
             {
                 res.Add(new PlaceWallCommand(c.X, c.Y, isHorizontal));
             }
