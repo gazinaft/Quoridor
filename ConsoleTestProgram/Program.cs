@@ -12,7 +12,7 @@ namespace ConsoleTestProgram
     {
         static void Main(string[] args)
         {
-            Game game = new Game(new ABStrategy(new ABTree(1)));
+            Game game = new Game(new ABStrategy(new ABTree(2)));
 
             ConsoleView consoleView = new ConsoleView();
 
