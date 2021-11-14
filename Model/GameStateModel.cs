@@ -20,11 +20,13 @@ namespace Model
 
         public IPlayer InActivePlayer { get; set; }
 
+        public ICommand ComToGet { get; set; }
+
         public GameStateModel(Game game)
         {
-            HasToWin = game.FirstPlayer; 
+            HasToWin = game.SecondPlayer; 
 
-            HasToLose = game.SecondPlayer;
+            HasToLose = game.FirstPlayer;
 
             ActivePlayer = game.ActivePlayer;
 
@@ -38,6 +40,34 @@ namespace Model
 
         }
 
+        public bool IsTerminal() {
+            return HasToWin.IsVictory() || HasToLose.IsVictory();
+        }
+        
+        private GameStateModel(GameStateModel other) {
+            Board = new GameField(other.Board);
+            HasToWin = other.HasToWin.InfoClone(Board);
+            HasToLose = other.HasToLose.InfoClone(Board);
+            InActivePlayer = other.InActivePlayer.InfoClone(Board);
+            ActivePlayer = other.ActivePlayer.InfoClone(Board);
+            Players = new List<IPlayer> { HasToLose, HasToWin };
+        }
+
+        private GameStateModel DeepTurn(ICommand com) {
+            return com.Execute(new GameStateModel(this) {ComToGet = com});
+        }
+
+        public List<GameStateModel> GetChildren() {
+            var res = new List<GameStateModel>();
+            var coms = GetLegalActions();
+            for (var i = 0; i < coms.Count; i++) {
+                var com = coms[i];
+                res.Add(DeepTurn(com));
+            }
+
+            return res;
+        }
+        
         public void DefineNextPlayer() {
 
             if (HasToWin.PlayerIsActive)
@@ -74,11 +104,11 @@ namespace Model
         
         }
 
-        public void PlaceTheWall(int x, int y, bool isHorizontal, bool ToAdd = true) {
+        public void PlaceTheWall(int x, int y, bool isHorizontal, bool toAdd = true) {
 
-            Board.SetBlock(x, y, isHorizontal, ToAdd);
+            Board.SetBlock(x, y, isHorizontal, toAdd);
 
-            ActivePlayer.WallsCounter +=  ToAdd ? - 1 : 1;
+            ActivePlayer.WallsCounter +=  toAdd ? - 1 : 1;
 
             DefineNextPlayer();
 
@@ -101,5 +131,6 @@ namespace Model
 
             return res;
         }
+        
     }
 }

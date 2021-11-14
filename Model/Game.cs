@@ -67,7 +67,7 @@ namespace Model {
             _moveValidationService = new MoveValidationService();
             _wallValidationService = new WallValidationService(_pathFindingService);
 
-            Board = new GameField(_moveValidationService, _wallValidationService, _pathFindingService, 9, 9);
+            Board = new GameField(_moveValidationService, _wallValidationService, 9, 9);
 
             Players = new List<IPlayer>();
 
@@ -135,7 +135,7 @@ namespace Model {
             _pathFindingService = new PathFindingService();
             _moveValidationService = new MoveValidationService();
             _wallValidationService = new WallValidationService(_pathFindingService);
-            Board = new GameField(_moveValidationService, _wallValidationService, _pathFindingService, 9, 9);
+            Board = new GameField(_moveValidationService, _wallValidationService, 9, 9);
 
             Players = new List<IPlayer>();
 
