@@ -14,7 +14,7 @@ namespace MainMenu
 
         private void SinglePlayerButton_Click(object sender, EventArgs e)
         {
-            Game game = new Game(new ABStrategy(new ABTree(3)));
+            Game game = new Game(new ABStrategy(new ABTree(2)));
 
             //Game game = new Game(new DummyStrategy());
 
