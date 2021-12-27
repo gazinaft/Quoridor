@@ -14,7 +14,7 @@ namespace ClientServerArchitecture
 
         int Y { get; set; }
 
-        string Message { get; set; }
+        string MessageText { get; set; }
 
         bool IsHorisontal { get; set; }
     }
