@@ -73,8 +73,6 @@ namespace View
 
             int wallSize = buttonSize / 5;
 
-            undoButton.Click += UndoButton_Click;
-
             for (int i = 0; i < state.Width; i++)
             {
 
@@ -208,20 +206,6 @@ namespace View
 
             labelCurPlayer.Text = "Current Player ID:" + CurrentState.CurrentPlayerID;
 
-        }
-
-        private void UndoButton_Click(object sender, EventArgs e)
-        {
-            foreach (Button b in ButtonGrid)
-            {
-
-                b.Dispose();
-
-            }
-
-            listBoxPlayers.Items.Clear();
-
-            DoUndo?.Invoke();
         }
 
         private void SelectedCorner(object sender, EventArgs e)
