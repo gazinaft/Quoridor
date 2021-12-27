@@ -59,16 +59,25 @@ namespace ClientServerArchitecture.Server
 
             byte[] dataBuffer = new byte[received];
 
-            //kjh
+            Array.Copy(_buffer, dataBuffer, received);
+
+            string text = Encoding.ASCII.GetString(dataBuffer);
+
+            ReceiveJson(text);
 
 
         }
 
+        private void SendCallback(IAsyncResult result) 
+        {
+            Socket socket = (Socket)result.AsyncState;
+
+            socket.EndSend(result);
+            
+        }
+
         private void StartGame(IClient firstClient, IClient secondClient) 
         {
-        
-
-
 
         }
 
@@ -79,10 +88,13 @@ namespace ClientServerArchitecture.Server
 
         }
 
-        private void SendJson() 
+        private void SendJson(IMessage message, Socket socket) 
         {
-            
+            var JsonObject = JsonConvert.SerializeObject(message);
 
+            byte[] data = Encoding.ASCII.GetBytes(JsonObject);
+
+            socket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(SendCallback), socket);
 
         }
 
