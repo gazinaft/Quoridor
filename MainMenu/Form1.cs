@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using Controllers;
 using Model;
+using Model.Network;
 using View;
 namespace MainMenu
 {
@@ -12,38 +13,34 @@ namespace MainMenu
             InitializeComponent();
         }
 
-        private void SinglePlayerButton_Click(object sender, EventArgs e)
-        {
+        private void SingleplayerClick(object sender, EventArgs e) {
             Game game = new Game(new ABStrategy(new ABTree(2)));
-
-            //Game game = new Game(new DummyStrategy());
-
             GameViewWinForm form = new GameViewWinForm(this);
-
             Presenter presenter = new Presenter(form, game);
-
-            this.Hide();
-
+            Hide();
             form.Show();
 
         }
 
-        private void buttonTwoPlayers_Click(object sender, EventArgs e)
-        {
+        private void HotseatClick(object sender, EventArgs e) {
             Game game = new Game();
-
             GameViewWinForm form = new GameViewWinForm(this);
-
             Presenter presenter = new Presenter(form, game);
+            Hide();
+            form.Show();
+        }
 
-            this.Hide();
-
+        private void MultiplayerClick(object sender, EventArgs e) {
+            Game game = new Game(new NetworkStrategy());
+            GameViewWinForm form = new GameViewWinForm(this);
+            Presenter presenter = new Presenter(form, game);
+            Hide();
             form.Show();
         }
 
         private void buttonExit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }
