@@ -85,9 +85,6 @@ namespace View
             _coordinatesCellsToLetters.Add(6, "G");
             _coordinatesCellsToLetters.Add(7, "H");
             _coordinatesCellsToLetters.Add(8, "I");
-
-
-
         }
 
         public void CantPlaceTheWall()
@@ -97,85 +94,11 @@ namespace View
 
         public void DisplayPotentialWallsAndCorners(GameFieldState state)
         {
-            /*Console.ForegroundColor = ConsoleColor.Yellow;
-
-            Console.WriteLine("+++A+++++B+++++C+++++D+++++E+++++F+++++G+++++H+++++I+++");
-            
-            for (int i = 0; i < state.GridForPlayers.GetLength(0); i++)
-            {
-
-                string one = "■■■■■";
-
-                int rowCounter = i + 1;
-
-                string rowCounterString = rowCounter.ToString();
-                
-                for (int u = 0; u < 3; u++) {
-
-                    for (int j = 0; j < state.GridForPlayers.GetLength(0); j++)
-                    {
-
-                        if (state.GridForPlayers[j, i])
-                        {
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-
-                            Console.Write("+");
-
-                            Console.ForegroundColor = ConsoleColor.DarkRed;
-
-                            Console.Write(one);
-
-                        }
-                        else
-                        {
-
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-
-                            Console.Write("+" + one);
-
-                        }
-
-                        if (j == 8)
-                        {
-                            Console.Write("+");
-                            Console.Write("\r\n");
-
-                        }
-
-                    }
-
-
-                }
-
-                if (i == 8)
-                {
-                    
-                    Console.WriteLine("++++++S+++++T+++++U+++++V+++++W+++++X+++++Y+++++Z++++++");
-                
-                }
-                else {
-                    
-                    Console.WriteLine("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-
-                }
-                
-                
-
-            }*/
-
-            //Console.WriteLine("Choose white or black");
-
             CheckTheFirstCommand();
-
-            //CheckTheCommand();
         }
 
         public void TryToMovePlayer() {
-
-
             PlayerMove?.Invoke();
-
-        
         }
 
         public void CheckTheFirstCommand() {
@@ -184,30 +107,16 @@ namespace View
 
             if (selectedTeam == "white")
             {
-
-                //CheckTheCommand();
-
                 ChangePlayer?.Invoke();
-
                 SelectedCellX = 4;
-
                 SelectedCellY = 7;
-
                 TryToMovePlayer();
-
             }
-            else if (selectedTeam == "black")
-            {
-
-                //ChangePlayer?.Invoke();
-
+            else if (selectedTeam == "black") {
                 CheckTheCommand();
-
             }
             else {
-
                 CheckTheFirstCommand();
-            
             }
         
         
@@ -217,213 +126,92 @@ namespace View
 
             string command = Console.ReadLine();
 
-            if (command.StartsWith("wall"))
+            if (command != null && command.StartsWith("wall"))
             {
                 string selectedCoordinates = command.Substring(5);
 
-                string XString = selectedCoordinates.Substring(0, 1);
+                string xString = selectedCoordinates.Substring(0, 1);
+                string yString = selectedCoordinates.Substring(1, 1);
+                string isHorizontal = selectedCoordinates.Substring(2);
 
-                string YString = selectedCoordinates.Substring(1, 1);
-
-                string isHorisontal = selectedCoordinates.Substring(2);
-
-                if (isHorisontal == "h" || isHorisontal == "H")
+                if (isHorizontal == "h" || isHorizontal == "H")
                 {
-
                     SelectedWallIsHorizontal = true;
-
-
                 }
-                else if (isHorisontal == "v" || isHorisontal == "V") {
-
+                else if (isHorizontal == "v" || isHorizontal == "V") {
                     SelectedWallIsHorizontal = false;
-                
                 }
 
                 try
                 {
-                    SelectedCornerX = _lettersToCornerCorodinates[XString];
-
-                    SelectedCornerY = Convert.ToInt32(YString);
-
+                    SelectedCornerX = _lettersToCornerCorodinates[xString];
+                    SelectedCornerY = Convert.ToInt32(yString);
                     PlacingTheWall?.Invoke();
+                }
+                catch (Exception) {
+                    Console.WriteLine("Can't parse the command");
+                }
+                
+            }
+            else if (command != null && command.StartsWith("jump"))
+            {
+                string selectedCoordinates = command.Substring(5);
+                string xString = selectedCoordinates.Substring(0, 1);
+                string yString = selectedCoordinates.Substring(1);
+
+                try
+                {
+                    SelectedCellX = _lettersToCellCoordinates[xString];
+                    SelectedCellY = Convert.ToInt32(yString) - 1;
+                    TryToMovePlayer();
 
                 }
                 catch (Exception) {
-
-                    Console.WriteLine("Can't parse the command:(((");
-
+                    Console.WriteLine("Can't parse the command");
                 }
-
-
             }
-            else if (command.StartsWith("jump"))
-            {
+            else if (command.StartsWith("move")) {
                 string selectedCoordinates = command.Substring(5);
-
-                string XString = selectedCoordinates.Substring(0, 1);
-
-                string YString = selectedCoordinates.Substring(1);
+                string xString = selectedCoordinates.Substring(0, 1);
+                string yString = selectedCoordinates.Substring(1);
 
                 try
                 {
-
-                    SelectedCellX = _lettersToCellCoordinates[XString];
-
-                    SelectedCellY = Convert.ToInt32(YString) - 1;
-
+                    SelectedCellX = _lettersToCellCoordinates[xString];
+                    SelectedCellY = Convert.ToInt32(yString) - 1;
                     TryToMovePlayer();
-
                 }
-                catch (Exception)
-                {
-
-                    Console.WriteLine("Can't parse the command:(((");
-
-                }
-
-
-            }
-            else if (command.StartsWith("move"))
-            {
-                string selectedCoordinates = command.Substring(5);
-
-                string XString = selectedCoordinates.Substring(0, 1);
-
-                string YString = selectedCoordinates.Substring(1);
-
-                try
-                {
-
-                    SelectedCellX = _lettersToCellCoordinates[XString];
-
-                    SelectedCellY = Convert.ToInt32(YString) - 1;
-
-                    TryToMovePlayer();
-
-                }
-                catch (Exception e){
-
+                catch (Exception e) {
                     Console.WriteLine(e);
-
                 }
-
-
-
+                
             }
             else {
-
-                Console.WriteLine("Sorry, I can't recognise the command...");
-
-                //DisplayTheField();
-            
+                Console.WriteLine("Sorry, I can't recognise the command");
             }
         
         }
 
         public void DisplayTheField(GameFieldState state)
         {
-
-            /*Console.ForegroundColor = ConsoleColor.Yellow;
-
-            Console.WriteLine("+++A+++++B+++++C+++++D+++++E+++++F+++++G+++++H+++++I+++");
-
-            for (int i = 0; i < state.GridForPlayers.GetLength(0); i++)
-            {
-
-                string one = "■■■■■";
-
-                int rowCounter = i + 1;
-
-                string rowCounterString = rowCounter.ToString();
-
-                for (int u = 0; u < 3; u++)
-                {
-
-                    for (int j = 0; j < state.GridForPlayers.GetLength(0); j++)
-                    {
-
-                        if (state.GridForPlayers[j, i])
-                        {
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-
-                            Console.Write("+");
-
-                            Console.ForegroundColor = ConsoleColor.DarkRed;
-
-                            Console.Write(one);
-
-                        }
-                        else
-                        {
-
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-
-                            Console.Write("+" + one);
-
-                        }
-
-                        if (j == 8)
-                        {
-                            Console.Write("+");
-                            Console.Write("\r\n");
-
-                        }
-
-                    }
-
-
-                }
-
-                if (i == 8)
-                {
-
-                    Console.WriteLine("++++++S+++++T+++++U+++++V+++++W+++++X+++++Y+++++Z++++++");
-
-                }
-                else
-                {
-
-                    Console.WriteLine("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-
-                }
-
-
-
-            }*/
-
             if (state.TheWallIsPlaced) {
-
                 if (state.TheWallIsHorisontal) {
-
                     int selectedCornerY = state.SelectedCornerY;
-
                     Console.WriteLine("wall " + _coordinatesCornersToLetters[state.SelectedCornerX] + selectedCornerY + "h");
-
                 }
                 else {
-
                     int selectedCornerY = state.SelectedCornerY;
-
                     Console.WriteLine("wall " + _coordinatesCornersToLetters[state.SelectedCornerX] +  selectedCornerY + "v");
-                
                 }
             
             }
             else {
-
-                if (state.IsJumping)
-                {
-
+                if (state.IsJumping) {
                     int selectedCellY = state.SelectedCellY + 1;
-
                     Console.WriteLine("jump " + _coordinatesCellsToLetters[state.SelectedCellX] + selectedCellY);
-
                 }
                 else {
-
                     int selectedCellY = state.SelectedCellY + 1;
-
                     Console.WriteLine("move " + _coordinatesCellsToLetters[state.SelectedCellX] + selectedCellY);
 
                 }

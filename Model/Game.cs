@@ -111,17 +111,11 @@ namespace Model {
             Players.ForEach(p => p.WallsCounter=10);
 
             foreach (ICommand c in _stepsHistory) {
-
                 if (c!=terminalCommand) {
-
                     c.Execute(this);
-                
                 }
-
             }
-
             DoDisplayStep = true;
-
             return this;
         
         }
