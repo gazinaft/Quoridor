@@ -8,5 +8,6 @@
 
         public void Undo(Game game);
 
+        public (int, int, bool) InfoForSerialize();
     }
 }

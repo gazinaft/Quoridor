@@ -34,5 +34,9 @@
             game.ActivePlayer.WallsCounter++;
             game.FindNextPlayer();
         }
+
+        public (int, int, bool) InfoForSerialize() {
+            return (_x, _y, _direction);
+        }
     }
 }
