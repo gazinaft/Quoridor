@@ -1,20 +1,36 @@
 ﻿syntax = "proto3";
 
+// both ends
+message General {
+  oneof msg {
+    MakeTurn turn = 1;
+    EndGame end_game = 2;
+    StartGame start_game = 3;
+    JoinedToQueue joined = 4;
+  }
+}
+
+// both ends
 message MakeTurn {
   int32 room_name = 1;
   bool to_place_wall = 2;
   int32 x = 3;
   int32 y = 4;
-  bool is_horizontal = 5;
+  optional bool is_horizontal = 5;
 }
 
-message EndGame {}
+// both ends
+message EndGame {
+  int32 room_name = 1;
+}
 
+// only from server to client
 message StartGame {
   bool is_first = 1;
   int32 room_name = 2;
 }
 
+// both ends
 message JoinedToQueue {
   bool success = 1;
 }

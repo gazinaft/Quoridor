@@ -22,16 +22,22 @@ public static partial class MessagesReflection {
   static MessagesReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "Cg5tZXNzYWdlcy5wcm90byJOCghNYWtlVHVybhIVCg10b19wbGFjZV93YWxs",
-          "GAEgASgIEgkKAXgYAiABKAUSCQoBeRgDIAEoBRIVCg1pc19ob3Jpem9udGFs",
-          "GAQgASgIIgkKB0VuZEdhbWUiHQoJU3RhcnRHYW1lEhAKCGlzX2ZpcnN0GAEg",
-          "ASgIIiAKDUpvaW5lZFRvUXVldWUSDwoHc3VjY2VzcxgBIAEoCGIGcHJvdG8z"));
+          "Cg5tZXNzYWdlcy5wcm90byKNAQoHR2VuZXJhbBIZCgR0dXJuGAEgASgLMgku",
+          "TWFrZVR1cm5IABIcCghlbmRfZ2FtZRgCIAEoCzIILkVuZEdhbWVIABIgCgpz",
+          "dGFydF9nYW1lGAMgASgLMgouU3RhcnRHYW1lSAASIAoGam9pbmVkGAQgASgL",
+          "Mg4uSm9pbmVkVG9RdWV1ZUgAQgUKA21zZyJ4CghNYWtlVHVybhIRCglyb29t",
+          "X25hbWUYASABKAUSFQoNdG9fcGxhY2Vfd2FsbBgCIAEoCBIJCgF4GAMgASgF",
+          "EgkKAXkYBCABKAUSGgoNaXNfaG9yaXpvbnRhbBgFIAEoCEgAiAEBQhAKDl9p",
+          "c19ob3Jpem9udGFsIhwKB0VuZEdhbWUSEQoJcm9vbV9uYW1lGAEgASgFIjAK",
+          "CVN0YXJ0R2FtZRIQCghpc19maXJzdBgBIAEoCBIRCglyb29tX25hbWUYAiAB",
+          "KAUiIAoNSm9pbmVkVG9RdWV1ZRIPCgdzdWNjZXNzGAEgASgIYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::MakeTurn), global::MakeTurn.Parser, new[]{ "ToPlaceWall", "X", "Y", "IsHorizontal" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::EndGame), global::EndGame.Parser, null, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::StartGame), global::StartGame.Parser, new[]{ "IsFirst" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::General), global::General.Parser, new[]{ "Turn", "EndGame", "StartGame", "Joined" }, new[]{ "Msg" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::MakeTurn), global::MakeTurn.Parser, new[]{ "RoomName", "ToPlaceWall", "X", "Y", "IsHorizontal" }, new[]{ "IsHorizontal" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::EndGame), global::EndGame.Parser, new[]{ "RoomName" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::StartGame), global::StartGame.Parser, new[]{ "IsFirst", "RoomName" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::JoinedToQueue), global::JoinedToQueue.Parser, new[]{ "Success" }, null, null, null, null)
         }));
   }
@@ -39,6 +45,397 @@ public static partial class MessagesReflection {
 
 }
 #region Messages
+public sealed partial class General : pb::IMessage<General>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<General> _parser = new pb::MessageParser<General>(() => new General());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<General> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::MessagesReflection.Descriptor.MessageTypes[0]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public General() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public General(General other) : this() {
+    switch (other.MsgCase) {
+      case MsgOneofCase.Turn:
+        Turn = other.Turn.Clone();
+        break;
+      case MsgOneofCase.EndGame:
+        EndGame = other.EndGame.Clone();
+        break;
+      case MsgOneofCase.StartGame:
+        StartGame = other.StartGame.Clone();
+        break;
+      case MsgOneofCase.Joined:
+        Joined = other.Joined.Clone();
+        break;
+    }
+
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public General Clone() {
+    return new General(this);
+  }
+
+  /// <summary>Field number for the "turn" field.</summary>
+  public const int TurnFieldNumber = 1;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::MakeTurn Turn {
+    get { return msgCase_ == MsgOneofCase.Turn ? (global::MakeTurn) msg_ : null; }
+    set {
+      msg_ = value;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Turn;
+    }
+  }
+
+  /// <summary>Field number for the "end_game" field.</summary>
+  public const int EndGameFieldNumber = 2;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::EndGame EndGame {
+    get { return msgCase_ == MsgOneofCase.EndGame ? (global::EndGame) msg_ : null; }
+    set {
+      msg_ = value;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.EndGame;
+    }
+  }
+
+  /// <summary>Field number for the "start_game" field.</summary>
+  public const int StartGameFieldNumber = 3;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::StartGame StartGame {
+    get { return msgCase_ == MsgOneofCase.StartGame ? (global::StartGame) msg_ : null; }
+    set {
+      msg_ = value;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.StartGame;
+    }
+  }
+
+  /// <summary>Field number for the "joined" field.</summary>
+  public const int JoinedFieldNumber = 4;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::JoinedToQueue Joined {
+    get { return msgCase_ == MsgOneofCase.Joined ? (global::JoinedToQueue) msg_ : null; }
+    set {
+      msg_ = value;
+      msgCase_ = value == null ? MsgOneofCase.None : MsgOneofCase.Joined;
+    }
+  }
+
+  private object msg_;
+  /// <summary>Enum of possible cases for the "msg" oneof.</summary>
+  public enum MsgOneofCase {
+    None = 0,
+    Turn = 1,
+    EndGame = 2,
+    StartGame = 3,
+    Joined = 4,
+  }
+  private MsgOneofCase msgCase_ = MsgOneofCase.None;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public MsgOneofCase MsgCase {
+    get { return msgCase_; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void ClearMsg() {
+    msgCase_ = MsgOneofCase.None;
+    msg_ = null;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as General);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(General other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (!object.Equals(Turn, other.Turn)) return false;
+    if (!object.Equals(EndGame, other.EndGame)) return false;
+    if (!object.Equals(StartGame, other.StartGame)) return false;
+    if (!object.Equals(Joined, other.Joined)) return false;
+    if (MsgCase != other.MsgCase) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (msgCase_ == MsgOneofCase.Turn) hash ^= Turn.GetHashCode();
+    if (msgCase_ == MsgOneofCase.EndGame) hash ^= EndGame.GetHashCode();
+    if (msgCase_ == MsgOneofCase.StartGame) hash ^= StartGame.GetHashCode();
+    if (msgCase_ == MsgOneofCase.Joined) hash ^= Joined.GetHashCode();
+    hash ^= (int) msgCase_;
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (msgCase_ == MsgOneofCase.Turn) {
+      output.WriteRawTag(10);
+      output.WriteMessage(Turn);
+    }
+    if (msgCase_ == MsgOneofCase.EndGame) {
+      output.WriteRawTag(18);
+      output.WriteMessage(EndGame);
+    }
+    if (msgCase_ == MsgOneofCase.StartGame) {
+      output.WriteRawTag(26);
+      output.WriteMessage(StartGame);
+    }
+    if (msgCase_ == MsgOneofCase.Joined) {
+      output.WriteRawTag(34);
+      output.WriteMessage(Joined);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (msgCase_ == MsgOneofCase.Turn) {
+      output.WriteRawTag(10);
+      output.WriteMessage(Turn);
+    }
+    if (msgCase_ == MsgOneofCase.EndGame) {
+      output.WriteRawTag(18);
+      output.WriteMessage(EndGame);
+    }
+    if (msgCase_ == MsgOneofCase.StartGame) {
+      output.WriteRawTag(26);
+      output.WriteMessage(StartGame);
+    }
+    if (msgCase_ == MsgOneofCase.Joined) {
+      output.WriteRawTag(34);
+      output.WriteMessage(Joined);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (msgCase_ == MsgOneofCase.Turn) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Turn);
+    }
+    if (msgCase_ == MsgOneofCase.EndGame) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(EndGame);
+    }
+    if (msgCase_ == MsgOneofCase.StartGame) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(StartGame);
+    }
+    if (msgCase_ == MsgOneofCase.Joined) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Joined);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(General other) {
+    if (other == null) {
+      return;
+    }
+    switch (other.MsgCase) {
+      case MsgOneofCase.Turn:
+        if (Turn == null) {
+          Turn = new global::MakeTurn();
+        }
+        Turn.MergeFrom(other.Turn);
+        break;
+      case MsgOneofCase.EndGame:
+        if (EndGame == null) {
+          EndGame = new global::EndGame();
+        }
+        EndGame.MergeFrom(other.EndGame);
+        break;
+      case MsgOneofCase.StartGame:
+        if (StartGame == null) {
+          StartGame = new global::StartGame();
+        }
+        StartGame.MergeFrom(other.StartGame);
+        break;
+      case MsgOneofCase.Joined:
+        if (Joined == null) {
+          Joined = new global::JoinedToQueue();
+        }
+        Joined.MergeFrom(other.Joined);
+        break;
+    }
+
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          global::MakeTurn subBuilder = new global::MakeTurn();
+          if (msgCase_ == MsgOneofCase.Turn) {
+            subBuilder.MergeFrom(Turn);
+          }
+          input.ReadMessage(subBuilder);
+          Turn = subBuilder;
+          break;
+        }
+        case 18: {
+          global::EndGame subBuilder = new global::EndGame();
+          if (msgCase_ == MsgOneofCase.EndGame) {
+            subBuilder.MergeFrom(EndGame);
+          }
+          input.ReadMessage(subBuilder);
+          EndGame = subBuilder;
+          break;
+        }
+        case 26: {
+          global::StartGame subBuilder = new global::StartGame();
+          if (msgCase_ == MsgOneofCase.StartGame) {
+            subBuilder.MergeFrom(StartGame);
+          }
+          input.ReadMessage(subBuilder);
+          StartGame = subBuilder;
+          break;
+        }
+        case 34: {
+          global::JoinedToQueue subBuilder = new global::JoinedToQueue();
+          if (msgCase_ == MsgOneofCase.Joined) {
+            subBuilder.MergeFrom(Joined);
+          }
+          input.ReadMessage(subBuilder);
+          Joined = subBuilder;
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 10: {
+          global::MakeTurn subBuilder = new global::MakeTurn();
+          if (msgCase_ == MsgOneofCase.Turn) {
+            subBuilder.MergeFrom(Turn);
+          }
+          input.ReadMessage(subBuilder);
+          Turn = subBuilder;
+          break;
+        }
+        case 18: {
+          global::EndGame subBuilder = new global::EndGame();
+          if (msgCase_ == MsgOneofCase.EndGame) {
+            subBuilder.MergeFrom(EndGame);
+          }
+          input.ReadMessage(subBuilder);
+          EndGame = subBuilder;
+          break;
+        }
+        case 26: {
+          global::StartGame subBuilder = new global::StartGame();
+          if (msgCase_ == MsgOneofCase.StartGame) {
+            subBuilder.MergeFrom(StartGame);
+          }
+          input.ReadMessage(subBuilder);
+          StartGame = subBuilder;
+          break;
+        }
+        case 34: {
+          global::JoinedToQueue subBuilder = new global::JoinedToQueue();
+          if (msgCase_ == MsgOneofCase.Joined) {
+            subBuilder.MergeFrom(Joined);
+          }
+          input.ReadMessage(subBuilder);
+          Joined = subBuilder;
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
 public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
 #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     , pb::IBufferMessage
@@ -46,6 +443,7 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
 {
   private static readonly pb::MessageParser<MakeTurn> _parser = new pb::MessageParser<MakeTurn>(() => new MakeTurn());
   private pb::UnknownFieldSet _unknownFields;
+  private int _hasBits0;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pb::MessageParser<MakeTurn> Parser { get { return _parser; } }
@@ -53,7 +451,7 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::MessagesReflection.Descriptor.MessageTypes[0]; }
+    get { return global::MessagesReflection.Descriptor.MessageTypes[1]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -73,6 +471,8 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public MakeTurn(MakeTurn other) : this() {
+    _hasBits0 = other._hasBits0;
+    roomName_ = other.roomName_;
     toPlaceWall_ = other.toPlaceWall_;
     x_ = other.x_;
     y_ = other.y_;
@@ -86,8 +486,20 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
     return new MakeTurn(this);
   }
 
+  /// <summary>Field number for the "room_name" field.</summary>
+  public const int RoomNameFieldNumber = 1;
+  private int roomName_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int RoomName {
+    get { return roomName_; }
+    set {
+      roomName_ = value;
+    }
+  }
+
   /// <summary>Field number for the "to_place_wall" field.</summary>
-  public const int ToPlaceWallFieldNumber = 1;
+  public const int ToPlaceWallFieldNumber = 2;
   private bool toPlaceWall_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -99,7 +511,7 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
   }
 
   /// <summary>Field number for the "x" field.</summary>
-  public const int XFieldNumber = 2;
+  public const int XFieldNumber = 3;
   private int x_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -111,7 +523,7 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
   }
 
   /// <summary>Field number for the "y" field.</summary>
-  public const int YFieldNumber = 3;
+  public const int YFieldNumber = 4;
   private int y_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -123,15 +535,28 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
   }
 
   /// <summary>Field number for the "is_horizontal" field.</summary>
-  public const int IsHorizontalFieldNumber = 4;
+  public const int IsHorizontalFieldNumber = 5;
   private bool isHorizontal_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public bool IsHorizontal {
-    get { return isHorizontal_; }
+    get { if ((_hasBits0 & 1) != 0) { return isHorizontal_; } else { return false; } }
     set {
+      _hasBits0 |= 1;
       isHorizontal_ = value;
     }
+  }
+  /// <summary>Gets whether the "is_horizontal" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool HasIsHorizontal {
+    get { return (_hasBits0 & 1) != 0; }
+  }
+  /// <summary>Clears the value of the "is_horizontal" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void ClearIsHorizontal() {
+    _hasBits0 &= ~1;
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -149,6 +574,7 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
     if (ReferenceEquals(other, this)) {
       return true;
     }
+    if (RoomName != other.RoomName) return false;
     if (ToPlaceWall != other.ToPlaceWall) return false;
     if (X != other.X) return false;
     if (Y != other.Y) return false;
@@ -160,10 +586,11 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
+    if (RoomName != 0) hash ^= RoomName.GetHashCode();
     if (ToPlaceWall != false) hash ^= ToPlaceWall.GetHashCode();
     if (X != 0) hash ^= X.GetHashCode();
     if (Y != 0) hash ^= Y.GetHashCode();
-    if (IsHorizontal != false) hash ^= IsHorizontal.GetHashCode();
+    if (HasIsHorizontal) hash ^= IsHorizontal.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -182,20 +609,24 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
-    if (ToPlaceWall != false) {
+    if (RoomName != 0) {
       output.WriteRawTag(8);
+      output.WriteInt32(RoomName);
+    }
+    if (ToPlaceWall != false) {
+      output.WriteRawTag(16);
       output.WriteBool(ToPlaceWall);
     }
     if (X != 0) {
-      output.WriteRawTag(16);
+      output.WriteRawTag(24);
       output.WriteInt32(X);
     }
     if (Y != 0) {
-      output.WriteRawTag(24);
+      output.WriteRawTag(32);
       output.WriteInt32(Y);
     }
-    if (IsHorizontal != false) {
-      output.WriteRawTag(32);
+    if (HasIsHorizontal) {
+      output.WriteRawTag(40);
       output.WriteBool(IsHorizontal);
     }
     if (_unknownFields != null) {
@@ -208,20 +639,24 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-    if (ToPlaceWall != false) {
+    if (RoomName != 0) {
       output.WriteRawTag(8);
+      output.WriteInt32(RoomName);
+    }
+    if (ToPlaceWall != false) {
+      output.WriteRawTag(16);
       output.WriteBool(ToPlaceWall);
     }
     if (X != 0) {
-      output.WriteRawTag(16);
+      output.WriteRawTag(24);
       output.WriteInt32(X);
     }
     if (Y != 0) {
-      output.WriteRawTag(24);
+      output.WriteRawTag(32);
       output.WriteInt32(Y);
     }
-    if (IsHorizontal != false) {
-      output.WriteRawTag(32);
+    if (HasIsHorizontal) {
+      output.WriteRawTag(40);
       output.WriteBool(IsHorizontal);
     }
     if (_unknownFields != null) {
@@ -234,6 +669,9 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
+    if (RoomName != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(RoomName);
+    }
     if (ToPlaceWall != false) {
       size += 1 + 1;
     }
@@ -243,7 +681,7 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
     if (Y != 0) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(Y);
     }
-    if (IsHorizontal != false) {
+    if (HasIsHorizontal) {
       size += 1 + 1;
     }
     if (_unknownFields != null) {
@@ -258,6 +696,9 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
     if (other == null) {
       return;
     }
+    if (other.RoomName != 0) {
+      RoomName = other.RoomName;
+    }
     if (other.ToPlaceWall != false) {
       ToPlaceWall = other.ToPlaceWall;
     }
@@ -267,7 +708,7 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
     if (other.Y != 0) {
       Y = other.Y;
     }
-    if (other.IsHorizontal != false) {
+    if (other.HasIsHorizontal) {
       IsHorizontal = other.IsHorizontal;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -286,18 +727,22 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 8: {
-          ToPlaceWall = input.ReadBool();
+          RoomName = input.ReadInt32();
           break;
         }
         case 16: {
-          X = input.ReadInt32();
+          ToPlaceWall = input.ReadBool();
           break;
         }
         case 24: {
-          Y = input.ReadInt32();
+          X = input.ReadInt32();
           break;
         }
         case 32: {
+          Y = input.ReadInt32();
+          break;
+        }
+        case 40: {
           IsHorizontal = input.ReadBool();
           break;
         }
@@ -317,18 +762,22 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
         case 8: {
-          ToPlaceWall = input.ReadBool();
+          RoomName = input.ReadInt32();
           break;
         }
         case 16: {
-          X = input.ReadInt32();
+          ToPlaceWall = input.ReadBool();
           break;
         }
         case 24: {
-          Y = input.ReadInt32();
+          X = input.ReadInt32();
           break;
         }
         case 32: {
+          Y = input.ReadInt32();
+          break;
+        }
+        case 40: {
           IsHorizontal = input.ReadBool();
           break;
         }
@@ -353,7 +802,7 @@ public sealed partial class EndGame : pb::IMessage<EndGame>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::MessagesReflection.Descriptor.MessageTypes[1]; }
+    get { return global::MessagesReflection.Descriptor.MessageTypes[2]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -373,6 +822,7 @@ public sealed partial class EndGame : pb::IMessage<EndGame>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public EndGame(EndGame other) : this() {
+    roomName_ = other.roomName_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -380,6 +830,18 @@ public sealed partial class EndGame : pb::IMessage<EndGame>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public EndGame Clone() {
     return new EndGame(this);
+  }
+
+  /// <summary>Field number for the "room_name" field.</summary>
+  public const int RoomNameFieldNumber = 1;
+  private int roomName_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int RoomName {
+    get { return roomName_; }
+    set {
+      roomName_ = value;
+    }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -397,6 +859,7 @@ public sealed partial class EndGame : pb::IMessage<EndGame>
     if (ReferenceEquals(other, this)) {
       return true;
     }
+    if (RoomName != other.RoomName) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -404,6 +867,7 @@ public sealed partial class EndGame : pb::IMessage<EndGame>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
+    if (RoomName != 0) hash ^= RoomName.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -422,6 +886,10 @@ public sealed partial class EndGame : pb::IMessage<EndGame>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
+    if (RoomName != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(RoomName);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -432,6 +900,10 @@ public sealed partial class EndGame : pb::IMessage<EndGame>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (RoomName != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(RoomName);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -442,6 +914,9 @@ public sealed partial class EndGame : pb::IMessage<EndGame>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
+    if (RoomName != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(RoomName);
+    }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
     }
@@ -453,6 +928,9 @@ public sealed partial class EndGame : pb::IMessage<EndGame>
   public void MergeFrom(EndGame other) {
     if (other == null) {
       return;
+    }
+    if (other.RoomName != 0) {
+      RoomName = other.RoomName;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -469,6 +947,10 @@ public sealed partial class EndGame : pb::IMessage<EndGame>
         default:
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
+        case 8: {
+          RoomName = input.ReadInt32();
+          break;
+        }
       }
     }
   #endif
@@ -484,6 +966,10 @@ public sealed partial class EndGame : pb::IMessage<EndGame>
         default:
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
+        case 8: {
+          RoomName = input.ReadInt32();
+          break;
+        }
       }
     }
   }
@@ -505,7 +991,7 @@ public sealed partial class StartGame : pb::IMessage<StartGame>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::MessagesReflection.Descriptor.MessageTypes[2]; }
+    get { return global::MessagesReflection.Descriptor.MessageTypes[3]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -526,6 +1012,7 @@ public sealed partial class StartGame : pb::IMessage<StartGame>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public StartGame(StartGame other) : this() {
     isFirst_ = other.isFirst_;
+    roomName_ = other.roomName_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -547,6 +1034,18 @@ public sealed partial class StartGame : pb::IMessage<StartGame>
     }
   }
 
+  /// <summary>Field number for the "room_name" field.</summary>
+  public const int RoomNameFieldNumber = 2;
+  private int roomName_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int RoomName {
+    get { return roomName_; }
+    set {
+      roomName_ = value;
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override bool Equals(object other) {
@@ -563,6 +1062,7 @@ public sealed partial class StartGame : pb::IMessage<StartGame>
       return true;
     }
     if (IsFirst != other.IsFirst) return false;
+    if (RoomName != other.RoomName) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -571,6 +1071,7 @@ public sealed partial class StartGame : pb::IMessage<StartGame>
   public override int GetHashCode() {
     int hash = 1;
     if (IsFirst != false) hash ^= IsFirst.GetHashCode();
+    if (RoomName != 0) hash ^= RoomName.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -593,6 +1094,10 @@ public sealed partial class StartGame : pb::IMessage<StartGame>
       output.WriteRawTag(8);
       output.WriteBool(IsFirst);
     }
+    if (RoomName != 0) {
+      output.WriteRawTag(16);
+      output.WriteInt32(RoomName);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -607,6 +1112,10 @@ public sealed partial class StartGame : pb::IMessage<StartGame>
       output.WriteRawTag(8);
       output.WriteBool(IsFirst);
     }
+    if (RoomName != 0) {
+      output.WriteRawTag(16);
+      output.WriteInt32(RoomName);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -619,6 +1128,9 @@ public sealed partial class StartGame : pb::IMessage<StartGame>
     int size = 0;
     if (IsFirst != false) {
       size += 1 + 1;
+    }
+    if (RoomName != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(RoomName);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -634,6 +1146,9 @@ public sealed partial class StartGame : pb::IMessage<StartGame>
     }
     if (other.IsFirst != false) {
       IsFirst = other.IsFirst;
+    }
+    if (other.RoomName != 0) {
+      RoomName = other.RoomName;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -654,6 +1169,10 @@ public sealed partial class StartGame : pb::IMessage<StartGame>
           IsFirst = input.ReadBool();
           break;
         }
+        case 16: {
+          RoomName = input.ReadInt32();
+          break;
+        }
       }
     }
   #endif
@@ -671,6 +1190,10 @@ public sealed partial class StartGame : pb::IMessage<StartGame>
           break;
         case 8: {
           IsFirst = input.ReadBool();
+          break;
+        }
+        case 16: {
+          RoomName = input.ReadInt32();
           break;
         }
       }
@@ -694,7 +1217,7 @@ public sealed partial class JoinedToQueue : pb::IMessage<JoinedToQueue>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::MessagesReflection.Descriptor.MessageTypes[3]; }
+    get { return global::MessagesReflection.Descriptor.MessageTypes[4]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

@@ -1,46 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Sockets;
 using System.Threading.Tasks;
 using Google.Protobuf;
 
 namespace Server {
     public class Room {
-        private readonly Player _firstPlayer;
-        private readonly Player _secondPlayer;
-        private bool firstPlayerTurn = true;
-        private int _roomNumber;
-        Player Receiver => firstPlayerTurn ? _secondPlayer : _firstPlayer;
+        private readonly List<Player> _players;
+        private Player WhitePlayer => _players[_white];
+        private Player BlackPlayer => _players[1 - _white];
+        private bool _firstPlayerTurn = true;
+        public int RoomNumber;
+        private readonly int _white;
+        private const int width = 8;
+        private const int height = 8;
+        private Player Receiver => _firstPlayerTurn ? BlackPlayer : WhitePlayer;
         
         public Room(int roomNumber, List<Player> players) {
-            _roomNumber = roomNumber;
-            var first = new Random().Next(0, 2);
-            _firstPlayer = players[first];
-            _secondPlayer = players[1 - first];
+            RoomNumber = roomNumber;
+            _players = players;
+            _white = new Random().Next(0, 2);
         }
-        
-        public void SendTurn(MakeTurn turn) {
+
+        public async Task HandleTurn(MakeTurn input) {
+            var res = new MakeTurn
+            {
+                RoomName = input.RoomName,
+                ToPlaceWall = input.ToPlaceWall,
+                X = width - input.X,
+                Y = height - input.Y,
+                IsHorizontal = input.IsHorizontal
+            };
+            await SendTurn(res);
+        }
+
+        private async Task SendTurn(MakeTurn turn) {
             var data = turn.ToByteArray();
             try {
-                Receiver.client.GetStream().WriteAsync(data, 0, data.Length);
-                firstPlayerTurn = false;
+                await Receiver.client.GetStream().WriteAsync(data, 0, data.Length);
+                _firstPlayerTurn = false;
             }
             catch (Exception e) {
                 Console.WriteLine("Error sending turn " + e.Message);
             }
         }
 
-        public void StartGame() {
+        public async Task StartGame() {
             var startWhite = new StartGame {
                 IsFirst = true
             }.ToByteArray();
+            var fStream = WhitePlayer.client.GetStream();
+            await fStream.WriteAsync(startWhite, 0, startWhite.Length);
             
             var startBlack = new StartGame {
                 IsFirst = false
             }.ToByteArray();
+            var bStream = BlackPlayer.client.GetStream();
+            await bStream.WriteAsync(startBlack, 0, startBlack.Length);
         }
-        
-        
 
     }
 }
