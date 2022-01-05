@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinProtocol", "BinProtocol\BinProtocol.csproj", "{FDEF7312-5ED9-4506-AC87-F16EF9989E9A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkTests", "NetworkTests\NetworkTests.csproj", "{79E6D571-8C14-441E-B396-2B6D9C5AE696}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{FDEF7312-5ED9-4506-AC87-F16EF9989E9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDEF7312-5ED9-4506-AC87-F16EF9989E9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDEF7312-5ED9-4506-AC87-F16EF9989E9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79E6D571-8C14-441E-B396-2B6D9C5AE696}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79E6D571-8C14-441E-B396-2B6D9C5AE696}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79E6D571-8C14-441E-B396-2B6D9C5AE696}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79E6D571-8C14-441E-B396-2B6D9C5AE696}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

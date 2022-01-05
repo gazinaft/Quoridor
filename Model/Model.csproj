@@ -80,6 +80,7 @@
     <Compile Include="IPlayer.cs" />
     <Compile Include="IPlayerStrategy.cs" />
     <Compile Include="MovePlayerCommand.cs" />
+    <Compile Include="Network\NetworkReader.cs" />
     <Compile Include="Network\NetworkStrategy.cs" />
     <Compile Include="PlaceWallComand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
