@@ -14,7 +14,7 @@ namespace Model.Network
             //         Success = true
             // } }.ToByteArray();
             // WriteToStreamSync(req, stream);
-            var data = ReadFromStreamSync(stream);
+            var data = ReadFromStream(stream);
             var msg = General.Parser.ParseFrom(data);
             var start = msg.StartGame;
             return start;
