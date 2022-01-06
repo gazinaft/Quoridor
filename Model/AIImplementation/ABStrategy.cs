@@ -10,5 +10,7 @@
         public void Think(Game game) {
             _ai.GetBestMove(game.GetGameState()).Execute(game);
         }
+
+        public void SendVictory(Game game) { }
     }
 }

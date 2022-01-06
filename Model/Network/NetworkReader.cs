@@ -6,19 +6,15 @@ using static BinProtocol.StreamTransmitter;
 namespace Model.Network {
     public class NetworkReader {
 
-        public bool GetTurnOrder(NetworkStream stream) {
+        public StartGame GetTurnOrder(NetworkStream stream) {
             var req = new General {
-                Turn = new MakeTurn {
-                X = 1,
-                Y = 2,
-                IsHorizontal = false,
-                RoomName = 4,
-                ToPlaceWall = false
+                Joined = new JoinedToQueue {
+                    Success = true
             } }.ToByteArray();
             WriteToStreamSync(req, stream);
             var data = ReadFromStreamSync(stream);
-            var turn = MakeTurn.Parser.ParseFrom(data);
-            return !turn.IsHorizontal;
+            var start = StartGame.Parser.ParseFrom(data);
+            return start;
         }
     }
 }
