@@ -2,15 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Google.Protobuf;
+using System.Net.Sockets;
+using BinProtocol;
 
 namespace Server
 {
-    using System.CodeDom;
-    using System.Net.Sockets;
-    using System.Runtime.CompilerServices;
-    using BinProtocol;
-    using Microsoft.VisualStudio.Threading;
-
     public class Room
     {
         public event Action<Room> OnRoomClose;
@@ -57,6 +53,7 @@ namespace Server
                     foreach (var player in _players)
                     {
                         player.Client.Close();
+                        player.Client.Dispose();
                         OnRoomClose?.Invoke(this);
                     }
                 }
@@ -104,5 +101,7 @@ namespace Server
                 }
             }
         }
+        
     }
+    
 }
