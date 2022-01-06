@@ -25,17 +25,18 @@ public static partial class MessagesReflection {
           "Cg5tZXNzYWdlcy5wcm90byKNAQoHR2VuZXJhbBIZCgR0dXJuGAEgASgLMgku",
           "TWFrZVR1cm5IABIcCghlbmRfZ2FtZRgCIAEoCzIILkVuZEdhbWVIABIgCgpz",
           "dGFydF9nYW1lGAMgASgLMgouU3RhcnRHYW1lSAASIAoGam9pbmVkGAQgASgL",
-          "Mg4uSm9pbmVkVG9RdWV1ZUgAQgUKA21zZyJ4CghNYWtlVHVybhIRCglyb29t",
-          "X25hbWUYASABKAUSFQoNdG9fcGxhY2Vfd2FsbBgCIAEoCBIJCgF4GAMgASgF",
-          "EgkKAXkYBCABKAUSGgoNaXNfaG9yaXpvbnRhbBgFIAEoCEgAiAEBQhAKDl9p",
-          "c19ob3Jpem9udGFsIhwKB0VuZEdhbWUSEQoJcm9vbV9uYW1lGAEgASgFIjAK",
-          "CVN0YXJ0R2FtZRIQCghpc19maXJzdBgBIAEoCBIRCglyb29tX25hbWUYAiAB",
-          "KAUiIAoNSm9pbmVkVG9RdWV1ZRIPCgdzdWNjZXNzGAEgASgIYgZwcm90bzM="));
+          "Mg4uSm9pbmVkVG9RdWV1ZUgAQgUKA21zZyKOAQoITWFrZVR1cm4SEQoJcm9v",
+          "bV9uYW1lGAEgASgFEhUKDXRvX3BsYWNlX3dhbGwYAiABKAgSCQoBeBgDIAEo",
+          "BRIJCgF5GAQgASgFEhoKDWlzX2hvcml6b250YWwYBSABKAhIAIgBARIUCgxp",
+          "c19sYXN0X3R1cm4YBiABKAhCEAoOX2lzX2hvcml6b250YWwiHAoHRW5kR2Ft",
+          "ZRIRCglyb29tX25hbWUYASABKAUiMAoJU3RhcnRHYW1lEhAKCGlzX2ZpcnN0",
+          "GAEgASgIEhEKCXJvb21fbmFtZRgCIAEoBSIgCg1Kb2luZWRUb1F1ZXVlEg8K",
+          "B3N1Y2Nlc3MYASABKAhiBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::General), global::General.Parser, new[]{ "Turn", "EndGame", "StartGame", "Joined" }, new[]{ "Msg" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::MakeTurn), global::MakeTurn.Parser, new[]{ "RoomName", "ToPlaceWall", "X", "Y", "IsHorizontal" }, new[]{ "IsHorizontal" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::MakeTurn), global::MakeTurn.Parser, new[]{ "RoomName", "ToPlaceWall", "X", "Y", "IsHorizontal", "IsLastTurn" }, new[]{ "IsHorizontal" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::EndGame), global::EndGame.Parser, new[]{ "RoomName" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::StartGame), global::StartGame.Parser, new[]{ "IsFirst", "RoomName" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::JoinedToQueue), global::JoinedToQueue.Parser, new[]{ "Success" }, null, null, null, null)
@@ -45,6 +46,9 @@ public static partial class MessagesReflection {
 
 }
 #region Messages
+/// <summary>
+/// both ends
+/// </summary>
 public sealed partial class General : pb::IMessage<General>
 #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     , pb::IBufferMessage
@@ -436,6 +440,9 @@ public sealed partial class General : pb::IMessage<General>
 
 }
 
+/// <summary>
+/// both ends
+/// </summary>
 public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
 #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     , pb::IBufferMessage
@@ -477,6 +484,7 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
     x_ = other.x_;
     y_ = other.y_;
     isHorizontal_ = other.isHorizontal_;
+    isLastTurn_ = other.isLastTurn_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -559,6 +567,18 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
     _hasBits0 &= ~1;
   }
 
+  /// <summary>Field number for the "is_last_turn" field.</summary>
+  public const int IsLastTurnFieldNumber = 6;
+  private bool isLastTurn_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool IsLastTurn {
+    get { return isLastTurn_; }
+    set {
+      isLastTurn_ = value;
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override bool Equals(object other) {
@@ -579,6 +599,7 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
     if (X != other.X) return false;
     if (Y != other.Y) return false;
     if (IsHorizontal != other.IsHorizontal) return false;
+    if (IsLastTurn != other.IsLastTurn) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -591,6 +612,7 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
     if (X != 0) hash ^= X.GetHashCode();
     if (Y != 0) hash ^= Y.GetHashCode();
     if (HasIsHorizontal) hash ^= IsHorizontal.GetHashCode();
+    if (IsLastTurn != false) hash ^= IsLastTurn.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -629,6 +651,10 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
       output.WriteRawTag(40);
       output.WriteBool(IsHorizontal);
     }
+    if (IsLastTurn != false) {
+      output.WriteRawTag(48);
+      output.WriteBool(IsLastTurn);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -659,6 +685,10 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
       output.WriteRawTag(40);
       output.WriteBool(IsHorizontal);
     }
+    if (IsLastTurn != false) {
+      output.WriteRawTag(48);
+      output.WriteBool(IsLastTurn);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -682,6 +712,9 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(Y);
     }
     if (HasIsHorizontal) {
+      size += 1 + 1;
+    }
+    if (IsLastTurn != false) {
       size += 1 + 1;
     }
     if (_unknownFields != null) {
@@ -710,6 +743,9 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
     }
     if (other.HasIsHorizontal) {
       IsHorizontal = other.IsHorizontal;
+    }
+    if (other.IsLastTurn != false) {
+      IsLastTurn = other.IsLastTurn;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -744,6 +780,10 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
         }
         case 40: {
           IsHorizontal = input.ReadBool();
+          break;
+        }
+        case 48: {
+          IsLastTurn = input.ReadBool();
           break;
         }
       }
@@ -781,6 +821,10 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
           IsHorizontal = input.ReadBool();
           break;
         }
+        case 48: {
+          IsLastTurn = input.ReadBool();
+          break;
+        }
       }
     }
   }
@@ -788,6 +832,9 @@ public sealed partial class MakeTurn : pb::IMessage<MakeTurn>
 
 }
 
+/// <summary>
+/// both ends
+/// </summary>
 public sealed partial class EndGame : pb::IMessage<EndGame>
 #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     , pb::IBufferMessage
@@ -977,6 +1024,9 @@ public sealed partial class EndGame : pb::IMessage<EndGame>
 
 }
 
+/// <summary>
+/// only from server to client
+/// </summary>
 public sealed partial class StartGame : pb::IMessage<StartGame>
 #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     , pb::IBufferMessage
@@ -1203,6 +1253,9 @@ public sealed partial class StartGame : pb::IMessage<StartGame>
 
 }
 
+/// <summary>
+/// both ends
+/// </summary>
 public sealed partial class JoinedToQueue : pb::IMessage<JoinedToQueue>
 #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     , pb::IBufferMessage
