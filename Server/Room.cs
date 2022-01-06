@@ -44,10 +44,11 @@ namespace Server
 
         private async Task SendTurn(MakeTurn turn)
         {
-            var data = turn.ToByteArray();
+            var general = new General() {Turn = turn};
+            var msg = general.ToByteArray();
             try
             {
-                await Receiver.Client.GetStream().WriteAsync(data, 0, data.Length);
+                await StreamTransmitter.WriteToStreamAsync(msg, Receiver.Client.GetStream());
                 if (turn.IsLastTurn)
                 {
                     foreach (var player in _players)
@@ -72,16 +73,25 @@ namespace Server
             var startWhite = new StartGame
             {
                 IsFirst = true
-            }.ToByteArray();
+            };
+
+            var general = new General() {StartGame = startWhite};
+            var msg = general.ToByteArray();
+
             var wStream = WhitePlayer.Client.GetStream();
-            await wStream.WriteAsync(startWhite, 0, startWhite.Length);
+            await StreamTransmitter.WriteToStreamAsync(msg, wStream);
 
             var startBlack = new StartGame
             {
                 IsFirst = false
-            }.ToByteArray();
+            };
+
+            general = new General() {StartGame = startBlack};
+            msg = general.ToByteArray();
+
             var bStream = BlackPlayer.Client.GetStream();
-            await bStream.WriteAsync(startBlack, 0, startBlack.Length);
+            await StreamTransmitter.WriteToStreamAsync(msg, bStream);
+
 
             await StartListening(WhitePlayer.Client.GetStream());
         }
@@ -101,7 +111,5 @@ namespace Server
                 }
             }
         }
-        
     }
-    
 }
