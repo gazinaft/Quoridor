@@ -1,6 +1,7 @@
 ﻿using View;
 using Model;
 using MappingProj;
+
 namespace Controllers
 {
     public class Presenter
@@ -27,47 +28,57 @@ namespace Controllers
 
             View.DisplayPotentialWallsAndCorners(_gameFieldMapper.FromModelToView(Game));
             View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
-
         }
 
-        public void ChangePlayers() {
+        public void ChangePlayers()
+        {
             Game.ChangePlayers();
         }
 
-        public void DoUndo() {
+        public void DoUndo()
+        {
             View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
         }
 
-        public void PlaceTheWall() {
+        public void PlaceTheWall()
+        {
             View.PlaceTheWall(_gameFieldMapper.FromModelToView(Game));
             View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
         }
 
-        public void WarnAboutInvalidCorner() {
+        public void WarnAboutInvalidCorner()
+        {
             View.CantPlaceTheWall();
         }
 
-        public void MakeBotStep() {
+        public void MakeBotStep()
+        {
             View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
         }
 
-        public void MakeStep() {
+        public void MakeStep()
+        {
             Game.SelectedCell = Game.Board.Cells[View.SelectedCellX, View.SelectedCellY];
             Game.MovePlayerCommand = new MovePlayerCommand(Game.SelectedCell);
             Game.MovePlayerCommand.Execute(Game);
+            Game._stepsHistory.AddLast(Game.MovePlayerCommand);
             View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
         }
 
-        public void TryToPlaceTheWall() {
+        public void TryToPlaceTheWall()
+        {
             Game.SelectedCorner = Game.Board.Corners[View.SelectedCornerX, View.SelectedCornerY];
             Game.WallIsHorizontal = View.SelectedWallIsHorizontal;
-            Game.PlaceTheWallCommand = new PlaceWallCommand(Game.SelectedCorner.X, Game.SelectedCorner.Y, Game.WallIsHorizontal);
+            Game.PlaceTheWallCommand =
+                new PlaceWallCommand(Game.SelectedCorner.X, Game.SelectedCorner.Y, Game.WallIsHorizontal);
+            Game._stepsHistory.AddLast(Game.PlaceTheWallCommand);
             Game.PlaceTheWallCommand.Execute(Game);
+            View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
         }
 
-        public void InformAboutEnd() {
+        public void InformAboutEnd()
+        {
             View.ThisIsTheEnd();
         }
-
     }
 }

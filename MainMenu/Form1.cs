@@ -5,8 +5,11 @@ using Controllers;
 using Model;
 using Model.Network;
 using View;
+
 namespace MainMenu
 {
+    using System.Threading;
+
     public partial class Menu : Form
     {
         public Menu()
@@ -14,16 +17,17 @@ namespace MainMenu
             InitializeComponent();
         }
 
-        private void SingleplayerClick(object sender, EventArgs e) {
+        private void SingleplayerClick(object sender, EventArgs e)
+        {
             Game game = new Game(new ABStrategy(new ABTree(2)));
             GameViewWinForm form = new GameViewWinForm(this);
             Presenter presenter = new Presenter(form, game);
             Hide();
             form.Show();
-
         }
 
-        private void HotseatClick(object sender, EventArgs e) {
+        private void HotseatClick(object sender, EventArgs e)
+        {
             Game game = new Game();
             GameViewWinForm form = new GameViewWinForm(this);
             Presenter presenter = new Presenter(form, game);
@@ -31,15 +35,18 @@ namespace MainMenu
             form.Show();
         }
 
-        private void MultiplayerClick(object sender, EventArgs e) {
+        private void MultiplayerClick(object sender, EventArgs e)
+        {
             var ns = new NetworkStrategy(new NetworkReader());
+            Thread.Sleep(3000);
             var isFirstTurn = ns.IsFirstTurn();
             // MultiplayerButton.BackColor = isFirstTurn ? Color.Black : Color.Chartreuse;
-            
+
             var game = new Game(ns);
             GameViewWinForm form = new GameViewWinForm(this);
             Presenter presenter = new Presenter(form, game);
-            if (!isFirstTurn) game.FindNextPlayer();
+            game._stepsHistory.AddLast(new EmptyCommand());
+            // if (!isFirstTurn) game.FindNextPlayer();
             Hide();
             form.Show();
         }

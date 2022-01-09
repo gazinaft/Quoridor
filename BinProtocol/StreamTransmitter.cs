@@ -21,14 +21,14 @@ namespace BinProtocol {
             await stream.FlushAsync();
         }
     
-        public static void WriteToStreamSync(byte[] data, NetworkStream stream) {
+        public static void WriteToStream(byte[] data, NetworkStream stream) {
             var sendSize = BitConverter.GetBytes(data.Length);
             stream.Write(sendSize, 0, 4);
             stream.Write(data, 0, data.Length);
             stream.Flush();
         }
         
-        public static byte[] ReadFromStreamSync(NetworkStream stream) {
+        public static byte[] ReadFromStream(NetworkStream stream) {
             var packetSize = new byte[4];
             stream.Read(packetSize, 0, packetSize.Length);
             var size = BitConverter.ToInt32(packetSize, 0);
