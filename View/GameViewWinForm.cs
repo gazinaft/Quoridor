@@ -14,6 +14,8 @@ namespace View
 
         Button _lastSelectedWall;
 
+        Button _wallSelectedByUser;
+
         Dictionary<Button, (int, int)> _cornerDictionary;
 
         Dictionary<(int, int, bool), Button> _cornerToButtonDictionary;
@@ -21,6 +23,8 @@ namespace View
         List<Button> _horizontalWalls;
 
         private Form _parentForm;
+
+        public int PlayerID;
 
         public GameViewWinForm(Form parentForm)
         {
@@ -192,12 +196,14 @@ namespace View
             }
 
 
+            listBoxPlayers.Items.Clear();
+
             foreach ((int id, int wC) in CurrentState._playersStates)
             {
                 listBoxPlayers.Items.Add(id + "                  " + wC);
             }
 
-            listBoxPlayers.Items.Clear();
+            
 
             labelCurPlayer.Text = "Current Player ID:" + CurrentState.CurrentPlayerID;
         }
@@ -218,11 +224,15 @@ namespace View
         {
             Button selectedWall = (Button) sender;
 
+            selectedWall.BackColor = Color.Red;
+
             (int SelectedX, int SelectedY) = _cornerDictionary[selectedWall];
 
             SelectedCornerX = SelectedX;
 
             SelectedCornerY = SelectedY;
+
+            _wallSelectedByUser = selectedWall;
 
             _lastSelectedWall = selectedWall;
 
@@ -313,6 +323,8 @@ namespace View
                 listBoxPlayers.Items.Add(id + "                " + wC);
             }
 
+            PlayerID = CurrentState.CurrentPlayerID;
+
             labelCurPlayer.Text = "Current Player ID:" + CurrentState.CurrentPlayerID;
 
             //listBoxPlayers.DataSource = CurrentState._playersStates;
@@ -348,14 +360,14 @@ namespace View
 
         public void CantPlaceTheWall()
         {
+            _wallSelectedByUser.BackColor = Color.Orange;
             MessageBox.Show("Sorry, you can't place the wall this way.");
         }
 
         public void ThisIsTheEnd()
         {
-            MessageBox.Show("The Game is Ended. Player number " + CurrentState.CurrentPlayerID +
-                            " has won. CONGRATULATIONS!");
-
+            MessageBox.Show("The Game is Ended. Player number " + PlayerID + " has won. CONGRATULATIONS!");
+            
             Close();
 
             _parentForm.Show();
