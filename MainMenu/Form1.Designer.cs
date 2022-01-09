@@ -26,94 +26,98 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
             this.SinglePlayerButton = new System.Windows.Forms.Button();
-            this.buttonTwoPlayers = new System.Windows.Forms.Button();
+            this.HotseatButton = new System.Windows.Forms.Button();
             this.labelTitle = new System.Windows.Forms.Label();
-            this.labelBy = new System.Windows.Forms.Label();
             this.buttonExit = new System.Windows.Forms.Button();
+            this.MultiplayerButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // SinglePlayerButton
             // 
             this.SinglePlayerButton.Font = new System.Drawing.Font("Modern No. 20", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SinglePlayerButton.Location = new System.Drawing.Point(159, 216);
+            this.SinglePlayerButton.Location = new System.Drawing.Point(212, 205);
+            this.SinglePlayerButton.Margin = new System.Windows.Forms.Padding(4);
             this.SinglePlayerButton.Name = "SinglePlayerButton";
-            this.SinglePlayerButton.Size = new System.Drawing.Size(385, 40);
+            this.SinglePlayerButton.Size = new System.Drawing.Size(513, 49);
             this.SinglePlayerButton.TabIndex = 0;
             this.SinglePlayerButton.Text = "Single Player";
             this.SinglePlayerButton.UseVisualStyleBackColor = true;
-            this.SinglePlayerButton.Click += new System.EventHandler(this.SinglePlayerButton_Click);
+            this.SinglePlayerButton.Click += new System.EventHandler(this.SingleplayerClick);
             // 
-            // buttonTwoPlayers
+            // HotseatButton
             // 
-            this.buttonTwoPlayers.Font = new System.Drawing.Font("Modern No. 20", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonTwoPlayers.Location = new System.Drawing.Point(159, 283);
-            this.buttonTwoPlayers.Name = "buttonTwoPlayers";
-            this.buttonTwoPlayers.Size = new System.Drawing.Size(385, 42);
-            this.buttonTwoPlayers.TabIndex = 1;
-            this.buttonTwoPlayers.Text = "Two Players";
-            this.buttonTwoPlayers.UseVisualStyleBackColor = true;
-            this.buttonTwoPlayers.Click += new System.EventHandler(this.buttonTwoPlayers_Click);
+            this.HotseatButton.Font = new System.Drawing.Font("Modern No. 20", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HotseatButton.Location = new System.Drawing.Point(212, 279);
+            this.HotseatButton.Margin = new System.Windows.Forms.Padding(4);
+            this.HotseatButton.Name = "HotseatButton";
+            this.HotseatButton.Size = new System.Drawing.Size(513, 52);
+            this.HotseatButton.TabIndex = 1;
+            this.HotseatButton.Text = "Two Players";
+            this.HotseatButton.UseVisualStyleBackColor = true;
+            this.HotseatButton.Click += new System.EventHandler(this.HotseatClick);
             // 
             // labelTitle
             // 
             this.labelTitle.AutoSize = true;
             this.labelTitle.Font = new System.Drawing.Font("Modern No. 20", 71.99999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTitle.ForeColor = System.Drawing.Color.Orange;
-            this.labelTitle.Location = new System.Drawing.Point(157, 47);
+            this.labelTitle.Location = new System.Drawing.Point(209, 58);
+            this.labelTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(402, 98);
+            this.labelTitle.Size = new System.Drawing.Size(500, 123);
             this.labelTitle.TabIndex = 2;
             this.labelTitle.Text = "Quoridor";
-            // 
-            // labelBy
-            // 
-            this.labelBy.AutoSize = true;
-            this.labelBy.Font = new System.Drawing.Font("Modern No. 20", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelBy.ForeColor = System.Drawing.Color.Orange;
-            this.labelBy.Location = new System.Drawing.Point(274, 145);
-            this.labelBy.Name = "labelBy";
-            this.labelBy.Size = new System.Drawing.Size(154, 21);
-            this.labelBy.TabIndex = 3;
-            this.labelBy.Text = "by Team Foxtrot";
             // 
             // buttonExit
             // 
             this.buttonExit.Font = new System.Drawing.Font("Modern No. 20", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonExit.Location = new System.Drawing.Point(159, 356);
+            this.buttonExit.Location = new System.Drawing.Point(212, 454);
+            this.buttonExit.Margin = new System.Windows.Forms.Padding(4);
             this.buttonExit.Name = "buttonExit";
-            this.buttonExit.Size = new System.Drawing.Size(385, 42);
+            this.buttonExit.Size = new System.Drawing.Size(513, 52);
             this.buttonExit.TabIndex = 4;
             this.buttonExit.Text = "Exit";
             this.buttonExit.UseVisualStyleBackColor = true;
             this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
             // 
+            // MultiplayerButton
+            // 
+            this.MultiplayerButton.Font = new System.Drawing.Font("Modern No. 20", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MultiplayerButton.Location = new System.Drawing.Point(212, 353);
+            this.MultiplayerButton.Margin = new System.Windows.Forms.Padding(4);
+            this.MultiplayerButton.Name = "MultiplayerButton";
+            this.MultiplayerButton.Size = new System.Drawing.Size(513, 52);
+            this.MultiplayerButton.TabIndex = 5;
+            this.MultiplayerButton.Text = "Multiplayer";
+            this.MultiplayerButton.UseVisualStyleBackColor = true;
+            this.MultiplayerButton.Click += new System.EventHandler(this.MultiplayerClick);
+            // 
             // Menu
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkRed;
-            this.ClientSize = new System.Drawing.Size(704, 468);
+            this.ClientSize = new System.Drawing.Size(939, 576);
+            this.Controls.Add(this.MultiplayerButton);
             this.Controls.Add(this.buttonExit);
-            this.Controls.Add(this.labelBy);
             this.Controls.Add(this.labelTitle);
-            this.Controls.Add(this.buttonTwoPlayers);
+            this.Controls.Add(this.HotseatButton);
             this.Controls.Add(this.SinglePlayerButton);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Menu";
             this.Text = "Quoridor Menu";
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
 
         private System.Windows.Forms.Button SinglePlayerButton;
-        private System.Windows.Forms.Button buttonTwoPlayers;
+        private System.Windows.Forms.Button HotseatButton;
+        private System.Windows.Forms.Button MultiplayerButton;
         private System.Windows.Forms.Label labelTitle;
-        private System.Windows.Forms.Label labelBy;
         private System.Windows.Forms.Button buttonExit;
     }
 }

@@ -11,5 +11,9 @@
         public void Undo(Game game) {}
         
         public void Undo(GameStateModel gsm) {}
+
+        public (int, int, bool) InfoForSerialize() {
+            return (0, 0, false);
+        }
     }
 }

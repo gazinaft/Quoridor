@@ -30,5 +30,8 @@
             gsm.MakeMove(_currentCell.X, _selectedCell.Y);
         }
 
+        public (int, int, bool) InfoForSerialize() {
+            return (_selectedCell.X, _selectedCell.Y, false);
+        }
     }
 }
