@@ -235,6 +235,8 @@ namespace Model {
 
             if (ActivePlayer.CurrentCell.Y == ActivePlayer.VictoryRow)
             {
+
+                DefineNextPlayer();
                 NotifyAboutEnd?.Invoke();
                 return;
             }

@@ -101,6 +101,7 @@ namespace Controllers
 
         public void InformAboutEnd() {
 
+            
             View.ThisIsTheEnd();
 
         }
