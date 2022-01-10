@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinProtocol", "BinProtocol\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkTests", "NetworkTests\NetworkTests.csproj", "{79E6D571-8C14-441E-B396-2B6D9C5AE696}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelTests", "ModelTests\ModelTests.csproj", "{F5821969-0CEE-4940-B565-0B9239B1998C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{79E6D571-8C14-441E-B396-2B6D9C5AE696}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79E6D571-8C14-441E-B396-2B6D9C5AE696}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79E6D571-8C14-441E-B396-2B6D9C5AE696}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5821969-0CEE-4940-B565-0B9239B1998C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5821969-0CEE-4940-B565-0B9239B1998C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5821969-0CEE-4940-B565-0B9239B1998C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5821969-0CEE-4940-B565-0B9239B1998C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
