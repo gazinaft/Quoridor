@@ -10,7 +10,7 @@ namespace View
         Dictionary<int, string> _coordinatesCornersToLetters;
         Dictionary<int, string> _coordinatesCellsToLetters;
 
-        public int SelectedCellX { get ; set; }
+        public int SelectedCellX { get; set; }
         public int SelectedCellY { get; set; }
         public int SelectedCornerX { get; set; }
         public int SelectedCornerY { get; set; }
@@ -30,7 +30,7 @@ namespace View
             _coordinatesCornersToLetters = new Dictionary<int, string>();
 
             _coordinatesCellsToLetters = new Dictionary<int, string>();
-            
+
             _lettersToCellCoordinates.Add("a", 0);
             _lettersToCellCoordinates.Add("A", 0);
             _lettersToCellCoordinates.Add("b", 1);
@@ -97,12 +97,13 @@ namespace View
             CheckTheFirstCommand();
         }
 
-        public void TryToMovePlayer() {
+        public void TryToMovePlayer()
+        {
             PlayerMove?.Invoke();
         }
 
-        public void CheckTheFirstCommand() {
-
+        public void CheckTheFirstCommand()
+        {
             string selectedTeam = Console.ReadLine();
 
             if (selectedTeam == "white")
@@ -112,18 +113,18 @@ namespace View
                 SelectedCellY = 7;
                 TryToMovePlayer();
             }
-            else if (selectedTeam == "black") {
+            else if (selectedTeam == "black")
+            {
                 CheckTheCommand();
             }
-            else {
+            else
+            {
                 CheckTheFirstCommand();
             }
-        
-        
         }
 
-        public void CheckTheCommand() {
-
+        public void CheckTheCommand()
+        {
             string command = Console.ReadLine();
 
             if (command != null && command.StartsWith("wall"))
@@ -138,7 +139,8 @@ namespace View
                 {
                     SelectedWallIsHorizontal = true;
                 }
-                else if (isHorizontal == "v" || isHorizontal == "V") {
+                else if (isHorizontal == "v" || isHorizontal == "V")
+                {
                     SelectedWallIsHorizontal = false;
                 }
 
@@ -148,10 +150,10 @@ namespace View
                     SelectedCornerY = Convert.ToInt32(yString);
                     PlacingTheWall?.Invoke();
                 }
-                catch (Exception) {
+                catch (Exception)
+                {
                     Console.WriteLine("Can't parse the command");
                 }
-                
             }
             else if (command != null && command.StartsWith("jump"))
             {
@@ -164,13 +166,14 @@ namespace View
                     SelectedCellX = _lettersToCellCoordinates[xString];
                     SelectedCellY = Convert.ToInt32(yString) - 1;
                     TryToMovePlayer();
-
                 }
-                catch (Exception) {
+                catch (Exception)
+                {
                     Console.WriteLine("Can't parse the command");
                 }
             }
-            else if (command.StartsWith("move")) {
+            else if (command.StartsWith("move"))
+            {
                 string selectedCoordinates = command.Substring(5);
                 string xString = selectedCoordinates.Substring(0, 1);
                 string yString = selectedCoordinates.Substring(1);
@@ -181,41 +184,46 @@ namespace View
                     SelectedCellY = Convert.ToInt32(yString) - 1;
                     TryToMovePlayer();
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     Console.WriteLine(e);
                 }
-                
             }
-            else {
+            else
+            {
                 Console.WriteLine("Sorry, I can't recognise the command");
             }
-        
         }
 
         public void DisplayTheField(GameFieldState state)
         {
-            if (state.TheWallIsPlaced) {
-                if (state.TheWallIsHorisontal) {
+            if (state.TheWallIsPlaced)
+            {
+                if (state.TheWallIsHorisontal)
+                {
                     int selectedCornerY = state.SelectedCornerY;
-                    Console.WriteLine("wall " + _coordinatesCornersToLetters[state.SelectedCornerX] + selectedCornerY + "h");
+                    Console.WriteLine("wall " + _coordinatesCornersToLetters[state.SelectedCornerX] + selectedCornerY +
+                                      "h");
                 }
-                else {
+                else
+                {
                     int selectedCornerY = state.SelectedCornerY;
-                    Console.WriteLine("wall " + _coordinatesCornersToLetters[state.SelectedCornerX] +  selectedCornerY + "v");
+                    Console.WriteLine("wall " + _coordinatesCornersToLetters[state.SelectedCornerX] + selectedCornerY +
+                                      "v");
                 }
-            
             }
-            else {
-                if (state.IsJumping) {
+            else
+            {
+                if (state.IsJumping)
+                {
                     int selectedCellY = state.SelectedCellY + 1;
                     Console.WriteLine("jump " + _coordinatesCellsToLetters[state.SelectedCellX] + selectedCellY);
                 }
-                else {
+                else
+                {
                     int selectedCellY = state.SelectedCellY + 1;
                     Console.WriteLine("move " + _coordinatesCellsToLetters[state.SelectedCellX] + selectedCellY);
-
                 }
-            
             }
 
             CheckTheCommand();
@@ -226,7 +234,8 @@ namespace View
             //Console.WriteLine("The wall was placed successfully.");
         }
 
-        public void ThisIsTheEnd()
+
+        public void ThisIsTheEnd(int id)
         {
             //Console.WriteLine("The Game is ended.");
         }

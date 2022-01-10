@@ -3,6 +3,8 @@ using System.Linq;
 using Model.Services;
 
 namespace Model {
+    using System;
+
     public class Game {
         
         public GameField Board { get; set; }
@@ -27,9 +29,8 @@ namespace Model {
         public delegate void CornerIsInvalid();
         public delegate void NextStep();
         public delegate void BotStep();
-        public delegate void TheGameIsEnded();
-        
-        public event TheGameIsEnded NotifyAboutEnd;
+       
+        public event Action<int> NotifyAboutEnd;
         public event BotStep NotifyBotHasDecided;
         public event NextStep NotifyNextStep;
         public event CornerIsInvalid NotifyCornerIsInvalid;
@@ -190,7 +191,7 @@ namespace Model {
         public void FindNextPlayer() {
             if (ActivePlayer.CurrentCell.Y == ActivePlayer.VictoryRow) {
                 SecondPlayer?.PlayerStrategy.SendVictory(this);
-                NotifyAboutEnd?.Invoke();
+                NotifyAboutEnd?.Invoke(ActivePlayer.PlayerId);
                 return;
             }
 
