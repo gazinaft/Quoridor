@@ -97,6 +97,7 @@
         <Compile Include="Room.cs" />
         <Compile Include="JoinHandler.cs" />
         <Compile Include="TCPServer.cs" />
+        <Compile Include="TurnHandler.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\BinProtocol\BinProtocol.csproj">

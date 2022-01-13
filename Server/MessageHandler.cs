@@ -1,28 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Server {
     public class MessageHandler {
 
-        public MessageHandler(
-            object TurnHandler,
-            object JoinHandler,
-            object EndGageHandler) {
-            
-            
+        private readonly TurnHandler turnHandler;
+
+        public MessageHandler(TurnHandler th) {
+            turnHandler = th;
         }
         
-        public void Handle(byte[] raw) {
+        public async Task Handle(byte[] raw, List<Room> rooms) {
+            Console.WriteLine("Handling message");
             var data = General.Parser.ParseFrom(raw);
             switch (data.MsgCase) {
                 case General.MsgOneofCase.None:
                     return;
-                case General.MsgOneofCase.EndGame:
-                    return;
                 case General.MsgOneofCase.Turn:
-                    break;
-                case General.MsgOneofCase.StartGame:
-                    break;
-                case General.MsgOneofCase.Joined:
+                    await turnHandler.Handle(data.Turn, rooms);
                     break;
                 default: throw new ArgumentException("Unknown message");
             }

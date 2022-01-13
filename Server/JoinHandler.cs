@@ -6,17 +6,17 @@ namespace Server
 
     public class JoinHandler
     {
-        private List<Room> _rooms;
-        private Queue<TcpClient> _waitingClients;
+        public List<Room> Rooms;
+        private Queue<Player> _waitingClients;
 
         public JoinHandler()
         {
-            _waitingClients = new Queue<TcpClient>();
-            _rooms = new List<Room>();
+            _waitingClients = new Queue<Player>();
+            Rooms = new List<Room>();
         }
 
 
-        public void Handle(TcpClient client)
+        public void Handle(Player client)
         {
             _waitingClients.Enqueue(client);
             TryCreateNewRoom();
@@ -28,18 +28,18 @@ namespace Server
             {
                 var players = new List<Player>()
                 {
-                    new Player(_waitingClients.Dequeue()),
-                    new Player(_waitingClients.Dequeue())
+                    _waitingClients.Dequeue(),
+                    _waitingClients.Dequeue()
                 };
-                var newRoom = new Room(_rooms.Count, players);
+                var newRoom = new Room(Rooms.Count, players);
                 newRoom.OnRoomClose += CloseRoom;
-                _rooms.Add(newRoom);
+                Rooms.Add(newRoom);
             }
         }
 
         private void CloseRoom(Room closedRoom)
         {
-            _rooms.Remove(closedRoom);
+            Rooms.Remove(closedRoom);
         }
     }
 }
