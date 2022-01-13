@@ -225,7 +225,8 @@ namespace View
             Button selectedWall = (Button) sender;
 
             selectedWall.BackColor = Color.Red;
-
+            selectedWall.BringToFront();
+            
             (int SelectedX, int SelectedY) = _cornerDictionary[selectedWall];
 
             SelectedCornerX = SelectedX;
@@ -250,12 +251,13 @@ namespace View
 
             _lastSelectedWall.BackColor = Color.Red;
 
-            _lastSelectedWall.BringToFront();
 
             foreach (Button b in ButtonGrid)
             {
                 b.Dispose();
             }
+
+            _lastSelectedWall.BringToFront();
 
             listBoxPlayers.Items.Clear();
         }
