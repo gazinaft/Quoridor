@@ -60,8 +60,8 @@ namespace Controllers
         {
             Game.SelectedCell = Game.Board.Cells[View.SelectedCellX, View.SelectedCellY];
             Game.MovePlayerCommand = new MovePlayerCommand(Game.SelectedCell);
-            Game.MovePlayerCommand.Execute(Game);
             Game._stepsHistory.AddLast(Game.MovePlayerCommand);
+            Game.MovePlayerCommand.Execute(Game);
             View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
         }
 
