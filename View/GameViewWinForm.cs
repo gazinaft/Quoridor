@@ -13,7 +13,8 @@ namespace View
         Button[,] CornerGrid;
 
         Button _lastSelectedWall;
-
+        Button _wallSelectedByUser;
+        
         Dictionary<Button, (int, int)> _cornerDictionary;
 
         Dictionary<(int, int, bool), Button> _cornerToButtonDictionary;
@@ -220,11 +221,16 @@ namespace View
         {
             Button selectedWall = (Button) sender;
 
+            selectedWall.BackColor = Color.Red;
+            selectedWall.BringToFront();
+            
             (int SelectedX, int SelectedY) = _cornerDictionary[selectedWall];
 
             SelectedCornerX = SelectedX;
 
             SelectedCornerY = SelectedY;
+            
+            _wallSelectedByUser = selectedWall;
 
             _lastSelectedWall = selectedWall;
 
@@ -351,6 +357,7 @@ namespace View
 
         public void CantPlaceTheWall()
         {
+            _wallSelectedByUser.BackColor = Color.Orange;
             MessageBox.Show("Sorry, you can't place the wall this way.");
         }
 
