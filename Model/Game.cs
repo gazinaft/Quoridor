@@ -189,7 +189,7 @@ namespace Model {
 
         public void FindNextPlayer() {
             if (ActivePlayer.CurrentCell.Y == ActivePlayer.VictoryRow) {
-                SecondPlayer?.PlayerStrategy.SendVictory(this);
+                SecondPlayer?.PlayerStrategy?.SendVictory(this);
                 NotifyAboutEnd?.Invoke();
                 return;
             }
@@ -243,7 +243,7 @@ namespace Model {
                 System.Math.Abs(SelectedCell.Y - ActivePlayer.CurrentCell.Y) > 1;
 
             Board.MovePlayer(SelectedCell.X, SelectedCell.Y, ActivePlayer);
-
+            // Redraw?.Invoke();
             TheWallIsPlaced = false;
             NotifyPlayerHasChanged?.Invoke();
         }
