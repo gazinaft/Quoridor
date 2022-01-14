@@ -354,9 +354,9 @@ namespace View
             MessageBox.Show("Sorry, you can't place the wall this way.");
         }
 
-        public void ThisIsTheEnd()
+        public void ThisIsTheEnd(int id)
         {
-            MessageBox.Show("The Game is Ended. Player number " + CurrentState.CurrentPlayerID +
+            MessageBox.Show("The Game is Ended. Player number " + id +
                             " has won. CONGRATULATIONS!");
 
             Close();

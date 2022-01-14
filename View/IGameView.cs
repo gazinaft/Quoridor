@@ -19,7 +19,7 @@ namespace View
         void DisplayPotentialWallsAndCorners(GameFieldState state);
         void CantPlaceTheWall();
         void PlaceTheWall(GameFieldState state);
-        void ThisIsTheEnd();
+        void ThisIsTheEnd(int id);
     }
     
 }
