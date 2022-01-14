@@ -226,7 +226,7 @@ namespace View
             //Console.WriteLine("The wall was placed successfully.");
         }
 
-        public void ThisIsTheEnd()
+        public void ThisIsTheEnd(int id)
         {
             //Console.WriteLine("The Game is ended.");
         }

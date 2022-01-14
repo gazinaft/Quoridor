@@ -2,9 +2,12 @@
 using System.Linq;
 using Model.Services;
 
-namespace Model {
-    public class Game {
-        
+namespace Model
+{
+    using System;
+
+    public class Game
+    {
         public GameField Board { get; set; }
         public ICommand PlaceTheWallCommand { get; set; }
         public ICommand MovePlayerCommand { get; set; }
@@ -13,23 +16,28 @@ namespace Model {
         public Cell SelectedCell { get; set; }
         public Corner SelectedCorner { get; set; }
         public bool WallIsHorizontal { get; set; }
-        public bool IsJumping { get; set; }        
+        public bool IsJumping { get; set; }
 
         private PathFindingService _pathFindingService;
         private MoveValidationService _moveValidationService;
         private WallValidationService _wallValidationService;
-        
+
         public delegate void ChangeSelectedCell();
+
         public delegate void ChangeSelectedCorner();
+
         public event ChangeSelectedCell SelectedCellChanged;
         public event ChangeSelectedCorner NotifyPlacingTheWall;
+
         public delegate void NextPlayer();
+
         public delegate void CornerIsInvalid();
+
         public delegate void NextStep();
+
         public delegate void BotStep();
-        public delegate void TheGameIsEnded();
-        
-        public event TheGameIsEnded NotifyAboutEnd;
+
+        public event Action<int> NotifyAboutEnd;
         public event BotStep NotifyBotHasDecided;
         public event NextStep NotifyNextStep;
         public event CornerIsInvalid NotifyCornerIsInvalid;
@@ -42,17 +50,18 @@ namespace Model {
         public IPlayer SecondPlayer { get; }
         public LinkedList<ICommand> _stepsHistory;
 
-        public bool DoDisplayStep { get; set; }
+        public bool DoDisplayStep { get; set; } 
 
-        public GameStateModel GetGameState() {
-            GameStateModel currentState = new GameStateModel(this) { Players = this.Players };
+        public GameStateModel GetGameState()
+        {
+            GameStateModel currentState = new GameStateModel(this) {Players = this.Players};
             return currentState;
         }
 
-        public Game(IPlayerStrategy enemyStrategy) {
-
+        public Game(IPlayerStrategy enemyStrategy)
+        {
             DoDisplayStep = true;
-            
+
             _stepsHistory = new LinkedList<ICommand>();
             _pathFindingService = new PathFindingService();
             _moveValidationService = new MoveValidationService();
@@ -68,7 +77,7 @@ namespace Model {
             firstPlayer.PlayerId = 1;
             firstPlayer.CurrentCell = Board.Cells[4, 8];
             firstPlayer.VictoryRow = 0;
-            
+
             UserPlayer secondPlayer = new UserPlayer();
             secondPlayer.PlayerStrategy = enemyStrategy;
             secondPlayer.StartCell = Board.Cells[4, 0];
@@ -91,19 +100,22 @@ namespace Model {
             NotifyNextStep += MakeNextStep;
         }
 
-        public Game Undo(ICommand terminalCommand) {
+        public Game Undo(ICommand terminalCommand)
+        {
             DoDisplayStep = false;
             Players.ForEach(p => p.CurrentCell = p.StartCell);
-            Players.ForEach(p => p.WallsCounter=10);
+            Players.ForEach(p => p.WallsCounter = 10);
 
-            foreach (ICommand c in _stepsHistory) {
-                if (c!=terminalCommand) {
+            foreach (ICommand c in _stepsHistory)
+            {
+                if (c != terminalCommand)
+                {
                     c.Execute(this);
                 }
             }
+
             DoDisplayStep = true;
             return this;
-        
         }
 
         public Game()
@@ -123,7 +135,7 @@ namespace Model {
             firstPlayer.VictoryRow = 0;
 
             FirstPlayer = firstPlayer;
-            
+
             UserPlayer secondPlayer = new UserPlayer();
             secondPlayer.CurrentCell = Board.Cells[4, 0];
             secondPlayer.StartCell = Board.Cells[4, 0];
@@ -134,36 +146,36 @@ namespace Model {
             InActivePlayer = secondPlayer;
 
             firstPlayer.PlayerIsActive = true;
-            
+
             firstPlayer.PlayerId = 1;
             secondPlayer.PlayerId = 2;
-            
+
             Players.Add(firstPlayer);
             Players.Add(secondPlayer);
-            
+
             NotifyPlayerHasChanged += FindNextPlayer;
             NotifyNextStep += MakeNextStep;
-            
         }
 
-        public void MakeNextStep() {
-
-            if (ActivePlayer.PlayerStrategy !=null) {
-
-                ActivePlayer.Decide(this);           
+        public void MakeNextStep()
+        {
+            if (ActivePlayer.PlayerStrategy != null)
+            {
+                ActivePlayer.Decide(this);
                 NotifyBotHasDecided?.Invoke();
                 NotifyPlayerHasChanged?.Invoke();
-            
             }
-        
         }
 
-        public void PlaceTheWall() {
-
-            if (_wallValidationService.CornerInvalid(SelectedCorner.X, SelectedCorner.Y, WallIsHorizontal, Board, Players)) {
+        public void PlaceTheWall()
+        {
+            if (_wallValidationService.CornerInvalid(SelectedCorner.X, SelectedCorner.Y, WallIsHorizontal, Board,
+                Players))
+            {
                 NotifyCornerIsInvalid?.Invoke();
             }
-            else {
+            else
+            {
                 Board.SetBlock(SelectedCorner.X, SelectedCorner.Y, WallIsHorizontal);
                 ActivePlayer.WallsCounter--;
                 TheWallIsPlaced = true;
@@ -172,14 +184,17 @@ namespace Model {
             }
         }
 
-        public void DefineNextPlayer() {
-            if (FirstPlayer.PlayerIsActive) {
+        public void DefineNextPlayer()
+        {
+            if (FirstPlayer.PlayerIsActive)
+            {
                 FirstPlayer.PlayerIsActive = false;
                 SecondPlayer.PlayerIsActive = true;
                 ActivePlayer = SecondPlayer;
                 InActivePlayer = FirstPlayer;
             }
-            else {
+            else
+            {
                 SecondPlayer.PlayerIsActive = false;
                 FirstPlayer.PlayerIsActive = true;
                 InActivePlayer = SecondPlayer;
@@ -187,29 +202,34 @@ namespace Model {
             }
         }
 
-        public void FindNextPlayer() {
-            if (ActivePlayer.CurrentCell.Y == ActivePlayer.VictoryRow) {
+        public void FindNextPlayer()
+        {
+            if (ActivePlayer.CurrentCell.Y == ActivePlayer.VictoryRow)
+            {
                 SecondPlayer?.PlayerStrategy.SendVictory(this);
-                NotifyAboutEnd?.Invoke();
+                NotifyAboutEnd?.Invoke(ActivePlayer.PlayerId);
                 return;
             }
 
             int lastActivePlayerIndex = Players.FindLastIndex(pl => pl.PlayerIsActive);
-            if (lastActivePlayerIndex + 1 != Players.Count) {
+            if (lastActivePlayerIndex + 1 != Players.Count)
+            {
                 InActivePlayer = Players.ElementAt(lastActivePlayerIndex);
                 Players.ElementAt(lastActivePlayerIndex).PlayerIsActive = false;
                 Players.ElementAt(lastActivePlayerIndex + 1).PlayerIsActive = true;
                 ActivePlayer = Players.ElementAt(lastActivePlayerIndex + 1);
             }
-            else {
+            else
+            {
                 InActivePlayer = Players.ElementAt(lastActivePlayerIndex);
                 Players.ElementAt(lastActivePlayerIndex).PlayerIsActive = false;
                 Players.ElementAt(0).PlayerIsActive = true;
                 ActivePlayer = Players.ElementAt(0);
             }
 
-            if (ActivePlayer.PlayerStrategy != null) {
-                ActivePlayer.Decide(this);               
+            if (ActivePlayer.PlayerStrategy != null)
+            {
+                ActivePlayer.Decide(this);
                 ActivePlayer.PlayerIsActive = false;
                 InActivePlayer = ActivePlayer;
                 ActivePlayer = Players.ElementAt(0);
@@ -217,8 +237,8 @@ namespace Model {
             }
         }
 
-        public void ChangePlayers() {
-
+        public void ChangePlayers()
+        {
             FirstPlayer.StartCell = Board.Cells[4, 0];
             FirstPlayer.CurrentCell = Board.Cells[4, 0];
 
@@ -237,7 +257,8 @@ namespace Model {
             FirstPlayer.PlayerIsActive = false;
         }
 
-        public void ChangeTheCell() {
+        public void ChangeTheCell()
+        {
             // if travel more than 1 cell than it's a jump
             IsJumping = System.Math.Abs(SelectedCell.X - ActivePlayer.CurrentCell.X) +
                 System.Math.Abs(SelectedCell.Y - ActivePlayer.CurrentCell.Y) > 1;
@@ -247,7 +268,5 @@ namespace Model {
             TheWallIsPlaced = false;
             NotifyPlayerHasChanged?.Invoke();
         }
-
     }
-    
 }

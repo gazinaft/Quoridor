@@ -76,9 +76,9 @@ namespace Controllers
             View.DisplayTheField(_gameFieldMapper.FromModelToView(Game));
         }
 
-        public void InformAboutEnd()
+        public void InformAboutEnd(int id)
         {
-            View.ThisIsTheEnd();
+            View.ThisIsTheEnd(id);
         }
     }
 }
