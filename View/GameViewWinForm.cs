@@ -20,6 +20,8 @@ namespace View
 
         List<Button> _horizontalWalls;
 
+        public bool IsWhite = true;
+
         private Form _parentForm;
 
         public GameViewWinForm(Form parentForm)
@@ -81,14 +83,24 @@ namespace View
 
                     ButtonGrid[i, j].Width = (int) buttonSize;
 
-                    if (CurrentState.GridForPlayers[i, j])
+                    if (CurrentState.GridForColoring[i, j] == 1)
                     {
                         //ButtonGrid[i, j].Text = "PLAYER";
                         GraphicsPath p = new GraphicsPath();
                         p.AddEllipse(ButtonGrid[i, j].Location.X, ButtonGrid[i, j].Location.Y, buttonSize, buttonSize);
                         ButtonGrid[i, j].Region = new Region(p);
 
-                        ButtonGrid[i, j].BackColor = Color.Red;
+                        ButtonGrid[i, j].BackColor = IsWhite ? Color.White: Color.Black;
+                    }
+                    
+                    if (CurrentState.GridForColoring[i, j] == 2)
+                    {
+                        //ButtonGrid[i, j].Text = "PLAYER";
+                        GraphicsPath p = new GraphicsPath();
+                        p.AddEllipse(ButtonGrid[i, j].Location.X, ButtonGrid[i, j].Location.Y, buttonSize, buttonSize);
+                        ButtonGrid[i, j].Region = new Region(p);
+
+                        ButtonGrid[i, j].BackColor = IsWhite ? Color.Black : Color.White;
                     }
 
                     GamePanel.Controls.Add(ButtonGrid[i, j]);
@@ -266,15 +278,24 @@ namespace View
 
                     ButtonGrid[i, j].Width = (int) buttonSize;
 
-                    if (CurrentState.GridForPlayers[i, j])
+                    if (CurrentState.GridForColoring[i, j] == 1)
                     {
                         GraphicsPath p = new GraphicsPath();
                         p.AddEllipse(ButtonGrid[i, j].Location.X, ButtonGrid[i, j].Location.Y, buttonSize, buttonSize);
                         ButtonGrid[i, j].Region = new Region(p);
 
-                        ButtonGrid[i, j].BackColor = Color.Red;
+                        ButtonGrid[i, j].BackColor = IsWhite ? Color.White : Color.Black;
                     }
 
+                    if (CurrentState.GridForColoring[i, j] == 2)
+                    {
+                        GraphicsPath p = new GraphicsPath();
+                        p.AddEllipse(ButtonGrid[i, j].Location.X, ButtonGrid[i, j].Location.Y, buttonSize, buttonSize);
+                        ButtonGrid[i, j].Region = new Region(p);
+
+                        ButtonGrid[i, j].BackColor = IsWhite ? Color.Black : Color.White;
+                    }
+                    
                     GamePanel.Controls.Add(ButtonGrid[i, j]);
 
                     ButtonGrid[i, j].Location = new Point(i * ((int) buttonSize + (int) wallSize),
@@ -289,6 +310,7 @@ namespace View
                 b.BringToFront();
             }
 
+            listBoxPlayers.Items.Clear();
             foreach ((int id, int wC) in CurrentState._playersStates)
             {
                 listBoxPlayers.Items.Add(id + "                " + wC);

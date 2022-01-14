@@ -5,7 +5,7 @@ namespace View
     public class GameFieldState
     {
         public bool[,] GridForPlayers;
-
+        public int[,] GridForColoring;
         public bool[,][,] GridForCorners;
 
         public bool IsJumping { get; set; }
