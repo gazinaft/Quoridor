@@ -46,9 +46,9 @@ namespace MainMenu
             GameViewWinForm form = new GameViewWinForm(this);
             Presenter presenter = new Presenter(form, game);
             game._stepsHistory.AddLast(new EmptyCommand());
-            // if (!isFirstTurn) game.FindNextPlayer();
             Hide();
             form.Show();
+            if (!isFirstTurn) game.FindNextPlayer();
         }
 
         private void buttonExit_Click(object sender, EventArgs e)
