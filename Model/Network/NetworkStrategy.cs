@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 using Google.Protobuf;
 using static BinProtocol.StreamTransmitter;
 
@@ -54,7 +55,10 @@ namespace Model.Network
                 WriteToStream(msg, stream);
             }
 
-            var bitNextTurn = ReadFromStream(stream);
+            ReadFromStreamAsync(stream).ContinueWith(async (data) => HandleInputNetwork(await data, game));
+        }
+
+        public async Task HandleInputNetwork(byte[] bitNextTurn, Game game) {
             var next = General.Parser.ParseFrom(bitNextTurn).Turn;
             if (next.ToPlaceWall)
             {

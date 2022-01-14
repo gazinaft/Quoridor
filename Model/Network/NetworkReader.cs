@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 using Google.Protobuf;
 using static BinProtocol.StreamTransmitter;
 
@@ -14,7 +15,7 @@ namespace Model.Network
             //         Success = true
             // } }.ToByteArray();
             // WriteToStreamSync(req, stream);
-            var data = ReadFromStream(stream);
+            var data = Task.Run(async () => await ReadFromStreamAsync(stream)).Result;
             var msg = General.Parser.ParseFrom(data);
             var start = msg.StartGame;
             return start;

@@ -53,6 +53,8 @@ namespace View
         public event Action ChangePlayer;
         public event Action DoUndo;
 
+        public bool IsWhite { get; set; }
+        
         public void DisplayPotentialWallsAndCorners(GameFieldState state)
         {
             _horizontalWalls = new List<Button>();
@@ -92,8 +94,7 @@ namespace View
                         p.AddEllipse(ButtonGrid[i, j].Location.X, ButtonGrid[i, j].Location.Y, buttonSize, buttonSize);
                         ButtonGrid[i, j].Region = new Region(p);
 
-                        ButtonGrid[i, j].BackColor = Color.White;
-                    }
+                        ButtonGrid[i, j].BackColor = IsWhite ? Color.White : Color.Black;                 }
                     
                     if (CurrentState.GridForColoring[i, j] == 2)
                     {
@@ -102,7 +103,7 @@ namespace View
                         p.AddEllipse(ButtonGrid[i, j].Location.X, ButtonGrid[i, j].Location.Y, buttonSize, buttonSize);
                         ButtonGrid[i, j].Region = new Region(p);
 
-                        ButtonGrid[i, j].BackColor = Color.Black;
+                        ButtonGrid[i, j].BackColor = IsWhite ? Color.Black : Color.White;
                     }
 
                     GamePanel.Controls.Add(ButtonGrid[i, j]);
@@ -292,7 +293,7 @@ namespace View
                         p.AddEllipse(ButtonGrid[i, j].Location.X, ButtonGrid[i, j].Location.Y, buttonSize, buttonSize);
                         ButtonGrid[i, j].Region = new Region(p);
 
-                        ButtonGrid[i, j].BackColor = Color.White;
+                        ButtonGrid[i, j].BackColor = IsWhite ? Color.White : Color.Black;
                     }
 
                     if (CurrentState.GridForColoring[i, j] == 2)
@@ -301,7 +302,7 @@ namespace View
                         p.AddEllipse(ButtonGrid[i, j].Location.X, ButtonGrid[i, j].Location.Y, buttonSize, buttonSize);
                         ButtonGrid[i, j].Region = new Region(p);
 
-                        ButtonGrid[i, j].BackColor = Color.Black;
+                        ButtonGrid[i, j].BackColor = IsWhite ? Color.Black : Color.White;
                     }
                     
                     GamePanel.Controls.Add(ButtonGrid[i, j]);

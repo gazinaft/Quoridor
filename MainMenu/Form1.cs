@@ -44,9 +44,10 @@ namespace MainMenu
 
             var game = new Game(ns);
             GameViewWinForm form = new GameViewWinForm(this);
+            form.IsWhite = isFirstTurn;
             Presenter presenter = new Presenter(form, game);
             game._stepsHistory.AddLast(new EmptyCommand());
-            // if (!isFirstTurn) game.FindNextPlayer();
+            if (!isFirstTurn) game.FindNextPlayer();
             Hide();
             form.Show();
         }
