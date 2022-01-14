@@ -55,7 +55,7 @@ namespace Model.Network
                 WriteToStream(msg, stream);
             }
 
-            var bitNextTurn = ReadFromStream(stream);
+            var bitNextTurn = Task.Run(async () => await ReadFromStreamAsync(stream)).Result;
             var next = General.Parser.ParseFrom(bitNextTurn).Turn;
             if (next.ToPlaceWall)
             {
